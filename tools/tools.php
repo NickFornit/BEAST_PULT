@@ -26,6 +26,9 @@ font-size:12pt;'>";
 echo "<div id='tools_conteiner' style='display:none'>";
 
 // СТРОКИ КОМАНД ИНСТРУМЕНТОВ:
+echo "<div class='tools' title='Экспортировать свои базовые настройки в общий каталог update' id='exp_larv' style='cursor:pointer;' onclick='Export_Larve()'>Экспортировать настройки</div>";
+echo "<div class='tools' title='Имортировать базовые настройки от других ботов из общего каталога update' id='imp_larv' style='cursor:pointer;' onclick='Import_Larve()'>Импортировать настройки</div><hr>";
+
 echo "<div class='tools' title='Сохранить все текущее состояние в архиве CurrentMemory.' onClick='save_current_memory()'>Сохранить текущее состояние (Ctrl+S)</div>";
 
 echo "<div class='tools' title='Сохранить текущую память Beast перед выключением. На это время приостанавливаются все процессы Beast и все виды памяти сохраняются из оперативной памяти в постоянную.' onClick='save_all_bot_files()'>Сохранить память Beast</div>";
@@ -37,7 +40,6 @@ echo "<div class='tools' title='Восстановить из архива вс�
 echo "<div class='tools' title='Сбросить память Beast чтобы начать развитие заново с безусловных рефлексов.' onClick='removeing_all()'>Сбросить память</div>";
 
 echo "<div class='tools' title='Корректное выключение Beast.' onClick='bot_closing()'>Выключить Beast</div>";
-
 
 // это - только для нижнего отсупа:
 echo "<div class='tools' ></div>";
@@ -52,6 +54,62 @@ echo "</div>
 </div>";
 ?>
 <script>
+	var stages = '<?php echo $stages; ?>';
+
+function larve_enabled() {
+	if (stages > 0) {
+		document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
+		document.getElementById('imp_larv').innerHTML = 'Импорт фраз';
+	} else {
+		document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
+		document.getElementById('imp_larv').innerHTML = 'Импортировать настройки';
+	}
+}
+
+function closed_dlg_confirm2() {
+	tools_action_ID = 0;
+}
+
+function expr_larv() {
+	tools_action_ID = 11;
+	bot_contact_get("set_exp_param=1", result_expr_larv);
+
+	function result_expr_larv(res) {
+		tools_action_ID = 0;
+		if (res != "yes") {
+			show_dlg_alert("Возникли проблемы при экспорте", 0);
+			return;
+		}
+		show_dlg_alert("Все файлы успешно выгружены", 0);
+	}
+}
+
+function Export_Larve(el) {
+	show_dlg_confirm2("Выгрузить свои базовые настройки для обмена в общий каталог?", "Да", "Нет", expr_larv);
+}
+
+function impr_larv() {
+	tools_action_ID = 12;
+	bot_contact_get("set_imp_param=1", result_impr_larv);
+
+	function result_impr_larv(res) {
+		tools_action_ID = 0;
+		if (res != "yes") {
+			show_dlg_alert("Возникли проблемы при обновлении", 0);
+			return;
+		}
+		show_dlg_alert("Все файлы успешно обновлены", 0);
+	}
+}
+
+function Import_Larve() {
+	if (stages == 0) {
+		show_dlg_confirm2("Обновить текущие файлы базовых настроек с данными от других ботов?", "Да", "Нет", impr_larv);
+	} else {
+		show_dlg_confirm2("Обновить сенсорную базу данными от других ботов?", "Да", "Нет", impr_larv);
+	}
+}
+
 function tools_show(on)
 {
 	if(on)

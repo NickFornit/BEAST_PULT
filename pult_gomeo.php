@@ -203,6 +203,7 @@ EOD;
 		//document.getElementById('gpar_1_2').innerHTML=p[3];
 		// p[3] СВОБОДНА, можно что-то передать.
 
+		larve_enabled();
 		//alert(p[4])
 		// время жизни:
 		var yeas = parseInt(p[4] / (3600 * 24 * 365));

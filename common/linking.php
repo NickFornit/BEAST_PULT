@@ -50,4 +50,18 @@ if(typeof(own_proc)=='function')
 	}
 }
 }
+
+function bot_contact_get(params,own_proc){
+	if(actived_contact==0){
+		return;
+	}
+	var AJAX = new ajax_support(linking_address+"?"+params,sent_request_bot);
+	AJAX.send_reqest();
+	function sent_request_bot(res){
+	if(typeof(own_proc)=='function'){
+		own_proc(res);
+		}
+	}
+}
+
 </script>
