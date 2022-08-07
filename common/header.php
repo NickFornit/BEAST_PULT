@@ -1,0 +1,81 @@
+<?
+/*      
+$page_id=0;
+$title="Пульт связи с Beast";
+include_once($_SERVER['DOCUMENT_ROOT']."/common/header.php");
+*/
+header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+header('Content-Type: text/html; charset=UTF-8');
+setlocale(LC_ALL, "ru_RU.UTF-8");
+mb_http_input('UTF-8');
+mb_http_output('UTF-8');
+mb_internal_encoding("UTF-8");
+
+
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><?=$title?></title>
+  <link rel="stylesheet" href="/common/common.css">
+</head>
+<body style="margin-left:20px;font-family:arial;font-size:14px;">
+<form name="open_another_win" method="post" action="" target="_blank"></form>
+<?
+include_once($_SERVER['DOCUMENT_ROOT']."/common/common.php"); 
+
+include_once($_SERVER["DOCUMENT_ROOT"]."/common/top_menu.php");
+?>
+<h1 style='font-size:18px;'><?=$title?></h1>
+
+<script>
+function open_anotjer_win(link)
+{  
+document.forms.open_another_win.action=link;
+document.forms.open_another_win.submit();
+}
+window.onmouseup = function(e)
+{
+var t = e.target || e.srcElement;
+while(t)
+{
+if(t.id == "div_dlg_alert")
+	return;	
+t = t.offsetParent;
+}
+end_dlg_confirm(0);//   зкрывать конфирм при щелчке по серому.
+
+// закрыть спойлер инструментов
+if(document.getElementById("block_id"))
+if(parseInt(document.getElementById("block_id").style.height)!=0)
+	open_close(`block_id`,0);
+
+}
+</script>
+<?
+///// стадии развития 
+$stages=read_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/stages.txt");
+$stages=trim($stages);
+switch($page_id)
+{
+case 1:case 3:case 4: // кроме слов case 2:
+	if($stages>0)
+	{
+echo "<div style='font-size:21px;color:red;'><b>Это - пройденная стадия развития! Не следует редактировать данные на этой станице!</b></div>";
+	}
+break;
+
+case 5:
+if($stages>1)
+echo "<div style='font-size:21px;color:red;'><b>Это - пройденная стадия развития! Не следует редактировать данные на этой станице!</b></div>";
+break;
+
+}
+
+?>
