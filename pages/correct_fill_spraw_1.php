@@ -26,17 +26,17 @@ foreach($_POST['id'] as $id => $str){
 	for ($i=0; $i<count($antArr); $i++){
 		$out1 ="В списке антагонистов ".$kontArr[$id];
 		if(!ExistsValInArr(array(1,2,3,4,5,6,7,8,9,10,11,12),$antArr[$i])){
-			$out = $out1." указан не существующий контекст ".$antArr[$i]."!";
+			exit($out1." указан не существующий контекст ".$antArr[$i]."!");
 			$flg_break=true;
 			break;
 		}
 		if($id==$antArr[$i]){
-			$out ="Нельзя указывать антагонистом контекста ".$kontArr[$id]." этот же контекст!";
+			exit("Нельзя указывать антагонистом контекста ".$kontArr[$id]." этот же контекст!");
 			$flg_break=true;
 			break;
 		}
 		if(ExistsValInArr($aArr, $antArr[$i])){
-			$out = $out1." есть дублер (".$antArr[$i].")!";
+			exit($out1." есть дублер (".$antArr[$i].")!");
 			$flg_break=true;
 			break;
 		}
@@ -44,6 +44,5 @@ foreach($_POST['id'] as $id => $str){
 	}
 	$aArr=array();
 }
-if($out=="") $out="*";
-exit($out);
+echo "*";
 ?>

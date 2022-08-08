@@ -83,7 +83,7 @@ if (isset($_POST['gogogo']) && $_POST['gogogo'] == 12) {
 	echo "<script language=\"JavaScript\">document.forms['refresh'].submit();</script>";
 	exit();
 }
-
+/*
 if (isset($_POST['gogogo']) && $_POST['gogogo'] == 3) {
 	$out = "";
 	//var_dump($_POST['bad']);exit();
@@ -129,6 +129,7 @@ if (isset($_POST['gogogo']) && $_POST['gogogo'] == 4) {
 document.forms['refresh'].submit();</script>";
 	exit();
 }
+*/
 echo "<div class='main_page_div' style=''>";
 ?>
 
@@ -250,10 +251,17 @@ foreach ($strArr as $str) {
 	$iArr[$id] = $par[1];
 }
 //var_dump($iArr);exit();
+
+
+
+
+
+//////////////////// активность контекстов
 ?>
+<div style="background-color:#E1EEFF;">
 <div style="position:relative">
 	<h2 class="header_h2" style="margin-top:0px;">Несовместимость активностей Базовых стилей:</h2>
-	<!-- div style="position:absolute;top:0px;right:0px" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснение</b></div -->
+	<div style="position:absolute;top:0px;right:0px;cursor:pointer;" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснения</b></div>
 </div>
 Для каждого из Базовых стилей нужно задать строку с перечислением (через запятую) ID тех стилей, которые с ним не совместимы.</span>
 <form id="form4" name="form4" method="post" action="/pages/gomeostaz.php">
@@ -327,7 +335,7 @@ foreach ($strArr as $str) {
 Активность Базовых стилей поведения зависит от состояния Базовых параметров гомеостаза от общего состояния Плохо и выхода Базовых параметров за пределы нормы. <span style="color:red;">Это определяет основы поведения Best и к редактированию нужно относиться <b>с особой осторожностью</b>.</span>
 <div style="position:relative">
 	<h2 class="header_h2" style="margin-top:0px;">Активности Базовых стилей:</h2>
-	<div style="position:absolute;top:0px;right:0px" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснения</b></div>
+	<div style="position:absolute;top:0px;right:0px;cursor:pointer;" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснения</b></div>
 </div>
 Чтобы погасить ID стиля, нужно перед ним поставить знак "-", например: "4,-3" означает, что стиль с ID=3 будет погашен. При этом действуют установки таблицы: "Несовместимость активностей Базовых стилей".
 <?
@@ -407,6 +415,15 @@ foreach ($strArr as $str) {
 	<input type="button" name="submit3" value="Сохранить" onClick="sent_korrect_kontext(2,'form3')">
 	<div id="korrect_kontext_2" style="display:inline-block;bottom:0px;right:0px;padding:4px;color:red;"></div>
 </form>
+
+</div>
+<?
+//////////////////// КОНЕЦ активность контекстов
+
+
+
+
+?>
 
 <a name="gogogo20"></a>
 <h2 class="header_h2" style="margin-top:20px;">Действия оператора - гомеостатический эффект</h2>
@@ -580,22 +597,51 @@ EOD;
 		var AJAX = new ajax_form_post_support(form_id, '/pages/correct_fill_spraw_' + id + '.php', sent_request_res);
 		AJAX.send_form_reqest();
 
-		function sent_request_res(res) { //alert(id+" | "+res);
+		function sent_request_res(res) { 
+//alert(id+" | "+res);
 			if (res == "*") {
 				switch (id) {
 					case 1:
-						document.forms.form4.submit(); // не работает обновление!
+						//document.forms.form4.submit(); // не работает обновление!
+					save_date();
 						break;
 					case 2:
-						document.forms.form3.submit();
+						//document.forms.form3.submit();
+					save_date();
 						break;
 					case 3:
 						document.forms.form5.submit();
 						break;
 				}
-			} else
-				//document.getElementById('korrect_kontext_' + id).innerHTML = res;
-				show_dlg_alert(res, 0);
+			} 
+			else
+			{
+				document.getElementById('korrect_kontext_' + id).innerHTML = res;
+				show_dlg_alert("Ошибка показана красным.", 2000);
+			}
 		}
 	}
+//////////////////////////////////////////////
+/* save_date() записывает содержимое обоих таблиц (для активности контекстов) без проверки, как есть.
+Проверка осуществляется только при нажатии Сохранить под каждой из таблиц.
+Это позволяет вносить измнения в обе таблицы по результатам проверки 
+с окончательным сохранениям по кнопкам Сохранить.
+*/
+function save_date()
+{
+var AJAX = new ajax_form_post_support("form4", '/pages/gomeostaz_saver.php', sent_save4_res);
+AJAX.send_form_reqest();
+function sent_save4_res(res)
+{
+//alert(res);
+var AJAX = new ajax_form_post_support("form3", '/pages/gomeostaz_saver.php', sent_save3_res);
+AJAX.send_form_reqest();
+function sent_save3_res(res)
+{
+show_dlg_alert("Сохранено.",1500);
+document.getElementById('korrect_kontext_1').innerHTML ="";
+document.getElementById('korrect_kontext_2').innerHTML ="";
+}
+}
+}
 </script>

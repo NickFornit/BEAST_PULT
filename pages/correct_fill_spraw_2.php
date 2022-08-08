@@ -36,18 +36,18 @@ function ChekValue($kArr, $baze_name, $zone_name)
 	$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_antagonists.txt");
 	$strArr = explode("\r\n", $progs);
 
-	$out = "Для " . $baze_name . " в разделе \"" . $zone_name . "\"";
+	$out="Для " . $baze_name . " в разделе \"" . $zone_name . "\"";
 	$out_ant = "";
 	for ($i = 0; $i < count($kArr); $i++) {
 		if (!ExistsValInArr(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), abs($kArr[$i]))) {
-			return $out . " указан не существующий контекст (" . $kArr[$i] . ")!|0";
+			exit($out . " указан не существующий контекст (" . $kArr[$i] . ")!|0");
 		}
 		if (ExistsValInArr($aArr, $kArr[$i])) {
-			return $out . " есть дублер (" . $kArr[$i] . ")!|0";
+			exit($out . " есть дублер (" . $kArr[$i] . ")!|0");
 		}
 		$val = $kArr[$i] * -1;
 		if (ExistsValInArr($aArr, $val)) {
-			return $out . " указан один и тот же контекст (" . $kArr[$i] . "/" . $val . ") с разными знаками!|0";
+			exit($out . " указан один и тот же контекст (" . $kArr[$i] . "/" . $val . ") с разными знаками!|0");
 		}
 		array_push($aArr, $kArr[$i]);
 	}
@@ -61,7 +61,7 @@ function ChekValue($kArr, $baze_name, $zone_name)
 			foreach ($antArr as $val) {
 				if (ExistsValInArr($aArr, $val)) {
 					//return $out." указан контекст \"".$kontArr[$val]."\", при этом он же указан антагонистом в таблице Несовместимость активностей Базовых стилей для контекста ".$kontArr[$ida]."!";
-					$out_ant .= $out . " указан контекст \"" . $kontArr[$val] . "\", заданный антагонистом в таблице \"Несовместимость активностей Базовых стилей\" для контекста \"" . $kontArr[$ida] . "\"!<br>";
+					exit($out." указан контекст \"" . $kontArr[$val] . "\", заданный антагонистом в таблице \"Несовместимость активностей Базовых стилей\" для контекста \"" . $kontArr[$ida] . "\"!<br>");
 				}
 			}
 		}
@@ -96,6 +96,5 @@ foreach ($_POST['id'] as $id => $str) {
 	}
 }
 
-if ($out == "") $out = "*";
-exit($out);
+echo "*";
 ?>
