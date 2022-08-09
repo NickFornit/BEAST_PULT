@@ -365,7 +365,7 @@ foreach ($strArr as $str) {
 		<tr>
 			<th width=170 class='table_header'>Параметр</th>
 			<th class='table_header'>Плохо</th>
-			<th class='table_header'>Хоршо</th>
+			<th class='table_header'>Хорошо</th>
 			<th class='table_header'>Норма 0-19%</th>
 			<th class='table_header'>Норма 20-39%</th>
 			<th class='table_header'>Норма 40-59%</th>
