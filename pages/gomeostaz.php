@@ -136,7 +136,10 @@ echo "<div class='main_page_div' style=''>";
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script Language="JavaScript" src="/ajax/ajax_form_post.js"></script>
 
+<div style="position:relative">
 <h2 class="header_h2">Жизненные параметры гомеостаза</h2>
+<div style="position:absolute;top:0px;right:0px;cursor:pointer;" onClick="open_anotjer_win('gomeostaz_help.htm')"><b>Важные пояснения</b></div>
+</div>
 Эти параметры – жестко заданы, можно менять только веса их значимости, влияющие на определения общего критического состояния. Даже программно их не следует пытаться менять, они задействованы во многих “наследуемых” предопределенных реакциях.<br>
 <span style="color:red;">Для Энергия порог нормы - после заданного значения.</span>
 
