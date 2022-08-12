@@ -47,7 +47,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/linking.php");
 // возраст:
 echo "<div id='life_time_id' style='position:absolute;top:0px;right:0px;'></div>";
 
-
 echo "<div style='position:absolute;top:-66px;right:10px;cursor:pointer;color:blue;' onClick='open_anotjer_win(`/pages/main_help.htm`)'><b>Как использовать Пульт</b></div>";
 
 /// блок включает то, что показывается при коннекте с Beast
@@ -59,9 +58,6 @@ include_once($_SERVER["DOCUMENT_ROOT"] . "/pult_gomeo.php");
 // Индикация активных базовых контекстов
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_base_contexts.php");
 
-
-
-
 // Диалог общения с Beast
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_Bot_dialog.php");
 
@@ -72,7 +68,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/show_bot_actions.php");
 
 // консоль событий
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_consol.php");
-
 
 echo "</div>";
 
@@ -219,13 +214,9 @@ echo "</div>";
 		if (document.getElementById('bot_switcher2').style.display == "none") {
 			if (!confirm("Запустить исполняемый файл Beast?"))
 				return;
-			var server = "/run.php";    
+			var server = "/run.php";
 			var AJAX = new ajax_support(server, sent_run_answer);
 			AJAX.send_reqest();
-
-/* нужно перегрузить страницу, иначе после загрузки сохраненного архива и Включения не появляется страница (как при отсуствии связи). Пока не исследовал почему это, просто поставил обновление страницы:
-*/
-			location.reload(true);
 
 			// не ожидая sent_run_answer т.к. /run.php зависает при запуске файла 
 			document.getElementById('bot_switcher').style.display = "none";
@@ -233,8 +224,8 @@ echo "</div>";
 			document.getElementById('bot_switcher2').style.display = ""; //document.getElementById('bot_switcher2').value="&nbsp;Выключить Beast&nbsp;";
 			show_dlg_alert("Beast включен.", 1);
 
-			function sent_run_answer(res) {  // alert("!!!!");
-//location.reload(true);
+			function sent_run_answer(res) {
+
 			}
 		} else {
 			// сохранить память в файлах
@@ -400,7 +391,7 @@ echo "</div>";
 				return;
 			}
 			//alert(res);
-			show_dlg_alert2("Рефлекс создан. Нужно выключить и включить Beast чтобы были восприняты новые рефлексы.<br><span style='color:blue;cursor:pointer;' onClick='reload_beast()'>Перезагрузить Beast</span> (~1,5 сек)", 2);
+			show_dlg_alert2("Рефлекс создан. Нужно выключить и включить Beast чтобы были восприняты новые рефлексы.", 2);
 		}
 	}
 
@@ -447,38 +438,6 @@ echo "</div>";
 		}
 	}
 	//new_bot_action("1|БЕССМЫСЛЕННЫЙ безусловный рефлекс<br>Предлогает поиграть");
-
-// выключить и снова включить исполняемый файл
-function reload_beast()
-{
-end_dlg_alert();
-end_dlg_alert2();
-wait_begin();
-var AJAX = new ajax_support("/kill.php", sent_reb1_answer);
-AJAX.send_reqest();
-//alert("1");
-setTimeout("rebooting()",1000);// выждать завершения процессов
-function sent_reb1_answer(res)
-	{
-
-	}
-}
-function rebooting()
-{
-//	alert("2");
-var AJAX = new ajax_support("/run.php", sent_reb2_answer);
-AJAX.send_reqest();
-setTimeout("rebooting2()",500);
-function sent_reb2_answer(res)
-	{
-
-	}
-}
-function rebooting2()
-{
-wait_end();  //alert("333");
-show_dlg_alert("Beast перезагружен.",1500);
-}
 </script>
 </div>
 </body>

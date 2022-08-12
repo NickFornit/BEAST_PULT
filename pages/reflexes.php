@@ -2,6 +2,9 @@
 /* Редактор безусловных рефлексов
 http://go/pages/reflexes.php  
 */
+$sorting=0;
+if(isset($_GET['sorting']))
+$sorting=$_GET['sorting'];
 
 $page_id = 4;
 $title = "Редактор безусловных рефлексов";
@@ -11,6 +14,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 if (filesize($_SERVER['DOCUMENT_ROOT'] . "/memory_reflex/condition_reflexes.txt") > 6) {
 	echo "<div style='color:red;border:solid 1px #8A3CA4;padding:10px;background-color:#DDEBFF;'>Этот редактор <b>НЕ СЛЕДУЕТ ИСПОЛЬЗОВАТЬ</b> потому, что уже есть условные рефлексы.<br>Чтобы использовать редактор, нужно сбросить память Beast (на странице Пульса справа вверху нажать шестеренку и выбрать &quot;Сбросить память&quot;) <br>или <b>просто удалить содержимое в файле /memory_reflex/condition_reflexes.txt</b></div>";
 }
+
+echo "<div style='position:absolute;top:40px;left:500px;'><a href='/pages/reflexes_maker.php' title='Создание безусловных рефлексов в зависимости от заданных условий без коннекта с Beast.'>Набивка рефлексов</a></div>";
 
 echo "<div style='position:absolute;top:40px;left:700px;'><a href='/pages/reflex_tree.php'>Дерево рефлексов</a></div>";
 //exit("!!!!");
@@ -85,37 +90,31 @@ echo "<div class='main_page_div' style=''>";
 	<span style='padding-right:20px;'>2 - Норма</span>
 	<span style='padding-right:20px;'>3 - Хорошо</span>
 	<h2 class="header_h2">Второй уровень - ID актуальных Базовых Контекстов через запятую:</h2>
-	<span style='padding-right:20px;' title='Пищевое поведение, восполнение энергии, на что тратится время и тормозятся антагонистические стили поведения.'>1 Пищевой</span>
-	<span style='padding-right:20px;' title='Поисковое поведение, любопытство. Обследование объекта внимания, поиск новых возможностей.'>2 Поиск</span>
-	<span style='padding-right:20px;' title='Игровое поведение - отработка опыта в облегченных ситуациях или при обучении.'>3 Игра</span>
-	<span style='padding-right:20px;' title='Половое поведение. Тормозятся антагонистические стили'>4 Гон</span>
-	<span style='padding-right:20px;' title='Оборонительные поведение для явных признаков угрозы или плохом состоянии.'>5 Защита</span>
-	<span style='padding-right:20px;' title='Апатия в благополучном или безысходном состоянии.'>6 Лень</span>
-	<span style='padding-right:20px;' title='Оцепенелость при непреодолимой опастности или когда нет мотивации при благополучии или отсуствии любых возможностей для активного поведения.'>7 Ступор</span>
-	<span style='padding-right:20px;' title='Осторожность при признаках опасной ситуации.'>8 Страх</span>
-	<span style='padding-right:20px;' title='Агрессивное поведение для признаков легкой добычи или защиты (иногда - при плохом состоянии).'>9 Агрессия</span>
-	<span style='padding-right:20px;' title='Безжалостность в случае низкой оценки.'>10 Злость</span>
-	<span style='padding-right:20px;' title='Альтруистическое поведение.'>11 Доброта</span>
-	<span style='padding-right:20px;' title='Состояние сна. Освобождение стрессового состояния. Реконструкция необработанной информации.'>12 Сон</span>
+<?
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
+foreach($baseContextArr as $id => $val)
+{
+echo "<span style='padding-right:20px;' title='".$val[1]."'>".$id." ".$val[0]."</span>";
+}
+?>
+
 	<h2 class="header_h2">Третий уровень - ID пусковых стимулов через запятую:</h2>
 	Антагонисты окрашены в разные цвета. <span style='color:red'>Нельзя, чтобы в условии были антагонистические ID.</span><br>
-	<span style='padding-left:20px;color:#ff3300'>1 Непонятно</span>
-	<span style='padding-right:20px;color:#0D5F00'> / 2 Понятно</span>
-	<span style='padding-left:20px;color:#ff3300'>3 Наказать</span>
-	<span style='padding-right:20px;color:#0D5F00'> / 4 Поощрить</span>
-	<span style='padding-right:20px;color:#B16DB4'>5 Накормить</span>
-	<span style='padding-right:20px;color:#B16DB4'>6 Успокоить</span>
-	<span style='padding-right:20px;color:#B16DB4'>7 Предложить поиграть</span>
-	<span style='padding-right:20px;color:#B16DB4'>8 Предложить поучить</span>
-	<span style='padding-right:20px;color:#B16DB4'>9 Игнорировать</span>
-	<span style='padding-left:20px;color:#ff3300'>10 Сделать больно</span>
-	<span style='padding-right:20px;color:#0D5F00'> / 11 Сделать приятно</span>
-	<span style='padding-left:20px;color:#ff3300'>12 Заплакать</span>
-	<span style='padding-right:20px;color:#0D5F00'> / 13 Засмеяться</span>
-	<span style='padding-left:20px;color:#0D5F00'>14 Обрадоваться / </span>
-	<span style='padding-right:20px;color:#ff3300'>15 Испугаться</span>
-	<span style='padding-right:20px;color:#B16DB4'>16 Простить</span>
-	<span style='padding-right:20px;color:#B16DB4'>17 Вылечить</span>
+<?
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/actions_from_pult.php");
+foreach ($actionsFromPultArr as $k => $v)
+{
+$bg="#000000";
+if($k==1 ||$k==3 ||$k==10 ||$k==12 ||$k==15)
+	$bg="#ff3300";
+if($k==2 ||$k==4 ||$k==11 ||$k==13 ||$k==14)
+	$bg="#009D00";
+$v[1]=str_replace(" ","&nbsp;",$v[1]);
+echo "<span style='padding-left:20px;color:".$bg."' title='".$v[1]."'>".$k."&nbsp;".$v[0]."</span> ";
+}
+?>
+
+
 	<hr>
 	<h2 class="header_h2"><a href="/pages/terminal_actions.php">Действия рефлекса</a> - ID одновременных действий через запятую:</h2>
 	<?
@@ -171,8 +170,8 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 <form id="form_id" name="form" method="post" action="/pages/reflexes.php">
 	<table id="main_table" class="main_table" cellpadding=0 cellspacing=0 border=1 width='100%' style="font-size:14px;">
 		<tr>
-			<th width=70 class='table_header'>ID<br>рефлекса</th>
-			<th width=70 class='table_header'>ID (1 уровень)<br>
+			<th width=70 class='table_header' style='cursor:pointer;background-color:#DDDDFF;' title='Сортировка по ID' onClick='sorting(1)'>ID<br>рефлекса</th>
+			<th width=70 class='table_header' style='cursor:pointer;background-color:#DDDDFF;' title='Сортировка по Базовому состоянию' onClick='sorting(2)'>ID (1 уровень)<br>
 				<nobr>базового состояния</nobr>
 			</th>
 			<th width='25%' class='table_header'>ID (2) актуальных контекстов<br>через запятую</th>
@@ -184,6 +183,26 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 		// считать файл 
 		$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
 		$strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
+
+if($sorting)
+{
+	if($sorting==2)
+	{
+uasort($strArr, "sort_cmp");
+	}
+}
+function sort_cmp($a, $b)
+{
+	$par1 = explode("|", $a);
+	$par2 = explode("|", $b);
+
+    if ($par1[1] == $par2[1]) {
+        return 0;
+    }
+    return ($par1[1] < $par2[1]) ? -1 : 1;
+}
+
+
 		$n = 0;
 		$lastID = 1;
 		foreach ($strArr as $str) {
@@ -206,7 +225,7 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 				$bg = "style='background-color:#FFDADD;'";
 				$title = "title='Рефлекс будет привящан ко всем узлам дерева данного уровня.'";
 			}
-			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,2," . $id . ")' title='Выбор значений'></td>";
+			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='3(this,2," . $id . ")' title='Выбор значений'></td>";
 			$bg = "";
 			$title = "";
 			if (empty($par[3])) {
@@ -350,6 +369,11 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 	////////////////////////////
 	function show_control(img, kind, id) {
 		event.stopPropagation();
+if(kind==4)// более удобный контрол
+{
+show_actions_list(id);
+return;
+}
 		var AJAX = new ajax_support("/lib/get_multiselectiong.php?kind=" + kind + "&id=" + id, sent_act_info);
 		AJAX.send_reqest();
 
@@ -384,8 +408,50 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 		}
 		end_dlg_alert2();
 	}
+
+/////////////////////////////
+function show_actions_list(nid)
+{
+event.stopPropagation();
+var selected=document.getElementById("lev4_" + nid).value;
+//show_dlg_alert(nid,0);
+event.stopPropagation();
+		var AJAX = new ajax_support("/lib/get_actions_list.php?selected="+selected, sent_act_info);
+		AJAX.send_reqest();
+
+		function sent_act_info(res) {
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>(используйте Ctrl+клик и Shift+клик)<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_list("+nid + ")'>", 2);
+		}
+
+}
+/////////////////////////////
+function set_input_list(nid) {
+var aStr = "";
+var nodes = document.getElementsByClassName('chbx_identiser'); //alert(nodes.length);
+for(var i=0; i<nodes.length; i++) 
+{
+if(nodes[i].checked)
+	{
+if(aStr.length > 0)
+	aStr += ",";
+aStr += nodes[i].value;
+	}
+}
+		//alert(aStr);
+		document.getElementById("lev4_" + nid).value = aStr;
+
+		end_dlg_alert2();
+}
+////////////////////////////////////////////////////////////////
+function sorting(nCol)
+{
+if(nCol==2)
+location.href='/pages/reflexes.php?sorting='+nCol;
+else
+location.href='/pages/reflexes.php';
+}
 </script>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><a href='/pages/reflexes_maker.php' title='Начать набивать рефлексы в зависимости от разных условий.' title='Создание безусловных рефлексов в зависимости от заданных условий без коннекта с Beast.'>Быстрая набивка рефлексов</a><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>

@@ -36,31 +36,55 @@ $food_portion='<select id="food_portion_id" title="Порция энергии �
 </div>
 
 <script>
+<?//// массив антагонистов для JS:
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/actions_from_pult.php");
+echo "var actionsFromPultAntagonistsArr = new Array();\r\n";
+foreach($actionsFromPultAntagonistsArr as $k => $v)
+{
+echo "actionsFromPultAntagonistsArr[".$k."]=new Array();\r\n";
+foreach($v as $a)
+{
+echo "actionsFromPultAntagonistsArr[".$k."].push(".$a.");\r\n";
+}
+}
+//exit("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+?>
+function in_array(value, array) { 
+	if(typeof(array)!='object')
+		return false;
+    for(var i=0; i<array.length; i++){
+        if(value == array[i]) return true;
+    }
+    return false;
+}
 var linking_address='<?include($_SERVER["DOCUMENT_ROOT"]."/common/linking_address.txt");?>';
 var actionsArr = new Array();
-for(i=0;i<17;i++)
-{
-actionsArr[i]=0;
-}
+
 function to_action(id)
 {
 // Не позволять включать антагонистов
-var atgnst=0;
-switch(id)
-{
-case 1: if(actionsArr[2]==1) atgnst=1; break;
-case 2: if(actionsArr[1]==1) atgnst=1;break;
-case 3: if(actionsArr[4]==1) atgnst=1;break;
-case 4: if(actionsArr[3]==1) atgnst=1;break;
+var antagonst=0;
+// есть ли среди нажатых кнопок actionsArr антагонисты
+for(i=0;i<actionsArr.length;i++)
+{  
+	//alert(actionsArr[i]);
+	//alert(actionsFromPultAntagonistsArr[actionsArr[i]]);
+if(in_array(id,actionsFromPultAntagonistsArr[actionsArr[i]]))
+	{
+	antagonst=1;
+	break;
+	}
 }
-if(atgnst==1)
+if(antagonst==1)
 {
+	end_dlg_alert();
+	end_dlg_alert2();
 	show_dlg_alert("Уже действует антагонист.",2000);
 	return;
 }
 if(0)// 1 - тестирование без Beast
 	{
-	actionsArr[id]=1;
+	actionsArr.push(id);
 	document.getElementById("act_"+id).style.boxShadow="0px 0px 6px 6px #FFFFCC";
 	set_desactivation(id);
 	}
@@ -70,7 +94,7 @@ var AJAX = new ajax_support(linking_address+"?set_action="+id+"&food_portion="+f
 AJAX.send_reqest();
 function sent_action(res)
 {
-actionsArr[id]=1;
+actionsArr.push(id);
 document.getElementById("act_"+id).style.boxShadow="0px 0px 6px 6px #FFFFCC";
 set_desactivation(id);
 show_dlg_alert("Действие совершено.",2000);
@@ -102,7 +126,12 @@ actionTimerID=setTimeout("desactivation("+id+")",10000);
 }
 function desactivation(id)
 {
-actionsArr[id]=0;
+//actionsArr[id]=0;
+for(i=0;i<actionsArr.length;i++)
+	{
+if(actionsArr[i]==id)
+	delete actionsArr[i];
+	}
 document.getElementById("act_"+id).style.boxShadow="";
 }
 function desactivationAll()
