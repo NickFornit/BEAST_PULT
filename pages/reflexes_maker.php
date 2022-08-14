@@ -97,7 +97,7 @@ foreach ($strArr as $str) {
 // Базовые контексты $baseContextArr
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 
-// допустимое сочетания контекстов
+/z допустимое сочетания контекстов
 $contextsArr=array();// ID выбранных контекстов без антагонистов
 echo "<b>Выбрать сочетания контекстов:</b><br> 
 <select id='base_context_id' multiple='multiple' size=12>";
@@ -164,13 +164,19 @@ case 3: echo "Хорошо"; break;
 
 echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетения контекстов: <b>";
 $n=0;
+$contextStr="";
+//var_dump($contextsArr);exit();
 foreach ($contextsArr as $id)
 {
-if($n)
+if($n){
+	$contextStr.=";";
 	echo ", ";
-echo $baseContextArr[$id][0];
-$n++;
 }
+$contextStr.=$id;
+echo $id."&nbsp;".$baseContextArr[$id][0];
+
+$n++;
+} 
 echo "</b>";
 
 echo "<script>
@@ -240,7 +246,7 @@ show_dlg_alert("Нет новых рефлексов, содержащих ID д
 return;
 }
 /////////////////////////
-saveStr="bsID=<?=$bsID?>&id_list=<?=$id_list?>&saveStr="+saveStr;  // alert(saveStr);
+saveStr="bsID=<?=$bsID?>&id_list=<?=$contextStr?>&saveStr="+saveStr;  // alert(saveStr);return;
 var link="/pages/reflexes_maker_saver.php";
 //alert(link);
 var AJAX = new ajax_post_support(link,saveStr, sent_table_save,1);

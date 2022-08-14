@@ -77,8 +77,9 @@ $out.="</tr>";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/actions_from_pult.php");
 
 ////// антагонисты пусковых стимулов из /lib/actions_from_pult.php
-$antFromId=$actionsFromPultAntagonistsArr;  //var_dump($antFromId);exit();
-
+$antFromId=$actionsFromPultAntagonistsArr;  
+//var_dump($antFromId);exit();
+//var_dump($actionsFromPultArr);exit();
 ////////////////////////////////////////////
 
 
@@ -86,24 +87,27 @@ $antFromId=$actionsFromPultAntagonistsArr;  //var_dump($antFromId);exit();
 
 $actionArr=array();// ID выбранных акций
 $actionsFromPultArr2=$actionsFromPultArr;
-foreach ($actionsFromPultArr as $k0 => $v)
+foreach ($actionsFromPultArr as $k0 => $v0)
 {
-$aList="";
-foreach ($actionsFromPultArr2 as $k => $v)
+$aList="";// набор акций в виде строки
+$aArr=array();// набор акций в виде массива
+foreach ($actionsFromPultArr2 as $k1 => $v1)
 {
-if(in_array($k,$actionArr))
+// убирать использованную $k1 из последующих (начинать следующую уже без $k1)
+if(in_array($k1,$actionArr))
 {
 	continue;
 }
 
 // убрать антагонистов
 $isAntagonist=0;
-foreach($actionArr as $g)
+foreach($aArr as $g)
 { 
-	//exit("$k0 <hr> ".var_dump($antFromId[$k0]));
-if(in_array($k,$antFromId[$k0]))
+	//exit("$k1 <hr> ".var_dump($antFromId[$g]));
+// есть ли антагонизм к $k1 в уже имеющихся $aArr
+if(in_array($k1,$antFromId[$g]))
 {  
-$isAntagonist=1;
+$isAntagonist=1; //exit("!!!!!!!!!!! $k1");
 }
 }
 if($isAntagonist)
@@ -111,12 +115,14 @@ if($isAntagonist)
 
 if(!empty($aList))
 	$aList.=",";
-$aList.=$k;
-
+$aList.=$k1;
+array_push($aArr,$k1);
+// приращивает к предыдущему текущий $k1
 array_push($actionArr,$aList);
 }
 
 }
+//var_dump($actionArr);exit();
 /////////////////////////////////////////////////////////
 
 
@@ -205,14 +211,14 @@ inp.value=inp.value.substr(0,limit);
 /////////////////////////////////////////////////
 function get_actions_names_list($list)
 {
-	global $rActionsArr;
+	global $actionsFromPultArr;
 $out="";
 	$arr=explode(",",$list);
 	foreach($arr as $a)
 	{
 if(!empty($out))
 	$out.=",&nbsp;&nbsp;&nbsp;&nbsp;";
-$out.=$a."&nbsp;".$rActionsArr[$a]."";
+$out.=$a."&nbsp;".$actionsFromPultArr[$a][0]."";
 	}
 return $out;
 }

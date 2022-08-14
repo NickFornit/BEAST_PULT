@@ -225,7 +225,7 @@ function sort_cmp($a, $b)
 				$bg = "style='background-color:#FFDADD;'";
 				$title = "title='Рефлекс будет привящан ко всем узлам дерева данного уровня.'";
 			}
-			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='3(this,2," . $id . ")' title='Выбор значений'></td>";
+			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,2," . $id . ")' title='Выбор значений'></td>";
 			$bg = "";
 			$title = "";
 			if (empty($par[3])) {
