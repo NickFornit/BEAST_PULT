@@ -15,7 +15,7 @@ if(isset($_GET['bsID']))
 $bsID=$_GET['bsID'];
 
 $id_list="";
-$get_list=0;
+$get_list="";
 if(isset($_GET['id_list']))
 {
 $id_list=$_GET['id_list'];
@@ -52,7 +52,7 @@ echo "<div style='position:relative;'>
 <div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода рефлексов</b>
 </div>";
 
-echo "<div style='position:absolute;top:10px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:70%;font-size:14px;'>
+echo "<div style='position:absolute;top:10px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:65%;font-size:14px;'>
 <b>Поясненния:</b><br>
 Редактор позволяет системно и быстро создавать новые безусловные рефлексы.<br>
 Системно потому, что при выборе основных условий (в виде Базового состояния и сочетания Базовых контекстов) создается таблица со всеми возможными состояниями пусковых стимулов (действий с Пульта).
@@ -65,79 +65,60 @@ echo "<div style='position:absolute;top:10px;right:10px;border:solid 1px #8A3CA4
 
 </div>";
 
+// onChange='choode_base_cond(this)' - нет определенной зависимости...
 echo "<b>Базовое состояние:</b><br>
 <select id='base_id' > 
 <option value='1' "; if($bsID==1)echo "selected"; echo ">Плохо</option>
 <option value='2' "; if($bsID==2)echo "selected"; echo ">Норма</option>
 <option value='3' "; if($bsID==3)echo "selected"; echo ">Хорошо</option>
-</select><br>
+</select><span title='Общее Базовое состояние формируется из отдельных состояний Базовых параметров гомеостаза и при этом никак не коррелирует с диапазонами состояний параметров гомеостаза.'> - Общее Базовое состояние</span><br>
 ";
 
 
 
-// антагонисты
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_antagonists.txt");
-$strArr = explode("\r\n", $progs);  //exit("$progs");
-$antFromId = array();// антагонисты для каждого выбранного в списке $get_list ID контекста
-foreach ($strArr as $str) {
-	$par = explode("|", $str);
-	$id = $par[0];
-	if(!empty($get_list) && in_array($id,$get_list))
-	{
-	$as = explode(",", $par[1]); 
-	$antFromId[$id]=array();
-	foreach ($as as $a)
-	{			
-	array_push($antFromId[$id],$a);
-	}
-	}
-}
-// var_dump($antFromId);exit();
+
+
+
+
 
 // Базовые контексты $baseContextArr
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 
-/z допустимое сочетания контекстов
+/* Все возможные сочетания активных контекстов выбираются из таблицы "Активности Базовых стилей" (минуса игнорируются и идет проверка на антагонистов).
+*/
 $contextsArr=array();// ID выбранных контекстов без антагонистов
 echo "<b>Выбрать сочетания контекстов:</b><br> 
-<select id='base_context_id' multiple='multiple' size=12>";
-foreach($baseContextArr as $k => $v)
-{   
-echo "<option value='".$k."' ";
-if(!empty($get_list))
-{
+<div id='context_variations_id'></div>";
 
-if(in_array($k,$get_list))
-{ 
-// исключить антагонистов, проверка для каждого выбранного ID кроме ужеж прошедших проверку
-$isAntagonist=0;
-foreach($contextsArr as $g)
-{ 
-if(in_array($k,$antFromId[$g]))
-{  
-$isAntagonist=1;
-}
-}
-
-if($isAntagonist)
+?>
+<script>
+function get_context_variations(bc)
 {
-//echo " style='background-color:#FFDDE1;' title='Это - антагонист.'";
-echo " title='Это - антагонист.'";
-}
-else
-{
-array_push($contextsArr,$k);
-}
-	echo "selected";
-}
-}
-if($isAntagonist)
-echo ">".$k." ".$v[0]." - антагонист</option>";
-else
-echo ">".$k." ".$v[0]."</option>";
+	// base_condition="+bc+"& 
+//	alert("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>");
+var AJAX = new ajax_support("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>", send_context_variations);
+		AJAX.send_reqest();
 
+		function send_context_variations(res) { // alert(res);
+if(res[0]!='!')
+{ //alert(res);
+show_dlg_alert(res,0);
+return;
 }
-echo "</select><br>";
+document.getElementById('context_variations_id').innerHTML=res.substr(1); //show_dlg_alert(res.substr(1),0);
+		}
+}
+get_context_variations(1);// сразу показать 
+/*
+function choode_base_cond(combo)
+{
+var bc=combo.options[combo.selectedIndex].value; //alert(bc);
+get_context_variations(bc);
+}
+*/
+</script>
+<?
+///////////////////////////////////////////////////////////////////////
 
 
 
@@ -166,10 +147,10 @@ echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетения контекстов: <b>";
 $n=0;
 $contextStr="";
 //var_dump($contextsArr);exit();
-foreach ($contextsArr as $id)
+foreach ($get_list as $id)
 {
 if($n){
-	$contextStr.=";";
+	$contextStr.=",";
 	echo ", ";
 }
 $contextStr.=$id;
@@ -199,7 +180,16 @@ function choose_0()
 var bsID=document.getElementById('base_id').selectedIndex +1;
 //alert(bsID);
 
-var combo=document.getElementById('base_context_id');
+var combo=document.getElementById('base_context_id'); 
+
+//alert(combo.selectedIndex);
+if(combo.selectedIndex==-1)
+	{
+	show_dlg_alert("Нужно выбрать сочетание Базовых контекстов в списоке.",0);
+	return;
+	}
+
+/*
 var len= combo.options.length; 
 var id_list="";
 for(var n = 0; n < len; n++)
@@ -216,7 +206,11 @@ if(id_list.length==0)
 show_dlg_alert("Нужно выбрать как минимум один Базовый контекст.",0);
 return;
 	}
-// alert(id_list);
+*/ 
+var id_list=combo.options[combo.selectedIndex].value;
+
+
+ //alert(id_list);
 location.href='/pages/reflexes_maker.php?bsID='+bsID+'&id_list='+id_list;
 }
 //////////////////////////////////////////////

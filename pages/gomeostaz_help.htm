@@ -50,7 +50,7 @@ style='color:black'>Жизненные параметры гомеостаза</
 
 <p class=MsoNormal><span style='font-size:10.5pt;line-height:107%;color:black'>Как только параметр выйдет из нормы (на Пульте – область розового в слайдере данного параметра), он начинает оцениваться для определения состояния Плохо (в BAD_detector.go func commonBadDetecting()). Оценка делается следующим образом.</span></p>
 
-<p class=MsoNormal><span style='font-size:10.5pt;line-height:107%;color:black'>Все параметры, вышедшие из нормы суммируются по их весам значимости, задаваемым в колонке “Вес значимости в %”.</span></p>
+<p class=MsoNormal><span style='font-size:10.5pt;line-height:107%;color:black'>Для всех параметров, вышедшие из нормы, суммируются произведение их веса значимости (задаваемым в колонке “Вес значимости в %”) на значение "насколько плохо" (т.е. CommonBadValue+=BadValue[id]*GomeostazParamsWeight[id]) </span></p>
 
 <p class=MsoNormal><span style='font-size:10.5pt;line-height:107%;color:black'>Полученная сумма сравнивается с порогом оценки состояния Плохо (var compareLevel=100) и если сумма превышает порог, то возникает состояния Плохо.</span></p>
 
