@@ -47,7 +47,7 @@ document.getElementById('table_id').innerHTML=res.substr(1);
 </script>
 <?
 //////////////////////////////////////////////////////////////
-echo "<div style='position:relative;'>
+echo "<div id='hr_table_id' style='position:relative;display:none;'>
 <hr>
 <div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода рефлексов</b>
 </div>";
@@ -96,19 +96,24 @@ echo "<b>Выбрать сочетания контекстов:</b><br>
 <script>
 function get_context_variations(bc)
 {
+	wait_begin();
 	// base_condition="+bc+"& 
 //	alert("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>");
 var AJAX = new ajax_support("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>", send_context_variations);
 		AJAX.send_reqest();
 
-		function send_context_variations(res) { // alert(res);
+function send_context_variations(res) 
+{ // alert(res);
+			wait_end();
 if(res[0]!='!')
 { //alert(res);
 show_dlg_alert(res,0);
 return;
 }
 document.getElementById('context_variations_id').innerHTML=res.substr(1); //show_dlg_alert(res.substr(1),0);
-		}
+document.getElementById('button_table_id').style.display="";
+document.getElementById('hr_table_id').style.display="block";
+}
 }
 get_context_variations(1);// сразу показать 
 /*
@@ -124,7 +129,7 @@ get_context_variations(bc);
 
 
 
-echo "<br><input type='button' value='Создать таблицу для заполнения рефлексами' onClick='choose_0()'>";
+echo "<br><input id='button_table_id' type='button' value='Создать таблицу для заполнения рефлексами' onClick='choose_0()' style='display:none;'>";
 //////////////////////////////////////////////////////////////
 
 echo "<div style='position:relative;'>
