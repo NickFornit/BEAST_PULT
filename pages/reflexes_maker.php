@@ -29,7 +29,7 @@ $get_list=explode(";",$id_list);
 <script>
 function get_table()
 {
-var link="/pages/reflexes_maker_table.php?bsID=<?=$bsID?>&id_list=<?=$id_list?>";
+var link="/pages/reflexes_maker_table.php?"+cur_condition_choose;
 //alert(link);
 var AJAX = new ajax_support(link, sent_table_info);
 AJAX.send_reqest();
@@ -94,6 +94,7 @@ echo "<b>Выбрать сочетания контекстов:</b><br>
 
 ?>
 <script>
+
 function get_context_variations(bc)
 {
 	wait_begin();
@@ -138,39 +139,15 @@ echo "<div style='position:relative;'>
 </div>";
 //var_dump($contextsArr);exit();
 //////////////////////////////////////////////////////////////
-if($bsID)
-{
+
+echo "<div id='conditions_block_id' style='display:none'>";
 echo "<b>Выбранные условия:</b><br>";
 
-echo "Базовое состояние: <b>";
-switch($bsID)
-{
-case 1: echo "Плохо"; break;
-case 2: echo "Норма"; break;
-case 3: echo "Хорошо"; break;
-}
+echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
+echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетения контекстов: <b><span id='base_context_name'></span></b>";
 
-echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетения контекстов: <b>";
-$n=0;
-$contextStr="";
-//var_dump($contextsArr);exit();
-foreach ($get_list as $id)
-{
-if($n){
-	$contextStr.=",";
-	echo ", ";
-}
-$contextStr.=$id;
-echo $id."&nbsp;".$baseContextArr[$id][0];
+echo "</div>";
 
-$n++;
-} 
-echo "</b>";
-
-echo "<script>
-get_table();
-</script>";
-}
 //////////////////////////////////////// ТАБЛИЦА
 echo "<div id='table_id'></div>";
 
@@ -182,43 +159,41 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/alert2_dlg.php");
 ?>
 <script Language="JavaScript" src="/ajax/ajax_post.js"></script>
 <script>
+var cur_bcond_choose="";
+var cur_bcontex_choose="";
+var cur_condition_choose="";
 function choose_0()
 {
 var bsID=document.getElementById('base_id').selectedIndex +1;
+switch(bsID)
+{
+case 1: cur_bcond_choose="Плохо"; break;
+case 2: cur_bcond_choose="Норма"; break;
+case 3: cur_bcond_choose="Хорошо"; break;
+}
 //alert(bsID);
 
 var combo=document.getElementById('base_context_id'); 
-
 //alert(combo.selectedIndex);
 if(combo.selectedIndex==-1)
 	{
 	show_dlg_alert("Нужно выбрать сочетание Базовых контекстов в списоке.",0);
 	return;
 	}
-
-/*
-var len= combo.options.length; 
-var id_list="";
-for(var n = 0; n < len; n++)
-{
-if (combo.options[n].selected==true)
-{
-if(id_list.length>0)
-	id_list+=";";
-id_list+=combo.options[n].value;
-}
-}
-if(id_list.length==0)
-	{
-show_dlg_alert("Нужно выбрать как минимум один Базовый контекст.",0);
-return;
-	}
-*/ 
-var id_list=combo.options[combo.selectedIndex].value;
+var id_list=combo.options[combo.selectedIndex].value; // 1;3
+cur_bcontex_choose=combo.options[combo.selectedIndex].text;
 
 
- //alert(id_list);
-location.href='/pages/reflexes_maker.php?bsID='+bsID+'&id_list='+id_list;
+cur_condition_choose='bsID='+bsID+'&id_list='+id_list; // alert(cur_condition_choose);
+
+document.getElementById('conditions_block_id').style.display="block";
+document.getElementById('base_cond_id').innerHTML=cur_bcond_choose;
+document.getElementById('base_context_name').innerHTML=cur_bcontex_choose;
+
+get_table();
+
+
+//location.href='/pages/reflexes_maker.php?bsID='+bsID+'&id_list='+id_list;
 }
 //////////////////////////////////////////////
 
@@ -247,7 +222,7 @@ show_dlg_alert("Нет новых рефлексов, содержащих ID д
 return;
 }
 /////////////////////////
-saveStr="bsID=<?=$bsID?>&id_list=<?=$contextStr?>&saveStr="+saveStr;  // alert(saveStr);return;
+saveStr=cur_condition_choose+"&saveStr="+saveStr;  // alert(saveStr);return;
 var link="/pages/reflexes_maker_saver.php";
 //alert(link);
 var AJAX = new ajax_post_support(link,saveStr, sent_table_save,1);

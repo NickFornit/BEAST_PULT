@@ -70,7 +70,7 @@ $contextArr[$id]=array();
 // тестирование правильности алгоритма выборки рабочих сочетаний
 $tComb=array();
 $nNumbers=5;
-for($n=0;$n<$nNumbers;$n++)
+for($n=1;$n<$nNumbers;$n++)
 {
 array_push($tComb,array($n));
 $a2=array();
@@ -95,8 +95,52 @@ foreach($tComb as $comb)
 
 }
  var_dump($tComb);exit();
+
+
+
+// все рабочие сочетания (без перестановочных повторений) номеров ячеек таблицы "Активности Базовых стилей" 29316 сочетаний для проверки моего алгоритма (предыдущий по коду)
+$cellComb = array();
+$cellStr= array();
+for($m=0;$m<5;$m++)
+array_push($cellStr,$m);
+
+function placing($chars, $from=0, $to = 0){
+	global $cellStr;
+    $cnt = count($chars);
+    if(($from == 0) && ($to == 0)){
+        $from = 1;
+        $to = $cnt;
+    }
+    if($from == 0) $from = 1;
+    if($to == 0) $to = $from;
+    if($from < $to){
+        $plac = [];
+        for($num = $from; $num <= $to; $num++){
+            $plac = array_merge($plac, placing($cellStr, $num));
+        }
+    }else{
+        $plac = [""];   
+        for($n = 0; $n < $from; $n++){
+            $plac_old = $plac;
+            $plac = [];
+            foreach($plac_old as $item){
+                $last = strlen($item)-1;
+                for($m = $n; $m < $cnt; $m++){
+                    if($chars[$m] > $item[$last]){
+                        $plac[] = $item.$chars[$m];
+                    }
+                }
+            }
+        }
+    }
+    return $plac;
+}
+
+$cellComb = placing($cellStr);
+var_dump($cellComb);exit();
 */
 ///////////////////////////////////////////////////////
+
 
 
 // все рабочие сочетания (без перестановочных повторений) номеров ячеек таблицы "Активности Базовых стилей" 29316 сочетаний
@@ -127,6 +171,8 @@ foreach($cellComb as $comb)
 
 }
 // var_dump($cellComb);exit();
+
+
 
 
 // по каждому сочетанию готовим суммы строк
