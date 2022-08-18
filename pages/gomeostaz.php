@@ -250,6 +250,7 @@ foreach ($strArr as $str) {
 //////////////////// активность контекстов
 ?>
 <div style="background-color:#E1EEFF;">
+<span style='font-size:16px;color:red'>Эти 2 таблицы НЕЛЬЗЯ редактировать после того, как начали заполнять таблицу рефлексов!</span>
 <div style="position:relative">
 	<h2 class="header_h2" style="margin-top:0px;">Несовместимость активностей Базовых стилей:</h2>
 	<div style="position:absolute;top:0px;right:0px;cursor:pointer;" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснения</b></div>
@@ -317,7 +318,7 @@ foreach ($strArr as $str) {
 		?>
 	</table>
 	<input type='hidden' name='gogogo' value='4'>
-	<input type="button" name="submit4" value="Сохранить" onClick="sent_korrect_kontext(1,'form4')">
+	<input type="button" name="submit4" value="Сохранить" onClick="save_date()">
 	<div id="korrect_kontext_1" style="display:inline-block;bottom:0px;right:0px;padding:4px;color:red;"></div>
 </form>
 <br>
@@ -329,7 +330,7 @@ foreach ($strArr as $str) {
 	<div style="position:absolute;top:0px;right:0px;cursor:pointer;" onClick="open_anotjer_win('active_contextx.htm')"><b>Важные пояснения</b></div>
 </div>
 Чтобы погасить ID стиля, нужно перед ним поставить знак "-", например: "4,-3" означает, что стиль с ID=3 будет погашен. При этом действуют установки таблицы: "Несовместимость активностей Базовых стилей".<br>
-<span style='font-size:16px;color:red'>Эту таблицу НЕЛЬЗЯ редактировать после того, как начали заполнять таблицу рефлексов!</span>
+
 <?
 // считать файл со строками  ID|bad|1|2|3|4|5
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_activnost.txt");
@@ -404,7 +405,7 @@ foreach ($strArr as $str) {
 		?>
 	</table>
 	<input type='hidden' name='gogogo' value='3'>
-	<input type="button" name="submit3" value="Сохранить" onClick="sent_korrect_kontext(2,'form3')">
+	<input type="button" name="submit3" value="Сохранить" onClick="save_date()">
 	<div id="korrect_kontext_2" style="display:inline-block;bottom:0px;right:0px;padding:4px;color:red;"></div>
 </form>
 
@@ -575,20 +576,8 @@ EOD;
 
 		function sent_request_res(res) { 
 //alert(id+" | "+res);
-			if (res == "*") {
-				switch (id) {
-					case 1:
-						//document.forms.form4.submit(); // не работает обновление!
-					save_date();
-						break;
-					case 2:
-						//document.forms.form3.submit();
-					save_date();
-						break;
-					case 3:
-						document.forms.form5.submit();
-						break;
-				}
+			if (res == "*") {	
+				document.forms.form5.submit();
 			} 
 			else
 			{
@@ -605,11 +594,34 @@ EOD;
 */
 function save_date()
 {
+// проверка первой таблицы
+var AJAX = new ajax_form_post_support("form4", '/pages/correct_fill_spraw_1.php', sent_request4_res);
+AJAX.send_form_reqest();
+function sent_request4_res(res)
+{
+if (res != "*")
+	{
+document.getElementById('korrect_kontext_1').innerHTML = res;
+show_dlg_alert("Ошибка показана красным.", 2000);
+return;
+	}
+// запись первой таблицы
 var AJAX = new ajax_form_post_support("form4", '/pages/gomeostaz_saver.php', sent_save4_res);
 AJAX.send_form_reqest();
 function sent_save4_res(res)
 {
-//alert(res);
+// проверка второй таблицы
+var AJAX = new ajax_form_post_support("form3", '/pages/correct_fill_spraw_2.php', sent_request3_res);
+AJAX.send_form_reqest();
+function sent_request3_res(res)
+{
+if (res != "*")
+	{
+document.getElementById('korrect_kontext_2').innerHTML = res;
+show_dlg_alert("Ошибка показана красным.", 2000);
+return;
+	}
+// запись второй таблицы
 var AJAX = new ajax_form_post_support("form3", '/pages/gomeostaz_saver.php', sent_save3_res);
 AJAX.send_form_reqest();
 function sent_save3_res(res)
@@ -617,6 +629,8 @@ function sent_save3_res(res)
 show_dlg_alert("Сохранено.",1500);
 document.getElementById('korrect_kontext_1').innerHTML ="";
 document.getElementById('korrect_kontext_2').innerHTML ="";
+}
+}
 }
 }
 }

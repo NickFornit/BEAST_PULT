@@ -11,6 +11,12 @@ header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
+$removeNotAllowe=0;// 1 - При сохранении очистить таблицу от рефлексов с невозможными сочетаниями Базовых контекстов.
+if($_POST['removeNotAllowe']==1)
+$removeNotAllowe=1;
+// exit("> $removeNotAllowe");
+
+
 
 //extract($_POST, EXTR_SKIP);
 $chererArr=array(); // будут сравниваться эти суммарные строки условий
@@ -107,6 +113,15 @@ exit("В строке с ID = $id есть несуществующее ID де�
 
 
 /////////////////// запись
+if($removeNotAllowe)
+{
+// реально возможные сочетания контекстов
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_str.txt");
+$c_list=str_replace(";",",",$c_list);
+$allowContextArr=explode("\r\n",$c_list); // var_dump($allowContextArr);exit();
+}
+
+
 $out=""; 
 //var_dump($_POST);exit();
 $n=0;
@@ -118,10 +133,18 @@ $s2=$str[1];
 $s3=$str[2];
 $s4=$str[3];
 $s5=$str[4];
+if($removeNotAllowe)
+{
+if(!in_array($s3,$allowContextArr))
+{
+continue;
+}
+}
 
 $out.=$s1."|".$s2."|".$s3."|".$s4."|".$s5."\r\n";
 }
-//exit("$out");
+
+//  exit("$out");
 write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt",$out);
 
 echo "!";

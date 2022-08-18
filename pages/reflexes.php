@@ -183,6 +183,10 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 		// считать файл 
 		$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
 		$strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
+// реально возможные сочетания контекстов
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_str.txt");
+$c_list=str_replace(";",",",$c_list);
+$allowContextArr=explode("\r\n",$c_list); // var_dump($allowContextArr);exit();
 
 if($sorting)
 {
@@ -205,6 +209,7 @@ function sort_cmp($a, $b)
 
 		$n = 0;
 		$lastID = 1;
+		$notAllowContexts=0;// 1 - есть невозможные сочетания контекстов
 		foreach ($strArr as $str) {
 			if (empty($str))
 				continue;
@@ -225,7 +230,16 @@ function sort_cmp($a, $b)
 				$bg = "style='background-color:#FFDADD;'";
 				$title = "title='Рефлекс будет привящан ко всем узлам дерева данного уровня.'";
 			}
-			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,2," . $id . ")' title='Выбор значений'></td>";
+
+$c_title="title='Сочетание Базовых контекстов.'";
+if(!in_array($par[2],$allowContextArr))
+{
+$bg="style='background-color:#FF858B;'";
+$c_title="title='НЕВОЗМОЖНОЕ сочетание Базовых контекстов.'";
+$notAllowContexts=1;// 1 - есть невозможные сочетания контекстов
+}
+
+			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $c_title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,2," . $id . ")' title='Выберите сочетание'></td>";
 			$bg = "";
 			$title = "";
 			if (empty($par[3])) {
@@ -251,17 +265,30 @@ function sort_cmp($a, $b)
 
 	<div style="position:relative;">
 		<input type='hidden' name='gogogo' value='1'>
-		<input style="position:absolute;top:0px;right:0px;" type="button" name="saver" value="Сохранить" onClick="check_and_sabmit()">
+		<input id='removeNotAllowe_id' type='hidden' name='removeNotAllowe' value='0'>
+		<input style="position:absolute;top:0px;right:0px;" type="button" name="saver" value="Сохранить" onClick="check_and_sabmit(0)">
+<?
+if($notAllowContexts)// 1 - есть невозможные сочетания контекстов
+{
+echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%, 0);" type="button" name="saver" value="Удалить рефлексы c невозможными сочетаниями контекстов" onClick="check_and_sabmit(1)" title="При сохранении очистить таблицу от рефлексов с невозможными сочетаниями Базовых контекстов.">';
+}
+?>
+
 		<input style="position:absolute;top:0px;left:0px;" type="button" name="addnew" value="Добавить новую строку" onClick="add_new_line()">
 	</div>
 </form>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
-	function check_and_sabmit() {
+	function check_and_sabmit(removeNotAllowe) {
+if(removeNotAllowe)
+			{
+	document.getElementById('removeNotAllowe_id').value=1;
+			}  
+
 		var nodes = document.getElementsByClassName('firstlevel'); //alert(nodes.length);
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].value.length == 0) {
-				show_dlg_alert("ID 1 и 2-го  уровеня (стоблцы 2 и 3) должны быть заполнены.", 0);
+				show_dlg_alert("ID 1 и 2-го  уровеня (стоблцы 2 и 3) должны быть заполнены.", 0); 
 				return;
 			}
 		}
@@ -369,6 +396,12 @@ function sort_cmp($a, $b)
 	////////////////////////////
 	function show_control(img, kind, id) {
 		event.stopPropagation();
+// alert(kind+" | "+id);
+if(kind==2)// более удобный контрол
+{
+show_contexts_list(id);
+return;
+}
 if(kind==4)// более удобный контрол
 {
 show_actions_list(id);
@@ -410,6 +443,26 @@ return;
 	}
 
 /////////////////////////////
+function show_contexts_list(nid)
+{
+event.stopPropagation();
+var selected=document.getElementById("lev2_" + nid).value;
+//show_dlg_alert(nid,0);
+event.stopPropagation();
+		var AJAX = new ajax_support("/lib/get_context_list.php?nid="+nid+"&selected="+selected, sent_context_info);
+		AJAX.send_reqest();
+
+		function sent_context_info(res) {
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите сочетание Базовых контекстов:<br>" + res + "<br>", 2);
+		}
+}
+function set_input3_list(nid,list) { // alert(nid+" | "+list);
+		//alert(aStr);
+		document.getElementById("lev2_" + nid).value = list;
+		document.getElementById("lev2_" + nid).style.backgroundColor="#ffffff";
+		end_dlg_alert2();
+}
+/////////////////////////////////////
 function show_actions_list(nid)
 {
 event.stopPropagation();
