@@ -1,6 +1,6 @@
 <?
-/*  Выдать контрол для выбора Базовых контекстов из списка ДЛЯ РЕФЛЕКСОВ
-/lib/get_context_list.php?selected=1,3
+/*  Выдать контрол для выбора Пусковых стимулов из списка ДЛЯ РЕФЛЕКСОВ
+/lib/get_triggers_list.php?nid=1&selected=1,3
 */
 header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -13,12 +13,12 @@ $selected=$_GET['selected'];
 
 
 // реально возможные сочетания контекстов
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_str.txt");
-$c_list=str_replace(";",",",$c_list);
-$ContextIdArr=explode("\r\n",$c_list); // var_dump($ContextIdArr);exit();
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/list_triggers_str.txt");
+//$c_list=str_replace(";",",",$c_list);
+$triggersIdArr=explode("\r\n",$c_list); // var_dump($triggersIdArr);exit();
 $nsel=0;
 $n=0;
-foreach($ContextIdArr as $str)
+foreach($triggersIdArr as $str)
 {
 //	echo "$selected==$str <br>";
 if($selected==$str)
@@ -30,12 +30,12 @@ $n++;
 }
 
 
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_names.txt");
-$c_list=str_replace(";",",",$c_list);
-$ContextnamesArr=explode("\r\n",$c_list); // var_dump($ContextnamesArr);exit();
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/list_triggers_names.txt");
+//$c_list=str_replace(";",",",$c_list);
+$triggersnamesArr=explode("\r\n",$c_list); // var_dump($triggersnamesArr);exit();
 $out="";
 $n=0;
-foreach($ContextnamesArr as $str)
+foreach($triggersnamesArr as $str)
 {
 	$bg="";
 	if($nsel==$n)
@@ -43,7 +43,7 @@ foreach($ContextnamesArr as $str)
 		$bg="#cccccc";
 //		exit("> $nsel");
 	}
-$out.="<div style='text-align:left;cursor:pointer;background-color:".$bg.";' onClick='set_input2_list(".$nid.",`".$ContextIdArr[$n]."`)'>".$str."</div>";
+$out.="<div style='text-align:left;cursor:pointer;background-color:".$bg.";' onClick='set_input3_list(".$nid.",`".$triggersIdArr[$n]."`)'>".$str."</div>";
 $n++;
 }
 

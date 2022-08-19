@@ -397,12 +397,17 @@ if(removeNotAllowe)
 	function show_control(img, kind, id) {
 		event.stopPropagation();
 // alert(kind+" | "+id);
-if(kind==2)// более удобный контрол
+if(kind==2)// более удобный контрол сочетаний контекстов
 {
 show_contexts_list(id);
 return;
 }
-if(kind==4)// более удобный контрол
+if(kind==3)// более удобный контрол сочетаний пусковых стимулов
+{
+show_triggers_list(id);
+return;
+}
+if(kind==4)// более удобный контрол сочетаний действий Beast
 {
 show_actions_list(id);
 return;
@@ -456,10 +461,30 @@ event.stopPropagation();
 			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите сочетание Базовых контекстов:<br>" + res + "<br>", 2);
 		}
 }
-function set_input3_list(nid,list) { // alert(nid+" | "+list);
+function set_input2_list(nid,list) { // alert(nid+" | "+list);
 		//alert(aStr);
 		document.getElementById("lev2_" + nid).value = list;
 		document.getElementById("lev2_" + nid).style.backgroundColor="#ffffff";
+		end_dlg_alert2();
+}
+///////////////////////////////////////
+function show_triggers_list(nid)
+{
+event.stopPropagation();
+var selected=document.getElementById("lev3_" + nid).value;
+//show_dlg_alert(nid,0);
+event.stopPropagation();
+		var AJAX = new ajax_support("/lib/get_triggers_list.php?nid="+nid+"&selected="+selected, sent_triggers_info);
+		AJAX.send_reqest();
+
+		function sent_triggers_info(res) {
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите сочетание Пусковых стимулов:<br>" + res + "<br>", 2);
+		}
+}
+function set_input3_list(nid,list) { // alert(nid+" | "+list);
+		//alert(aStr);
+		document.getElementById("lev3_" + nid).value = list;
+		document.getElementById("lev3_" + nid).style.backgroundColor="#ffffff";
 		end_dlg_alert2();
 }
 /////////////////////////////////////

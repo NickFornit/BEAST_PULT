@@ -14,6 +14,9 @@ setlocale(LC_ALL, "ru_RU.UTF-8");
 $bsID=$_GET['bsID'];
 $id_list=$_GET['id_list'];
 
+
+
+
 ////// Собрать данные по существующим рефлексам
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
 $strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
@@ -35,7 +38,7 @@ array_push($reflexArr,$par);
 //$resArr=get_reflex_exists("1","1;8","1;3");var_dump($resArr);exit();
 ////////////////////////////////////////////////////////////////////
 
-
+/*
 ///////////////////// список возможных действий
 $rActionsArr=array();
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/terminal_actons.txt");
@@ -48,6 +51,7 @@ $rActionsArr[$p[0]]=$p[1];
 	}
 // var_dump($rActionsArr);exit();
 ////////////////////////////////////////////////////////////////////
+*/
 
 
 
@@ -82,32 +86,37 @@ $antFromId=$actionsFromPultAntagonistsArr;
 //var_dump($actionsFromPultArr);exit();
 ////////////////////////////////////////////
 
+// все рабочие сочетания Пусковых стимулов
+$nNumbers=count($actionsFromPultArr);         
+// все рабочие сочетания Пусковых стимулов
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/get_ubicum_combination.php");
 
+$triggersComb=get_ubicum_combination($nNumbers);
+//var_dump($triggersComb);exit();
+
+
+
+
+////////////////////////////////////////////
 // пустые строки - заготовки рефлексов: все возможные сочетания пусковых стимулов
-
 $actionArr=array();// ID выбранных акций
-$actionsFromPultArr2=$actionsFromPultArr;
-foreach ($actionsFromPultArr as $k0 => $v0)
+foreach ($triggersComb as $nTArr)
 {
 $aList="";// набор акций в виде строки
 $aArr=array();// набор акций в виде массива
-foreach ($actionsFromPultArr2 as $k1 => $v1)
+foreach ($nTArr as $nT)
 {
-// убирать использованную $k1 из последующих (начинать следующую уже без $k1)
-if(in_array($k1,$actionArr))
-{
-	continue;
-}
+$idT=$nT+1;// id пускового стимула
 
 // убрать антагонистов
 $isAntagonist=0;
 foreach($aArr as $g)
 { 
-	//exit("$k1 <hr> ".var_dump($antFromId[$g]));
-// есть ли антагонизм к $k1 в уже имеющихся $aArr
-if(in_array($k1,$antFromId[$g]))
+	//exit("$idT <hr> ".var_dump($antFromId[$g]));
+// есть ли антагонизм к $idT в уже имеющихся $aArr
+if(in_array($idT,$antFromId[$g]))
 {  
-$isAntagonist=1; //exit("!!!!!!!!!!! $k1");
+$isAntagonist=1; //exit("!!!!!!!!!!! $idT");
 }
 }
 if($isAntagonist)
@@ -115,15 +124,47 @@ if($isAntagonist)
 
 if(!empty($aList))
 	$aList.=",";
-$aList.=$k1;
-array_push($aArr,$k1);
-// приращивает к предыдущему текущий $k1
+$aList.=$idT;
+array_push($aArr,$idT);
+
+// убирать использованную $k1 из последующих (начинать следующую уже без $k1)
+if(in_array($aList,$actionArr))
+{
+	continue;
+}
 array_push($actionArr,$aList);
 }
-
 }
-//var_dump($actionArr);exit();
+// var_dump($actionArr);exit();
 /////////////////////////////////////////////////////////
+
+
+
+// сохранять сочетания Пусковых стимулов в раб.файлах для треугольничков /pages/reflexes.php, вызывающих диалог выбора 
+$list_id="";
+$list_name="";
+foreach($actionArr as $str)
+{
+$list_id.=$str."\r\n";
+
+$s="";
+	$p = explode(",", $str);
+foreach($p as $a)
+{
+	if(empty($a) || $a<0)
+		continue;
+if(!empty($s))
+	{
+	$s.=", ";
+	}
+
+	$s.=$a." ".$actionsFromPultArr[$a][0];
+}
+$list_name.=$s."\r\n";
+}
+write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/list_triggers_str.txt",$list_id);
+write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/list_triggers_names.txt",$list_name);
+
 
 
 
@@ -237,5 +278,18 @@ return $contents;
 return "";
 }
 ///////////////////////////////////////////////////
-
+///////////////////////////////////////////////////
+function write_trigger_file($file,$content)
+{
+$hf=fopen($file,"wb+");
+if($hf)
+{
+fwrite($hf,$content,strlen($content));
+fclose($hf);
+chmod($file, 0666);
+return 1;
+}
+return 0;
+}
+//////////////////////////////////
 ?>

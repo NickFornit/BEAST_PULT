@@ -1,15 +1,17 @@
 <?
-/*  сгенерировать рабочие сочетания Базовых контекстов
+/*  СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЂР°Р±РѕС‡РёРµ СЃРѕС‡РµС‚Р°РЅРёСЏ Р‘Р°Р·РѕРІС‹С… РєРѕРЅС‚РµРєСЃС‚РѕРІ
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/reflexes_maker_context_combinations.php");
 */
 
 
 
-// антагонисты
+///////////////////////////////////////////////////////
+
+// Р°РЅС‚Р°РіРѕРЅРёСЃС‚С‹
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_antagonists.txt");
 $strArr = explode("\r\n", $progs);  //exit("$progs");
-$antFromId = array();// антагонисты для каждого выбранного в списке $get_list ID контекста
+$antFromId = array();// Р°РЅС‚Р°РіРѕРЅРёСЃС‚С‹ РґР»СЏ РєР°Р¶РґРѕРіРѕ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РІ СЃРїРёСЃРєРµ $get_list ID РєРѕРЅС‚РµРєСЃС‚Р°
 foreach ($strArr as $str) {
 	$par = explode("|", $str);
 	$id = $par[0];
@@ -22,12 +24,12 @@ foreach ($strArr as $str) {
 }
 // var_dump($antFromId);exit();
 
-// Базовые контексты $baseContextArr - только для получения имен базовых контекстов
+// Р‘Р°Р·РѕРІС‹Рµ РєРѕРЅС‚РµРєСЃС‚С‹ $baseContextArr - С‚РѕР»СЊРєРѕ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РёРјРµРЅ Р±Р°Р·РѕРІС‹С… РєРѕРЅС‚РµРєСЃС‚РѕРІ
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 
 
 
-////////// таблица Активности Базовых стилей
+////////// С‚Р°Р±Р»РёС†Р° РђРєС‚РёРІРЅРѕСЃС‚Рё Р‘Р°Р·РѕРІС‹С… СЃС‚РёР»РµР№
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_activnost.txt");
 $strArr = explode("\r\n", $progs);  //exit("$progs");
 $contextArr = array();
@@ -45,84 +47,13 @@ $contextArr[$id]=array();
 //////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+// РІСЃРµ СЂР°Р±РѕС‡РёРµ СЃРѕС‡РµС‚Р°РЅРёСЏ (Р±РµР· РїРµСЂРµСЃС‚Р°РЅРѕРІРѕС‡РЅС‹С… РїРѕРІС‚РѕСЂРµРЅРёР№) РЅРѕРјРµСЂРѕРІ СЏС‡РµРµРє С‚Р°Р±Р»РёС†С‹ "РђРєС‚РёРІРЅРѕСЃС‚Рё Р‘Р°Р·РѕРІС‹С… СЃС‚РёР»РµР№" 29316 СЃРѕС‡РµС‚Р°РЅРёР№
+
 /*
-// тестирование правильности алгоритма выборки рабочих сочетаний
-$tComb=array();
-$nNumbers=5;
-for($n=1;$n<$nNumbers;$n++)
-{
-array_push($tComb,array($n));
-$a2=array();
-array_push($a2,$n);
-for($m=$n+1;$m<$nNumbers;$m++)
-{
-array_push($a2,$m);// добавляется по одному
-array_push($tComb,$a2);
-} 
-}
-// из каждого сочетания убираем по 1 кроме крайних
-foreach($tComb as $comb)
-{
-	if(count($comb)<3)
-		continue;
-	$arr=$comb;
-	for($m=1;$m<count($comb)-1;$m++)
-	{
-      unset($arr[$m]);
-	  array_push($tComb,$arr);
-	}
-
-}
- var_dump($tComb);exit();
-
-
-
-// все рабочие сочетания (без перестановочных повторений) номеров ячеек таблицы "Активности Базовых стилей" 29316 сочетаний для проверки моего алгоритма (предыдущий по коду)
-$cellComb = array();
-$cellStr= array();
-for($m=0;$m<5;$m++)
-array_push($cellStr,$m);
-
-function placing($chars, $from=0, $to = 0){
-	global $cellStr;
-    $cnt = count($chars);
-    if(($from == 0) && ($to == 0)){
-        $from = 1;
-        $to = $cnt;
-    }
-    if($from == 0) $from = 1;
-    if($to == 0) $to = $from;
-    if($from < $to){
-        $plac = [];
-        for($num = $from; $num <= $to; $num++){
-            $plac = array_merge($plac, placing($cellStr, $num));
-        }
-    }else{
-        $plac = [""];   
-        for($n = 0; $n < $from; $n++){
-            $plac_old = $plac;
-            $plac = [];
-            foreach($plac_old as $item){
-                $last = strlen($item)-1;
-                for($m = $n; $m < $cnt; $m++){
-                    if($chars[$m] > $item[$last]){
-                        $plac[] = $item.$chars[$m];
-                    }
-                }
-            }
-        }
-    }
-    return $plac;
-}
-
-$cellComb = placing($cellStr);
-var_dump($cellComb);exit();
-*/
-///////////////////////////////////////////////////////
-
-
-
-// все рабочие сочетания (без перестановочных повторений) номеров ячеек таблицы "Активности Базовых стилей" 29316 сочетаний
 $cellComb=array();
 $nNumbers=56;
 for($n=0;$n<$nNumbers;$n++)
@@ -132,11 +63,11 @@ $a2=array();
 array_push($a2,$n);
 for($m=$n+1;$m<$nNumbers;$m++)
 {
-array_push($a2,$m);// добавляется по одному
+array_push($a2,$m);// РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РїРѕ РѕРґРЅРѕРјСѓ
 array_push($cellComb,$a2);
 } 
 }
-// из каждого сочетания убираем по 1 кроме крайних
+// РёР· РєР°Р¶РґРѕРіРѕ СЃРѕС‡РµС‚Р°РЅРёСЏ СѓР±РёСЂР°РµРј РїРѕ 1 РєСЂРѕРјРµ РєСЂР°Р№РЅРёС…
 foreach($cellComb as $comb)
 {
 	if(count($comb)<3)
@@ -150,16 +81,22 @@ foreach($cellComb as $comb)
 
 }
 // var_dump($cellComb);exit();
+*/
+
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/get_ubicum_combination.php");
+
+$cellComb=get_ubicum_combination(56);
+//var_dump($cellComb);exit();
 
 
 
 
-// по каждому сочетанию готовим суммы строк
-$contextsArr0=array();// сочетания контекстов
+// РїРѕ РєР°Р¶РґРѕРјСѓ СЃРѕС‡РµС‚Р°РЅРёСЋ РіРѕС‚РѕРІРёРј СЃСѓРјРјС‹ СЃС‚СЂРѕРє
+$contextsArr0=array();// СЃРѕС‡РµС‚Р°РЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРІ
 $n=0;
 foreach($cellComb as $ccomb)
 {
-$sumArr=array();// сумматор значений ячеек данного сочетания $ccomb
+$sumArr=array();// СЃСѓРјРјР°С‚РѕСЂ Р·РЅР°С‡РµРЅРёР№ СЏС‡РµРµРє РґР°РЅРЅРѕРіРѕ СЃРѕС‡РµС‚Р°РЅРёСЏ $ccomb
 foreach($ccomb as $nCell)
 {
 $col1=$nCell%7; 
@@ -178,33 +115,33 @@ $n++;
 //var_dump($contextsArr0);exit();
 
 
-// убрать антагонистов, отрицательнеы контексты (которые должны госиться) и перевести сочетания контекстов в строки, оставить только уникальные
-$contextsArr=array();// сочетания контекстов
+// СѓР±СЂР°С‚СЊ Р°РЅС‚Р°РіРѕРЅРёСЃС‚РѕРІ, РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРµС‹ РєРѕРЅС‚РµРєСЃС‚С‹ (РєРѕС‚РѕСЂС‹Рµ РґРѕР»Р¶РЅС‹ РіРѕСЃРёС‚СЊСЃСЏ) Рё РїРµСЂРµРІРµСЃС‚Рё СЃРѕС‡РµС‚Р°РЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРІ РІ СЃС‚СЂРѕРєРё, РѕСЃС‚Р°РІРёС‚СЊ С‚РѕР»СЊРєРѕ СѓРЅРёРєР°Р»СЊРЅС‹Рµ
+$contextsArr=array();// СЃРѕС‡РµС‚Р°РЅРёСЏ РєРѕРЅС‚РµРєСЃС‚РѕРІ
 foreach($contextsArr0 as $comb)
 {
 $str="";  
 $minusArr=array();
 $antArr=array();
 
-foreach($comb as $a)// подготовка к удалению отрицательных
+foreach($comb as $a)// РїРѕРґРіРѕС‚РѕРІРєР° Рє СѓРґР°Р»РµРЅРёСЋ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…
 {
 	if($a<0){
 		array_push($minusArr,-$a);
 	}
 }
-$antArr=array();// для проверки антагонистов
+$antArr=array();// РґР»СЏ РїСЂРѕРІРµСЂРєРё Р°РЅС‚Р°РіРѕРЅРёСЃС‚РѕРІ
 foreach($comb as $a)
 {
 	if($a<0){
 		continue;
 	}
-// убрать отрицательнеы контексты (которые должны гаситься)
+// СѓР±СЂР°С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРµС‹ РєРѕРЅС‚РµРєСЃС‚С‹ (РєРѕС‚РѕСЂС‹Рµ РґРѕР»Р¶РЅС‹ РіР°СЃРёС‚СЊСЃСЏ)
 if(in_array($a,$minusArr))
 {
 continue;
 }
 
-// исключить антагонистов, проверка для каждого выбранного ID кроме уже прошедших проверку
+// РёСЃРєР»СЋС‡РёС‚СЊ Р°РЅС‚Р°РіРѕРЅРёСЃС‚РѕРІ, РїСЂРѕРІРµСЂРєР° РґР»СЏ РєР°Р¶РґРѕРіРѕ РІС‹Р±СЂР°РЅРЅРѕРіРѕ ID РєСЂРѕРјРµ СѓР¶Рµ РїСЂРѕС€РµРґС€РёС… РїСЂРѕРІРµСЂРєСѓ
 if(1)
 {
 $isAntagonist=0;
@@ -228,9 +165,9 @@ continue;
 }
 array_push($contextsArr,$str);
 }
-$contextsArr=array_unique($contextsArr);// Число сочетаний - 35 :)
+$contextsArr=array_unique($contextsArr);// Р§РёСЃР»Рѕ СЃРѕС‡РµС‚Р°РЅРёР№ - 35 :)
 
-//var_dump($contextsArr);exit("<hr>Число сочетаний: ".count($contextsArr));
+//var_dump($contextsArr);exit("<hr>Р§РёСЃР»Рѕ СЃРѕС‡РµС‚Р°РЅРёР№: ".count($contextsArr));
 
 
 
@@ -238,7 +175,7 @@ $contextsArr=array_unique($contextsArr);// Число сочетаний - 35 :)
 
 
 ///////////////////////////////////////////
-// расположить по возрастанию чила контекстов
+// СЂР°СЃРїРѕР»РѕР¶РёС‚СЊ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ С‡РёР»Р° РєРѕРЅС‚РµРєСЃС‚РѕРІ
 uasort($contextsArr, "cmpare");
 function cmpare($a, $b) 
 { 
@@ -248,10 +185,10 @@ function cmpare($a, $b)
     return (strlen($a) < strlen($b)) ? -1 : 1;
 }
 
-// var_dump($contextsArr);exit("<hr>Число сочетаний: ".count($contextsArr));
+// var_dump($contextsArr);exit("<hr>Р§РёСЃР»Рѕ СЃРѕС‡РµС‚Р°РЅРёР№: ".count($contextsArr));
 
 
-// сохранять строки комбо контекстов в раб.файле  combo_contexts_str.txt
+// СЃРѕС…СЂР°РЅСЏС‚СЊ СЃС‚СЂРѕРєРё РєРѕРјР±Рѕ РєРѕРЅС‚РµРєСЃС‚РѕРІ РІ СЂР°Р±.С„Р°Р№Р»Рµ  combo_contexts_str.txt
 $list_id="";
 $list_name="";
 foreach($contextsArr as $str)
