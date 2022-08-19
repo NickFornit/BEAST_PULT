@@ -124,6 +124,16 @@ $allowContextArr=explode("\r\n",$c_list); // var_dump($allowContextArr);exit();
 
 $out=""; 
 //var_dump($_POST);exit();
+//sort($rArr, SORT_NUMERIC);reset($rArr);
+uasort($rArr, "cmp");
+function cmp($a, $b) 
+{ 
+    if ($a[0] == $b[0]) {
+        return 0;
+    }
+    return ($a[0] < $b[0]) ? -1 : 1;
+}
+//var_dump($rArr);exit();
 $n=0;
 $back="";// чисто для контроля
 foreach($rArr as $str)

@@ -305,3 +305,16 @@ right:2px;
 
 cursor:pointer;
 }
+.filtre_item
+{
+cursor: pointer;
+border:solid 1px #cccccc;
+background-color:#eeeeee;
+padding-left:2px;
+padding-right:2px;
+border-radius: 3px;
+}
+.filtre_item:hover
+{
+border:solid 1px #666666;
+}

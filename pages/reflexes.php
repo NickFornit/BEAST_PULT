@@ -6,6 +6,10 @@ $sorting=0;
 if(isset($_GET['sorting']))
 $sorting=$_GET['sorting'];
 
+$selected=0;
+if(isset($_GET['selected']))
+$selected=$_GET['selected'];
+
 $page_id = 4;
 $title = "Редактор безусловных рефлексов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
@@ -167,6 +171,29 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 	<a style="position:absolute;top:0px;right:0px;cursor:pointer;" href="/pages/reflexes_help.htm" target="_blank">Пояснение как заполнять таблицу</a>
 </div>
 
+<div style="position:relative;margin-bottom:4px;">
+Показывать только: 
+<span class="filtre_item" onClick='set_philter(1)' <?echo set_filter_bg(1)?>>Плохо</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="filtre_item" onClick='set_philter(2)' <?echo set_filter_bg(2)?>>Норма</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="filtre_item" onClick='set_philter(3)' <?echo set_filter_bg(3)?>>Хорошо</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?>>Без Пусковых стимулов</span>
+<span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
+</div>
+<?
+function set_filter_bg($nF)
+{
+	global $selected;  // exit("! $selected");
+	switch($nF)
+	{
+case 1: if($selected==1)return "style='background-color:#C2FFC5;'"; break;
+case 2: if($selected==2)return "style='background-color:#C2FFC5;'"; break;
+case 3: if($selected==3)return "style='background-color:#C2FFC5;'"; break;
+case 4: if($selected==4)return "style='background-color:#C2FFC5;'"; break;
+case 0: if($selected==0)return "style='background-color:#C2FFC5;'"; break;
+	}
+}
+?>
+
 <form id="form_id" name="form" method="post" action="/pages/reflexes.php">
 	<table id="main_table" class="main_table" cellpadding=0 cellspacing=0 border=1 width='100%' style="font-size:14px;">
 		<tr>
@@ -205,7 +232,7 @@ function sort_cmp($a, $b)
     }
     return ($par1[1] < $par2[1]) ? -1 : 1;
 }
-
+////////////////////////////////////////////////////////////////////////
 
 		$n = 0;
 		$lastID = 1;
@@ -215,6 +242,20 @@ function sort_cmp($a, $b)
 				continue;
 			$par = explode("|", $str);
 			$id = $par[0];
+//exit("$selected | ".$par[1]);
+if($selected==1 && $par[1]!=1 ||
+	$selected==2 && $par[1]!=2 ||
+	$selected==3 && $par[1]!=3 ||
+	$selected==4 && !empty($par[3]))// не показывать эту строку
+{
+echo "<input type='hidden' name='id1[" . $id . "]' value='" . $par[0] . "'  >";
+echo "<input type='hidden' name='id2[" . $id . "]' value='" . $par[1] . "'  >";
+echo "<input type='hidden' name='id3[" . $id . "]' value='" . $par[2] . "'  >";
+echo "<input type='hidden' name='id4[" . $id . "]' value='" . $par[3] . "'  >";
+echo "<input type='hidden' name='id5[" . $id . "]' value='" . $par[4] . "'  >";
+}
+else
+{
 			echo "<tr class='highlighting' onClick='set_sel(this," . $id . ")'>
 <td class='table_cell' style='width:40px;background-color:#eeeeee;' ><input type='hidden' name='id1[" . $id . "]' value='" . $par[0] . "'  >" . $par[0] . "</td>";
 			$bg = "";
@@ -259,6 +300,7 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 </tr>";
 			$n++;
 			$lastID = $id + 1;
+}
 		}
 		?>
 	</table>
@@ -524,9 +566,27 @@ aStr += nodes[i].value;
 function sorting(nCol)
 {
 if(nCol==2)
-location.href='/pages/reflexes.php?sorting='+nCol;
+var link='/pages/reflexes.php?sorting='+nCol;
 else
+var link='/pages/reflexes.php?sorting=0';
+<?if($selected){
+echo "link+='&selected=".$selected."';";
+}?> 
+location.href=link;
+}
+////////////////////
+function set_philter(kind)
+{
+	if(kind==0)
+	{
 location.href='/pages/reflexes.php';
+return;
+	}
+var link='/pages/reflexes.php?selected='+kind;
+<?if($sorting){
+echo "link+='&sorting=".$sorting."';";	
+}?>
+location.href=link;
 }
 </script>
 </div>
