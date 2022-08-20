@@ -87,7 +87,10 @@ echo "<div class='main_page_div' style=''>";
 
 <script Language="JavaScript" src="/ajax/ajax_form_post.js"></script>
 
-<div id="fixed_id" style="position:relative;z-index:10;top:0px;left:0px;padding-left:15px;background-color:#ffffff;width:1100px;">
+
+
+<span class="spoiler_header" onclick="open_close('lib_block_id',1)" style="cursor:pointer;font-size:16px"><?=set_sopiler_icon('lib_block_id')?><b>Справочные данные</b></span>
+<div id="lib_block_id" class="spoiler_block spoiler" style="position:relative;z-index:10;top:0px;left:0px;padding-left:15px;background-color:#ffffff;width:1100px;height:0px;">
 	Для ввода условий срабатывания рефлекса нужно использовать ID этих условий:
 	<h2 class="header_h2">Первый уровень - ID базовых состояний:</h2>
 	<span style='padding-right:20px;'>1 - Похо</span>
@@ -149,6 +152,7 @@ echo "<span style='padding-left:20px;color:".$bg."' title='".$v[1]."'>".$k."&nbs
 	}
 	echo "</tr></table>";
 	?>
+</div>
 	<div style="position:relative;">
 		<hr>
 		<div style="position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#FFFFCC;">
@@ -156,12 +160,12 @@ echo "<span style='padding-left:20px;color:".$bg."' title='".$v[1]."'>".$k."&nbs
 		</div>
 	</div>
 
-	<div id="helper_id" style="position:absolute;top:0px;right:0px;
+	<div id="helper_id" style="position:fixed;z-index:1000;top:0px;right:0px;
 background-color:#FFFFCC;
 padding:6px;
 box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);
 border:solid 1px #81853D; border-radius: 7px;"></div>
-</div>
+
 
 <span style="color:red">Если для каких-то действий НЕ заполнена строка рефлекса, задающая условия</span>, то будет выдавать "<b>Игнорирует</b>".<br>
 <br>
@@ -390,17 +394,21 @@ if(removeNotAllowe)
 	}
 
 	window.onscroll = function(event) {
+// игнорировать если спойлер справочника свернут
+if(parseInt(document.getElementById('lib_block_id').style.height)==0)
+	return;
+
 		//var posY=document.scrollingElement.scrollTop;
 		//	alert(window.pageYOffset);
 		if (window.pageYOffset > 70) {
-			document.getElementById("fixed_id").style.position = "fixed";
-			document.getElementById("fixed_id").style.left = "20px";
-			document.getElementById("fixed_id").style.top = "0px";
+			document.getElementById("lib_block_id").style.position = "fixed";
+			document.getElementById("lib_block_id").style.left = "20px";
+			document.getElementById("lib_block_id").style.top = "0px";
 			document.getElementById("h2_id").style.marginTop = "400px";
 		} else {
-			document.getElementById("fixed_id").style.position = "relative";
-			document.getElementById("fixed_id").style.left = "0px";
-			document.getElementById("fixed_id").style.top = "0px";
+			document.getElementById("lib_block_id").style.position = "relative";
+			document.getElementById("lib_block_id").style.left = "0px";
+			document.getElementById("lib_block_id").style.top = "0px";
 			document.getElementById("h2_id").style.marginTop = "0px";
 		}
 	}
@@ -422,7 +430,6 @@ if(removeNotAllowe)
 	}
 	////////////////////////////
 	function set_help(tr, inf) {
-		//alert(tr.offsetTop);
 		document.getElementById("helper_id").style.display = "block";
 		document.getElementById("helper_id").innerHTML = inf;
 	}

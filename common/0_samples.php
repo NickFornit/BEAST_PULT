@@ -1,6 +1,6 @@
 <?
 /*  Примеры использования функций папки common
-http://scorcher/common/0_samples.php
+http://go/common/0_samples.php
 */
 header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
