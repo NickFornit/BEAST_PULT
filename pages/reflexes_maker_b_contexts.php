@@ -23,23 +23,62 @@ header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
 
+set_time_limit(0);
+
+
 
 $base_condition=$_GET['base_condition']; // НЕ ИСПОЛЬЗУЕТСЯ т.к. нет отпределенной зависимости
 $get_list=$_GET['get_list'];  //exit($get_list);
 
 
-// сгенерировать рабочие сочетания Базовых контекстов
-include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/reflexes_maker_context_combinations.php");
+// сгенерировать рабочие сочетания Базовых контекстов НЕ ПОЛУЧАЕТСЯ КОРРЕКТНО
+//include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/reflexes_maker_context_combinations.php");
+/*
+В ДАННЫЙ МОМЕНТ СКРИПТ /pages/reflexes_maker_context_combinations.php НЕ ИСПОЛЬЗУЕТСЯ вот почему.
 
+Проверено немало алгоритмов фомрирования списков (наиболее эффективные для PHP собраны в array_combinations.php), но до сих пор ни один не используется вот почему:
+1. время выполнения оказывается неприемлемо долгим при создании неповторяющихся комбинайиций из 8х7 ячеек. Многие алгоритмы вызывают ошибки недостатка памяти (даже, использующие yield PHP).
+Даже в ГО профессиональный алгоритм работает неприемлемое время (tools.combinations_maker.go).
+2. Наличие антагонистов и гасящих контекстов делает результат зависимым от способа обработки.
 
+Поэтому сейчас используются файлы готовых списков в папке /pages/combinations/ составленные на основе ранее полученных вариантов и проверненные эвристически.
+!!! В случае изменения таблицы "Активности Базовых стилей"(в http://go/pages/gomeostaz.php) 
+наобходимо пересматривать списки 
+/pages/combinations/combo_contexts_str.txt
+и
+/pages/combinations/combo_contexts_names.txt
+
+В случае, если будет сделан генератор сочетаний, то он должен срабатывать при запуске из Публта, из менб Инструментов (шестеренка) и обновлять списки, а при каждом редактировании таблицы "Активности Базовых стилей" должно быть предупреждение о необходимости обновления списков.
+*/
+
+// использовать имеющиеся combo_contexts_str.txt и combo_contexts_names.txt
+$idText = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
+//$nameText = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_names.txt");
+
+$contextsArr=array();
+$cList = explode("\r\n", $idText);  
+$n=0;
+foreach($cList as $c)
+{
+	if(empty($c))
+		continue;
+//$contextsArr[$n]=array();
+//$p = explode(";", $aArr);
+$c=str_replace(",",";",$c);
+array_push($contextsArr,$c);
+}
+//var_dump($contextsArr);exit();
 ///////////////////////////////////////////////////////////////
+// Базовые контексты $baseContextArr - только для получения имен базовых контекстов
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
+//var_dump($baseContextArr);exit();
 
 // собрать комбобокс
 $out="<select id='base_context_id' size=12 style='max-width:360px;'>";// multiple='multiple' 
 foreach($contextsArr as $aArr)
 {
 	$str="";
-	$p = explode(";", $aArr);
+	$p = explode(";", $aArr); //var_dump($p);exit();
 	foreach($p as $a)
 {
 	if(empty($a) || $a<0)
@@ -48,7 +87,7 @@ if(!empty($str))
 	{
 	$str.=",&nbsp;";
 	}
-
+$a=(int)$a;
 	$str.=$a."&nbsp;".$baseContextArr[$a][0];
 }
 

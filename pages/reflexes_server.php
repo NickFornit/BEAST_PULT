@@ -116,7 +116,7 @@ exit("В строке с ID = $id есть несуществующее ID де�
 if($removeNotAllowe)
 {
 // реально возможные сочетания контекстов
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_str.txt");
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
 $c_list=str_replace(";",",",$c_list);
 $allowContextArr=explode("\r\n",$c_list); // var_dump($allowContextArr);exit();
 }

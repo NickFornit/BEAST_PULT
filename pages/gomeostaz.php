@@ -594,6 +594,11 @@ EOD;
 */
 function save_date()
 {
+show_dlg_confirm("При изменении этих таблиц<br><span style='color:red'>необходимо будет изменить списки сочетаний контекстов</span><br>которые пока что делаются вручную<br>в папке /pages/combinations/.","ДА, сохранить изменения.","Отмена сохранения",save_date2);
+//show_dlg_confirm("Уверены?","да","нет",save_date2);
+}
+function save_date2()
+{
 // проверка первой таблицы
 var AJAX = new ajax_form_post_support("form4", '/pages/correct_fill_spraw_1.php', sent_request4_res);
 AJAX.send_form_reqest();

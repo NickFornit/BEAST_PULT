@@ -13,7 +13,7 @@ $selected=$_GET['selected'];
 
 
 // реально возможные сочетания контекстов
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_str.txt");
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
 $c_list=str_replace(";",",",$c_list);
 $ContextIdArr=explode("\r\n",$c_list); // var_dump($ContextIdArr);exit();
 $nsel=0;
@@ -30,7 +30,7 @@ $n++;
 }
 
 
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combo_contexts_names.txt");
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_names.txt");
 $c_list=str_replace(";",",",$c_list);
 $ContextnamesArr=explode("\r\n",$c_list); // var_dump($ContextnamesArr);exit();
 $out="";

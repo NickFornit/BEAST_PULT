@@ -2,9 +2,26 @@
 /*  сгенерировать рабочие сочетания Базовых контекстов
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/reflexes_maker_context_combinations.php");
+для http://go/pages/reflexes_maker.php 
+
+В ДАННЫЙ МОМЕНТ ЭТОТ СКРИПТ НЕ ИСПОЛЬЗУЕТСЯ вот почему.
+
+Проверено немало алгоритмов фомрирования списков (наиболее эффективные для PHP собраны в array_combinations.php), но до сих пор ни один не используется вот почему:
+1. время выполнения оказывается неприемлемо долгим при создании неповторяющихся комбинайиций из 8х7 ячеек. Многие алгоритмы вызывают ошибки недостатка памяти (даже, использующие yield PHP).
+Даже в ГО профессиональный алгоритм работает неприемлемое время (tools.combinations_maker.go).
+2. Наличие антагонистов и гасящих контекстов делает результат зависимым от способа обработки.
+
+Поэтому сейчас используются файлы готовых списков в папке /pages/combinations/ составленные на основе ранее полученных вариантов и проверненные эвристически.
+!!! В случае изменения таблицы "Активности Базовых стилей"(в http://go/pages/gomeostaz.php) 
+наобходимо пересматривать списки 
+/pages/combinations/combo_contexts_str.txt
+и
+/pages/combinations/combo_contexts_names.txt
+
+В случае, если будет сделан генератор сочетаний, то он должен срабатывать при запуске из Публта, из менб Инструментов (шестеренка) и обновлять списки, а при каждом редактировании таблицы "Активности Базовых стилей" должно быть предупреждение о необходимости обновления списков.
 */
 
-
+//ini_set('memory_limit', '2024M');
 
 ///////////////////////////////////////////////////////
 
@@ -47,63 +64,72 @@ $contextArr[$id]=array();
 //////////////////////////////////////////////////////////////////////
 
 
+//!!!! сделать все возможные сочетаия 12 контекстов, и потом из каждой поудалять антагонистов,
+//??? в список антагонистов включить минусы из таблицы
 
 
 
 
-// все рабочие сочетания (без перестановочных повторений) номеров ячеек таблицы "Активности Базовых стилей" 29316 сочетаний
+$contextsArr0=array();// сочетания контекстов
 
-/*
-$cellComb=array();
-$nNumbers=56;
-for($n=0;$n<$nNumbers;$n++)
-{
-array_push($cellComb,array($n));
-$a2=array();
-array_push($a2,$n);
-for($m=$n+1;$m<$nNumbers;$m++)
-{
-array_push($a2,$m);// добавляется по одному
-array_push($cellComb,$a2);
-} 
-}
-// из каждого сочетания убираем по 1 кроме крайних
-foreach($cellComb as $comb)
-{
-	if(count($comb)<3)
-		continue;
-	$arr=$comb;
-	for($m=1;$m<count($comb)-1;$m++)
-	{
-      unset($arr[$m]);
-	  array_push($cellComb,$arr);
+
+$combArr=array();
+$countC=count($contextArr[1]);
+$out = "";
+$arr1 = $contextArr[1];
+$arr2 = $contextArr[2];
+$arr3 = $contextArr[3];
+$arr4 = $contextArr[4];
+$arr5 = $contextArr[5];
+$arr6 = $contextArr[6];
+$arr7 = $contextArr[7];
+$arr8 = $contextArr[8];
+for ($n1=0; $n1 < $countC; $n1++) {
+	for ($n2=0; $n2 < $countC; $n2++) {
+		for ($n3=0; $n3 < $countC; $n3++) {
+			for ($n4=0; $n4 < $countC; $n4++) {
+				for ($n5=0; $n5 < $countC; $n5++) {
+					for ($n6=0; $n6 < $countC; $n6++) {
+						for ($n7=0; $n7 < $countC; $n7++) {
+							for ($n8=0; $n8 < $countC; $n8++) {
+								$out .= $arr1[$n1]."|".$arr2[$n2]."|".$arr3[$n3]."|".$arr4[$n4]."|".$arr5[$n5]."|".$arr6[$n6]."|".$arr7[$n7]."|".$arr8[$n8]; //exit($out);
+								array_push($combArr, $out);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-
 }
-// var_dump($cellComb);exit();
-*/
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/get_ubicum_combination.php");
+$combArr = array_unique($combArr); 
+var_dump($combArr);exit();
 
-$cellComb=get_ubicum_combination(56);
-//var_dump($cellComb);exit();
+$out="";
+foreach($combArr as $ccomb)
+{
+$out.=$ccomb."\r\n";
+}
+$out=md5($str)."\r\n".$out;
+write_combo_file($_SERVER["DOCUMENT_ROOT"]."/lib/contexts_combin.txt",$out);
+exit("1111");
 
 
-
+$list=read_combo_file($_SERVER["DOCUMENT_ROOT"]."/lib/contexts_combin.txt");
+$combArr = explode("\r\n", $list);   
+var_dump($combArr);exit();
 
 // по каждому сочетанию готовим суммы строк
 $contextsArr0=array();// сочетания контекстов
 $n=0;
-foreach($cellComb as $ccomb)
+foreach($combArr as $ccomb)
 {
 $sumArr=array();// сумматор значений ячеек данного сочетания $ccomb
-foreach($ccomb as $nCell)
+$pArr = explode("|", $ccomb);
+foreach($pArr as $cell)
 {
-$col1=$nCell%7; 
-$row1=(int)($nCell/7);
-$curComb1=$contextArr[$row1+1][$col1];
-$p = explode(",", $curComb1);
-$sumArr=array_merge($sumArr,$p);
+$sumArr=array_merge($sumArr,$cell);
 }
 //var_dump($pArr);exit();
 $sumArr=array_unique($sumArr);
@@ -112,7 +138,7 @@ sort($sumArr, SORT_NUMERIC);reset($sumArr);
 array_push($contextsArr0,$sumArr);
 $n++;
 }
-//var_dump($contextsArr0);exit();
+var_dump($contextsArr0);exit();
 
 
 // убрать антагонистов, отрицательнеы контексты (которые должны госиться) и перевести сочетания контекстов в строки, оставить только уникальные
@@ -210,8 +236,8 @@ if(!empty($s))
 }
 $list_name.=$s."\r\n";
 }
-write_combo_file($_SERVER["DOCUMENT_ROOT"]."/pages/combo_contexts_str.txt",$list_id);
-write_combo_file($_SERVER["DOCUMENT_ROOT"]."/pages/combo_contexts_names.txt",$list_name);
+write_combo_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/combo_contexts_str.txt",$list_id);
+write_combo_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/combo_contexts_names.txt",$list_name);
 
 
 ///////////////////////////////////////////////////
@@ -228,4 +254,19 @@ return 1;
 return 0;
 }
 //////////////////////////////////
+///////////////////////////////////////////////////
+function read_combo_file($file)
+{
+if(filesize($file)==0)
+	return "";
+$hf=fopen($file,"rb");
+if($hf)
+{
+$contents=fread($hf,filesize($file));
+fclose($hf);
+return $contents;
+}//if($hf)
+return "";
+}
+///////////////////////////////////////////////////
 ?>

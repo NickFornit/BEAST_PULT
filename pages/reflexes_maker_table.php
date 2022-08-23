@@ -87,16 +87,25 @@ $antFromId=$actionsFromPultAntagonistsArr;
 ////////////////////////////////////////////
 
 // все рабочие сочетания Пусковых стимулов
-$nNumbers=count($actionsFromPultArr);         
-// все рабочие сочетания Пусковых стимулов
+$nNumbers=count($actionsFromPultArr);  
+
+
+
+
+
+// все рабочие сочетания Пусковых стимулов НЕ РАБОТАЕТ
+//
+//
+
+
+
+
+// var_dump($triggersComb);exit();
+
+
+// Пусковые стимулы
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/get_ubicum_combination.php");
-
 $triggersComb=get_ubicum_combination($nNumbers);
-//var_dump($triggersComb);exit();
-
-
-
-
 ////////////////////////////////////////////
 // пустые строки - заготовки рефлексов: все возможные сочетания пусковых стимулов
 $actionArr=array();// ID выбранных акций
@@ -106,7 +115,7 @@ $aList="";// набор акций в виде строки
 $aArr=array();// набор акций в виде массива
 foreach ($nTArr as $nT)
 {
-$idT=$nT+1;// id пускового стимула
+$idT=(int)($nT)+1;// id пускового стимула
 
 // убрать антагонистов
 $isAntagonist=0;
@@ -162,8 +171,8 @@ if(!empty($s))
 }
 $list_name.=$s."\r\n";
 }
-write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/list_triggers_str.txt",$list_id);
-write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/list_triggers_names.txt",$list_name);
+write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers_str.txt",$list_id);
+write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers_names.txt",$list_name);
 
 
 

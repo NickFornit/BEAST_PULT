@@ -13,7 +13,7 @@ $selected=$_GET['selected'];
 
 
 // реально возможные сочетания контекстов
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/list_triggers_str.txt");
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_str.txt");
 //$c_list=str_replace(";",",",$c_list);
 $triggersIdArr=explode("\r\n",$c_list); // var_dump($triggersIdArr);exit();
 $nsel=0;
@@ -30,7 +30,7 @@ $n++;
 }
 
 
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/list_triggers_names.txt");
+$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_names.txt");
 //$c_list=str_replace(";",",",$c_list);
 $triggersnamesArr=explode("\r\n",$c_list); // var_dump($triggersnamesArr);exit();
 $out="";

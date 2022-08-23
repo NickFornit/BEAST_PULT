@@ -134,7 +134,7 @@ if(no!=-1)
 	{
 buttons+="<input type='button' value='"+name_yes+"' class='alerts_dlg_botton' onClick='end_dlg_confirm(1)' style='position:absolute;bottom:5px;left: 30%;transform: translate(-50%, 0);'>";
 
-buttons+="<input type='button' value='"+name_no+"' class='alerts_dlg_botton' onClick='def_func();' style='position:absolute;bottom:5px;left: 70%;transform: translate(-50%, 0);'>";
+buttons+="<input type='button' value='"+name_no+"' class='alerts_dlg_botton' onClick='end_dlg_confirm(0);' style='position:absolute;bottom:5px;left: 70%;transform: translate(-50%, 0);'>";
 
 	}
 	else//!! ЕСЛИ ВТОРАЯ КНОПКА==-1 то ее не показывать
@@ -151,7 +151,7 @@ bkanking_dlg(1);
 }
 // закрыто второй кнопкой - если есть умолчательная функция у клиента - отработать
 function def_func()
-{ //alert("1");
+{ // alert("1");
 if(typeof(closed_dlg_confirm)=='function')
 {  //alert("2");
 closed_dlg_confirm();

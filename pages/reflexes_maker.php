@@ -1,6 +1,6 @@
 <?
 /* Редактор безусловных рефлексов
-http://go/pages/reflexes.php  
+http://go/pages/reflexes_maker.php  
 */
 
 $page_id = -1;
@@ -184,7 +184,8 @@ var id_list=combo.options[combo.selectedIndex].value; // 1;3
 cur_bcontex_choose=combo.options[combo.selectedIndex].text;
 
 
-cur_condition_choose='bsID='+bsID+'&id_list='+id_list; // alert(cur_condition_choose);
+cur_condition_choose='bsID='+bsID+'&id_list='+id_list; 
+// alert(cur_condition_choose);
 
 document.getElementById('conditions_block_id').style.display="block";
 document.getElementById('base_cond_id').innerHTML=cur_bcond_choose;
