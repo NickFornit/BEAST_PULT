@@ -144,7 +144,7 @@ echo "<div id='conditions_block_id' style='display:none'>";
 echo "<b>Выбранные условия:</b><br>";
 
 echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
-echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетения контекстов: <b><span id='base_context_name'></span></b>";
+echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетания контекстов: <b><span id='base_context_name'></span></b>";
 
 echo "</div>";
 
