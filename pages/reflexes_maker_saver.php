@@ -1,5 +1,5 @@
 <?
-/* Сохранить рефлексы табцы из http://go/pages/reflexes_maker.php 
+/* РЎРѕС…СЂР°РЅРёС‚СЊ СЂРµС„Р»РµРєСЃС‹ С‚Р°Р±С†С‹ РёР· http://go/pages/reflexes_maker.php 
 
 /pages/reflexes_maker_saver.php
 */
@@ -12,7 +12,7 @@ header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
 
-if(0)// тестирование
+if(0)// С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ
 {
 $bsID=1;
 $id_list="1,3";
@@ -27,13 +27,13 @@ $saveStr=$_POST['saveStr'];
 //exit("$bsID | $id_list | $saveStr");
 
 
- 
-$id=0;// последний существующий iD
+$id_list = str_replace(";",",",$id_list); 
+$id=0;// РїРѕСЃР»РµРґРЅРёР№ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ iD
 $progs = read_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt");
 $progs=trim($progs);
 $strArr = explode("\r\n", $progs);
 /*
-for($n=count($strArr)-1;$n>0;$n--)// нужен перебор снизу т.к. м.б. пустые строки внизу
+for($n=count($strArr)-1;$n>0;$n--)// РЅСѓР¶РµРЅ РїРµСЂРµР±РѕСЂ СЃРЅРёР·Сѓ С‚.Рє. Рј.Р±. РїСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё РІРЅРёР·Сѓ
 {
 	$lastRstr=trim($strArr[$n]);
 	if(empty($lastRstr))
@@ -41,7 +41,7 @@ for($n=count($strArr)-1;$n>0;$n--)// нужен перебор снизу т.к. м.б. пустые строки
 $p = explode("|", $lastRstr);  
 $id=$p[0]+1;
 break;
-}  уже не нужен :) т.к. $progs=trim($progs);
+}  СѓР¶Рµ РЅРµ РЅСѓР¶РµРЅ :) С‚.Рє. $progs=trim($progs);
 */
 $p = explode("|", $strArr[count($strArr)-1]);  
 $id=$p[0]+1;
