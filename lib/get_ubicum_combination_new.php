@@ -7,7 +7,7 @@ http://go/lib/get_ubicum_combination.php?max=12
 
 сочетания без повторений +yield +php
 
-//https://translated.turbopages.org/proxy_u/en-ru.ru.e09f3caa-630330f0-9080748f-74722d776562/https/stackoverflow.com/questions/25610919/all-combinations-without-repetitions-with-specific-cardinality
+https://stackoverflow.com/questions/25610919/all-combinations-without-repetitions-with-specific-cardinality
 */
 header('Content-Type: text/html; charset=UTF-8');
 set_time_limit(0);

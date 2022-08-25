@@ -19,7 +19,9 @@ if (filesize($_SERVER['DOCUMENT_ROOT'] . "/memory_reflex/condition_reflexes.txt"
 	echo "<div style='color:red;border:solid 1px #8A3CA4;padding:10px;background-color:#DDEBFF;'>Этот редактор <b>НЕ СЛЕДУЕТ ИСПОЛЬЗОВАТЬ</b> потому, что уже есть условные рефлексы.<br>Чтобы использовать редактор, нужно сбросить память Beast (на странице Пульса справа вверху нажать шестеренку и выбрать &quot;Сбросить память&quot;) <br>или <b>просто удалить содержимое в файле /memory_reflex/condition_reflexes.txt</b></div>";
 }
 
+
 echo "<div style='position:absolute;top:40px;left:500px;'><a href='/pages/reflexes_maker.php' title='Создание безусловных рефлексов в зависимости от заданных условий без коннекта с Beast.'>Набивка рефлексов</a></div>";
+
 
 echo "<div style='position:absolute;top:40px;left:700px;'><a href='/pages/reflex_tree.php'>Дерево рефлексов</a></div>";
 //exit("!!!!");

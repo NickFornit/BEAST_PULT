@@ -10,6 +10,8 @@ header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
+
+/*
 // очистить файлы:
 write_empty($_SERVER['DOCUMENT_ROOT']."/memory_reflex/base_style_images.txt");
 write_empty($_SERVER['DOCUMENT_ROOT']."/memory_reflex/condition_reflexes.txt");
@@ -21,6 +23,9 @@ copy($_SERVER['DOCUMENT_ROOT']."/tools/memory_reflex0/phrase_tree.txt", $_SERVER
 copy($_SERVER['DOCUMENT_ROOT']."/tools/memory_reflex0/word_tree.txt", $_SERVER['DOCUMENT_ROOT']."/memory_reflex/word_tree.txt");
 copy($_SERVER['DOCUMENT_ROOT']."/tools/memory_reflex0/terminal_actons.txt", $_SERVER['DOCUMENT_ROOT']."/memory_reflex/terminal_actons.txt");
 copy($_SERVER['DOCUMENT_ROOT']."/tools/memory_reflex0/GomeostazParams.txt", $_SERVER['DOCUMENT_ROOT']."/memory_reflex/GomeostazParams.txt");
+
+
+// теперь - просто залить архив /tools/bot_files_save/birthday.zip
 
 
 // очистить все в папке memory_psy
@@ -39,7 +44,7 @@ write_empty($dir.$file);
 }
 closedir($dh);
 }
-
+*/
 
 
 echo "!";

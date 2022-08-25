@@ -26,7 +26,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/reflexes_maker_context_combinat
 ///////////////////////////////////////////////////////
 
 // антагонисты
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_antagonists.txt");
+$progs = read_combo_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_antagonists.txt");
 $strArr = explode("\r\n", $progs);  //exit("$progs");
 $antFromId = array();// антагонисты для каждого выбранного в списке $get_list ID контекста
 foreach ($strArr as $str) {
@@ -47,7 +47,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 
 
 ////////// таблица Активности Базовых стилей
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_activnost.txt");
+$progs = read_combo_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/base_context_activnost.txt");
 $strArr = explode("\r\n", $progs);  //exit("$progs");
 $contextArr = array();
 foreach ($strArr as $str) {
@@ -67,41 +67,86 @@ $contextArr[$id]=array();
 //!!!! сделать все возможные сочетаия 12 контекстов, и потом из каждой поудалять антагонистов,
 //??? в список антагонистов включить минусы из таблицы
 
+ДОБАВЛЯТЬ ПЕРЕБОРЫ К УЖЕ СУЩЕСТВУЮЩЕМУ ПРЕДЫДУЩЕМУ, записывая результат в вызодной массив !!!
+
+???
+$outArr=array();// в выходной массив добавляется (array_push) $curArr с каждой итерацией, т.е. после каждой итерации он возрастает на 7*8=56 элементов. Всего в нем станет 7*56 элементов.
+$curArr=array();// текущий суммирующий массив 56 элементов - с каждой итерацией накапливает цифры ID при сдвиге следующей строки с уборкой повторов
+
+/* попытка повторить то, что в ГО
+$nid=array();
+$outArr=array();
+$gCArr=$contextArr;
+$cols=count($gCArr[1]);
+$rows=8;
+// собираются все значения переборов ячеек в одну строку
+for ($i = 1; $i < $rows; $i++) {
+	iterate($i);
+}
+function iterate($nrow)
+{
+	global $outArr,$gCArr,$cols;
+	$outArr[$nrow]=array();
+//for ($n = 0; $n < $cols; $n++) {
+		$out="";
+		for ($i = 0; $i < $cols; $i++) {
+			if ($i>0){$out .=",";}
+			$out .=$gCArr[$nrow][$i];
+			// собираются все значения данного набора ячеек в одну строку
+			//exit("$out");
+			array_push($outArr[$nrow],$out);
+		}
+	//}
+}
+//var_dump($outArr);exit();
+
+// теперь нужно перебрать эти 7 $outArr[$nrow] по сочетаниям без повторений 7 значений
+
+/// все комбинации по 7 без повторов
+function comb($m, $words) {
+    if (!$m) {
+        yield [];
+        return;
+    }
+    if (!$words) {
+        return;
+    }
+    $h = $words[0];
+    $t = array_slice($words, 1);
+    foreach(comb($m - 1, $t) as $c)
+        yield array_merge([$h], $c);
+    foreach(comb($m, $t) as $c)
+        yield $c;
+}
+$words = array();
+for($m=0;$m<7;$m++)
+array_push($words,$m);
+
+$cur_comb=array();
+foreach(range(1, 7) as $n)
+{
+    foreach(comb($n, $words) as $c)
+	{
+       // echo join(' ', $c), "\n";
+	   //$cur_comb.=implode('|', $c)."\r\n";
+	   array_push($cur_comb,$c);
+	}
+}
+var_dump($cur_comb);exit();
+
+
+foreach($cur_comb as $cur)
+{
+
+}
+
 
 
 
 $contextsArr0=array();// сочетания контекстов
+*/
 
 
-$combArr=array();
-$countC=count($contextArr[1]);
-$out = "";
-$arr1 = $contextArr[1];
-$arr2 = $contextArr[2];
-$arr3 = $contextArr[3];
-$arr4 = $contextArr[4];
-$arr5 = $contextArr[5];
-$arr6 = $contextArr[6];
-$arr7 = $contextArr[7];
-$arr8 = $contextArr[8];
-for ($n1=0; $n1 < $countC; $n1++) {
-	for ($n2=0; $n2 < $countC; $n2++) {
-		for ($n3=0; $n3 < $countC; $n3++) {
-			for ($n4=0; $n4 < $countC; $n4++) {
-				for ($n5=0; $n5 < $countC; $n5++) {
-					for ($n6=0; $n6 < $countC; $n6++) {
-						for ($n7=0; $n7 < $countC; $n7++) {
-							for ($n8=0; $n8 < $countC; $n8++) {
-								$out .= $arr1[$n1]."|".$arr2[$n2]."|".$arr3[$n3]."|".$arr4[$n4]."|".$arr5[$n5]."|".$arr6[$n6]."|".$arr7[$n7]."|".$arr8[$n8]; //exit($out);
-								array_push($combArr, $out);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
 
 $combArr = array_unique($combArr); 
 var_dump($combArr);exit();

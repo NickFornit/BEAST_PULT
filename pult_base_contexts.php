@@ -45,6 +45,18 @@ echo "ПЯТАЯ стадия развития: Инициативное и тв
 }
 ?>
 </b></div>
+
+
+<div id='condition_button_id' style='position:absolute;bottom:-10px;right:0px;
+background-color:#FFFFCC;
+padding-left:5px;padding-right:5px;
+border:solid 1px #8A3CA4;
+border-radius: 7px;
+text-align:center;
+cursor:pointer;
+display:none;'
+title='Вывести список текущих условий в верхний-правый угол страницы в желтом блоке.'
+onClick='show_condition_info()'>Текущие<br>условия</div>
 </div>
 
 <script>
@@ -96,7 +108,26 @@ document.getElementById("context_"+id).style.boxShadow="";
 } 
 //set_active_id(4,1);
 
+function show_condition_info()
+{
+	event.stopPropagation();
 
+	if(current_condition.length<3)
+	{alert('Не передана информация по текущим условиям.');return;}
 
+var AJAX = new ajax_support("/lib/condition_info_translate.php?current_condition="+current_condition, sent_condition_info);
+AJAX.send_reqest();
+//alert("1");
+setTimeout("rebooting()",1000);// выждать завершения процессов
+function sent_condition_info(res)
+	{  
+document.getElementById("helper_pult_id").style.display = "block";
+document.getElementById("helper_pult_id").innerHTML = "<div class='alert_exit' style='top:0; right:0;' title='закрыть' onClick='end_helper_dlg();'><span style='position:relative; top:-1px; left:1px;'>&#10006;</span></div><br>"+res;
+	}
 
+}
+function end_helper_dlg()
+{
+document.getElementById("helper_pult_id").style.display = "none";
+}
 </script>

@@ -4,6 +4,9 @@ http://go/  связь с GO <?include($_SERVER["DOCUMENT_ROOT"]."/common/linkin
 ПУЛЬТ связи с Beast
 ///////////////////// главная Пульта test ///////////////
 */
+$reflex_quick_working=0;
+if(isset($_GET['reflex_quick_working'])&&$_GET['reflex_quick_working']==1)
+$reflex_quick_working=1;// режим быстрой набивки б.рефлексов в зависимости от выставляемых условий без коннекта с Beast.
 
 $page_id = 0;
 $title = "Пульт связи с Beast";
@@ -20,8 +23,21 @@ include_once($_SERVER["DOCUMENT_ROOT"] . "/tools/tools.php");
 $stages = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/stages.txt");
 $stages = trim($stages);
 
+echo '<div id="helper_pult_id" style="position:fixed;z-index:1000;top:0px;right:0px;
+background-color:#FFFFCC; height:;
+padding:6px;
+box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);
+border:solid 1px #81853D; border-radius: 7px;
+display:none;"></div>';
+
 echo "<div class='main_page_div' style=''>";
 
+if($reflex_quick_working)
+{
+echo "<div style='position:absolute;top:-30px;left:300px;font=size:19px;color:#00C200;'><b>Это - режим быстрой набивки безусловных рефлексов</b></div>";
+}
+else
+{
 echo "<div style='position:absolute;top:-30px;left:300px;'>
 <span id='link_warning_id' style=''></span>
 
@@ -46,6 +62,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/linking.php");
 <?
 // возраст:
 echo "<div id='life_time_id' style='position:absolute;top:0px;right:0px;'></div>";
+}
 
 
 echo "<div style='position:absolute;top:-66px;right:10px;cursor:pointer;color:blue;' onClick='open_anotjer_win(`/pages/main_help.htm`)'><b>Как использовать Пульт</b></div>";
@@ -62,16 +79,38 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_base_contexts.php");
 
 
 
+///////////////////////  НАБИВКА РЕФЛЕКСОВ
+if($reflex_quick_working)
+{
+echo "<div style='margin-top:10px;background-color:#eeeeee;padding:10px;border:solid 1px #8A3CA4;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);'><b>Это - режим быстрой набивки безусловных рефлексов в зависимости от выставляемых условий без коннекта с Beast.</b>";
+
+echo "<br>Пояснение:
+<br>
+<br>
+<br>
+";
+
+echo "<br><a href='/pult.php'>Переключить нормальный режим Пульта</a>";
+
+echo "</div>";
+}
+else
+{
+
 // Диалог общения с Beast
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_Bot_dialog.php");
+}
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_actions.php");
 
 // показ дейстивий и фраз от Beast
 include_once($_SERVER['DOCUMENT_ROOT'] . "/show_bot_actions.php");
 
+if(!$reflex_quick_working)
+{
 // консоль событий
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_consol.php");
+}
 
 
 echo "</div>";
@@ -357,7 +396,7 @@ echo "</div>";
 			return;
 		}
 		oldActipnStr = conditions;
-		//alert(conditions);
+		// alert(conditions);
 
 		var reason = "Для данных условий нет безусловного рефлекса";
 		if (ignor) {

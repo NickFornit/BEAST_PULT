@@ -50,71 +50,42 @@ case 3: return "3 Хорошо"; break;
 	} 
 }
 ////////////////////////////////////////
+
 function get_info_2($str)
 {
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 $inf="";
 $pArr=explode(",",$str);
 foreach($pArr as $s)
 {
-	$s=trim($s);
+$s=trim($s);
 	if(empty($s))
 		continue;
 if(!empty($inf))
 	$inf.="; ";
-	switch($s)
-	{
-case 1: $inf.="1 Пищевой "; break;
-case 2: $inf.="2 Поиск"; break;
-case 3: $inf.="3 Игра"; break;
-case 4: $inf.="4 Гон"; break;
-case 5: $inf.="5 Защита"; break;
-case 6: $inf.="6 Лень"; break;
-case 7: $inf.="7 Ступор"; break;
-case 8: $inf.="8 Страх"; break;
-case 9: $inf.="9 Агрессия"; break;
-case 10: $inf.="10 Злость"; break;
-case 11: $inf.="11 Доброта"; break;
-case 12: $inf.="12 Сон"; break;
-	} 
+$inf.=$s."&nbsp;".$baseContextArr[$s][0];
 }
 return $inf;
 }
 //////////////////////////////////////////
+
 function get_info_3($str)
 {
 	if(empty($str))
 	{
 return "Любые действия или без действий.";
 	}
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/actions_from_pult.php");
 $inf="";
-$pArr=explode(",",$str);   // exit($str);
+$pArr=explode(",",$str);
 foreach($pArr as $s)
 {
-	$s=trim($s);
+$s=trim($s);
 	if(empty($s))
 		continue;
 if(!empty($inf))
 	$inf.="; ";
-	switch($s)
-	{
-case 1: $inf.="1 Непонятно"; break;
-case 2: $inf.="2 Понятно"; break;
-case 3: $inf.="3 Наказать"; break;
-case 4: $inf.="4 Поощрить"; break;
-case 5: $inf.="5 Накормить"; break;
-case 6: $inf.="6 Успокоить"; break;
-case 7: $inf.="7 Предложить поиграть"; break;
-case 8: $inf.="8 Предложить поучить"; break;
-case 9: $inf.="9 Игнорировать"; break;
-case 10: $inf.="10 Сделать больно"; break;
-case 11: $inf.="11 Сделать приятно"; break;
-case 12: $inf.="12 Заплакать"; break;
-case 13: $inf.="13 Засмеяться"; break;
-case 14: $inf.="14 Обрадоваться"; break;
-case 15: $inf.="15 Испугаться"; break;
-case 16: $inf.="16 Простить"; break;
-case 17: $inf.="17 Вылечить"; break;
-	} 
+$inf.=$s."&nbsp;".$actionsFromPultArr[$s][0];
 }
 return $inf;
 }
