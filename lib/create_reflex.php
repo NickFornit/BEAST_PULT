@@ -11,6 +11,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 $aStr=$_GET['aStr'];
 $conditions=$_GET['conditions'];
+$conditions=str_replace(" ","",$conditions);
 
 
 $content=read_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt");
@@ -58,7 +59,7 @@ $content.="\r\n".$newr;
 }
 
 //exit("<hr>".$isRepaled."<hr>".$content);
-$progs=write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt",$content);
+$progs=write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt",trim($content));
 
 echo "!";
 ///////////////////////////////////////////////////
