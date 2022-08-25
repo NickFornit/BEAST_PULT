@@ -406,8 +406,9 @@ echo "</div>";
 		show_dlg_alert2("<br><span style='font-weight:normal;'>" + reason + "<br>(редактор http://go/pages/reflexes.php)</span><br><br><span onClick='choose_actions(`" + conditions + "`)' style='cursor:pointer;color:blue;'>Создать подходящий рефлекс</span><br><br><span onClick='stop_reflex_create()' style='cursor:pointer;color:blue;'>Больше не показывать этот диалог</span>", 2);
 	}
 
-	function choose_actions(conditions) {
+function choose_actions(conditions) {
 		//alert(conditions);
+/*		
 		var AJAX = new ajax_support("/lib/get_action_choose.php?id=0", sent_act_info);
 		AJAX.send_reqest();
 
@@ -415,11 +416,23 @@ echo "</div>";
 			//alert(res);
 			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса:<br>(Lkz dsltktybq используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Создать рефлекс' onClick='create_reflex(`" + conditions + "`)'>", 2);
 		}
-	}
+		
+*/
+//show_dlg_alert(nid,0);
+event.stopPropagation();
+		var AJAX = new ajax_support("/lib/get_actions_list.php?selected=", sent_act_info);
+		AJAX.send_reqest();
 
-	function create_reflex(conditions) {
+		function sent_act_info(res) { //alert(res);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>(используйте Ctrl+клик и Shift+клик)<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='create_reflex(`" + conditions + "`)'>", 2);
+		}
+		
+}
+
+function create_reflex(conditions) {  
+/*	
 		var aStr = ""; // <option class='a_option'
-		var combo = document.getElementById('actions_combo');
+		var combo = document.getElementById('actions_combo');  // alert(res);
 		var len = combo.options.length;
 		for (var n = 0; n < len; n++) {
 			if (combo.options[n].selected == true) {
@@ -428,6 +441,26 @@ echo "</div>";
 				aStr += combo.options[n].id;
 			}
 		}
+alert(aStr);
+		document.getElementById("lev4_" + nid).value = aStr;
+
+		end_dlg_alert2();
+*/
+var aStr = "";
+var nodes = document.getElementsByClassName('chbx_identiser'); //alert(nodes.length);
+for(var i=0; i<nodes.length; i++) 
+{
+if(nodes[i].checked)
+	{
+if(aStr.length > 0)
+	aStr += ",";
+aStr += nodes[i].value;
+	}
+}
+//alert(aStr);
+//document.getElementById("lev4_" + nid).value = aStr;
+end_dlg_alert2();
+
 		var qw = "/lib/create_reflex.php?aStr=" + aStr + "&conditions=" + conditions;
 		//alert(qw);return;
 		var AJAX = new ajax_support(qw, sent_cr_info);
@@ -441,7 +474,7 @@ echo "</div>";
 			//alert(res);
 			show_dlg_alert2("Рефлекс создан. Нужно выключить и включить Beast чтобы были восприняты новые рефлексы.<br><span style='color:blue;cursor:pointer;' onClick='reload_beast()'>Перезагрузить Beast</span> (~1,5 сек)", 2);
 		}
-	}
+}
 
 	function stop_reflex_create() {
 		stopReflexCreate = 1;

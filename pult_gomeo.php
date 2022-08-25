@@ -228,7 +228,7 @@ document.getElementById('condition_button_id').style.display="block";
 else
 document.getElementById('condition_button_id').style.display="none";
 
-//alert(p[5]);
+// alert(p[5]);
 		if (p[5].indexOf("NOREFLEX") == 0) {
 			dialog_no_reflex(current_condition, 0);
 		}
