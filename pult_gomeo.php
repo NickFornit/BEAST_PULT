@@ -92,6 +92,9 @@ EOD;
 </table>
 
 <script>
+// текущие условия в виде "3|2,5,8|11" - базовое|сочетание контекстов|пусковые стимулы
+var current_condition="";
+
 	//get_cut_bot_params();// начать опрос состояния Beast раз в 2 сек
 	var consol_win_id = 0;
 	var slider_timerId = 0;
@@ -198,6 +201,7 @@ EOD;
 			document.getElementById('status_' + id).style.backgroundColor = color2;
 			document.getElementById('status_' + id).title = title;
 		}
+
 		get_context_info(p[2]);
 
 		//document.getElementById('gpar_1_2').innerHTML=p[3];
@@ -210,11 +214,28 @@ EOD;
 		var days = parseInt((p[4] % (3600 * 24 * 365)) / (3600 * 24)); //alert(yeas+" | "+days);
 		document.getElementById('life_time_id').innerHTML = "Возраст: " + yeas + " лет " + days + " дней";
 
+/* постоянно доступно текущее состояние:
+1|2,5,8|11
+Базовое состояние
+Активные контексты
+Пусковые стимулы
+*/
+current_condition=p[3];  // alert(current_condition);
+if(current_condition.length>3)
+{
+document.getElementById('condition_button_id').style.display="block";
+}
+else
+document.getElementById('condition_button_id').style.display="none";
+
+//alert(p[5]);
 		if (p[5].indexOf("NOREFLEX") == 0) {
-			dialog_no_reflex(p[5].substr(8), 0);
+			dialog_no_reflex(current_condition, 0);
 		}
 		if (p[5].indexOf("IGNORED") == 0) {
-			dialog_no_reflex(p[5].substr(8), 1);
+			dialog_no_reflex(current_condition, 1);
 		}
+
+		
 	}
 </script>

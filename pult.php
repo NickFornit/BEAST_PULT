@@ -20,6 +20,13 @@ include_once($_SERVER["DOCUMENT_ROOT"] . "/tools/tools.php");
 $stages = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/stages.txt");
 $stages = trim($stages);
 
+echo '<div id="helper_pult_id" style="position:fixed;z-index:1000;top:0px;right:0px;
+background-color:#FFFFCC; height:;
+padding:6px;
+box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);
+border:solid 1px #81853D; border-radius: 7px;
+display:none;"></div>';
+
 echo "<div class='main_page_div' style=''>";
 
 echo "<div style='position:absolute;top:-30px;left:300px;'>
@@ -58,7 +65,6 @@ include_once($_SERVER["DOCUMENT_ROOT"] . "/pult_gomeo.php");
 
 // Индикация активных базовых контекстов
 include_once($_SERVER['DOCUMENT_ROOT'] . "/pult_base_contexts.php");
-
 
 
 
@@ -357,7 +363,7 @@ echo "</div>";
 			return;
 		}
 		oldActipnStr = conditions;
-		//alert(conditions);
+		// alert(conditions);
 
 		var reason = "Для данных условий нет безусловного рефлекса";
 		if (ignor) {
