@@ -52,10 +52,12 @@ if(act.length!=2)
 alert("Неверно прописана акция: "+act_str);
 return; // кривая акция
 	}
+//	alert(actKind);
 actKind=act[0];   //actKind=3;
 actStr=act[1];
+
 if(actKind==1)
-aOut+="<b>Beast делает:</b><br>"+actStr+"<br>";
+aOut+="<b>Безусловный рефлекс:</b><br>"+actStr+"<br>";
 else
 if(actKind==2)
 aOut+="<b>Beast говорит:</b><br>"+actStr+"<br>";

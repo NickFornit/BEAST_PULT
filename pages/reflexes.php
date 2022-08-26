@@ -367,11 +367,14 @@ if(removeNotAllowe)
 		tbl.rows[currow].insertCell(1);
 		tbl.rows[currow].cells[1].innerHTML = "<input class='table_input' type='text' name='id2[" + lastID + "]' <? echo only_int_inp(); ?>  value=''  >";
 		tbl.rows[currow].insertCell(2);
-		tbl.rows[currow].cells[2].innerHTML = "<input class='table_input' type='text' name='id3[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' >";
+		tbl.rows[currow].cells[2].className="table_cell";
+		tbl.rows[currow].cells[2].innerHTML = "<input  id='lev2_"+ lastID + "' class='table_input' type='text' name='id3[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' ><img src='/img/down17.png' class='select_control' onClick='show_control(this,2,"+ lastID + ")' title='Выберите сочетание'>";
 		tbl.rows[currow].insertCell(3);
-		tbl.rows[currow].cells[3].innerHTML = "<input class='table_input' type='text' name='id4[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' >";
+		tbl.rows[currow].cells[3].className="table_cell";
+		tbl.rows[currow].cells[3].innerHTML = "<input id='lev3_"+ lastID + "' class='table_input' type='text' name='id4[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' ><img src='/img/down17.png' class='select_control' onClick='show_control(this,3,"+ lastID + ")' title='Выберите сочетание'>";
 		tbl.rows[currow].insertCell(4);
-		tbl.rows[currow].cells[4].innerHTML = "<input class='table_input' type='text' name='id5[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' >";
+		tbl.rows[currow].cells[4].className="table_cell";
+		tbl.rows[currow].cells[4].innerHTML = "<input id='lev4_"+ lastID + "' class='table_input' type='text' name='id5[" + lastID + "]' <? echo only_numbers_and_Comma_input(); ?>   value='' ><img src='/img/down17.png' class='select_control' onClick='show_control(this,4,"+ lastID + ")' title='Выберите сочетание'>";
 
 		lastID++;
 	}
