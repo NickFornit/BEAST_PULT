@@ -292,7 +292,7 @@ document.onkeydown = function(event) {
 		if (is_press_strl) {
 			if (kCode == 83) {
 				event.preventDefault();
-alert(is_table_shoved);
+//alert(is_table_shoved);
 	if(!is_table_shoved)
 		return false;
 				//alert("!!!!! ");
