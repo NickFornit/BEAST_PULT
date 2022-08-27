@@ -27,6 +27,7 @@ $get_list=explode(";",$id_list);
 ?>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
+var is_table_shoved=0;// 1 таблица показывается
 function get_table()
 {
 var link="/pages/reflexes_maker_table.php?"+cur_condition_choose;
@@ -42,6 +43,7 @@ show_dlg_alert(res,0);
 return;
 }
 document.getElementById('table_id').innerHTML=res.substr(1);
+is_table_shoved=1;
 }
 }
 </script>
@@ -114,6 +116,7 @@ return;
 document.getElementById('context_variations_id').innerHTML=res.substr(1); //show_dlg_alert(res.substr(1),0);
 document.getElementById('button_table_id').style.display="";
 document.getElementById('hr_table_id').style.display="block";
+
 }
 }
 get_context_variations(1);// сразу показать 
@@ -140,7 +143,8 @@ echo "<div style='position:relative;'>
 //var_dump($contextsArr);exit();
 //////////////////////////////////////////////////////////////
 
-echo "<div id='conditions_block_id' style='display:none'>";
+echo "<div id='conditions_block_id' style='position:relative;display:none'>";
+echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='reflex_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение рефлексов</span> - по <b>Ctrl+S</b></div>";
 echo "<b>Выбранные условия:</b><br>";
 
 echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
@@ -239,6 +243,7 @@ return;
 show_dlg_alert("Записаны новые рефлексы.",2000);
 // убрать таблицу, чтобы второй раз не записывать (т.к. там нет ID рефлексов у только что записанных)
 document.getElementById('table_id').innerHTML="";
+is_table_shoved=0;
 }
 }
 ////////////////////////////////
@@ -273,6 +278,37 @@ aStr += nodes[i].value;
 		document.getElementById("input_" + nid).value = aStr;
 
 		end_dlg_alert2();
+}
+/////////////////////////////////////////
+	// сохранение по Ctrl+S
+var is_press_strl = 0;
+document.onkeydown = function(event) { 
+		var kCode = window.event ? window.event.keyCode : (event.keyCode ? event.keyCode : (event.which ? event.which : null))
+
+		//alert(kCode);
+		if (kCode == 17) // ctrl
+			is_press_strl = 1;
+
+		if (is_press_strl) {
+			if (kCode == 83) {
+				event.preventDefault();
+alert(is_table_shoved);
+	if(!is_table_shoved)
+		return false;
+				//alert("!!!!! ");
+				save_CTRRLS();
+				is_press_strl = 0;
+				return false;
+			}
+		}
+}
+function save_CTRRLS()
+{
+show_dlg_confirm("Сохранить рефлексы?",1,-1,reflex_saver);
+}
+function close_all_dlg()
+{
+// просто чтобы была такая пустая и не было варннига при закрытии по фону
 }
 </script>
 
