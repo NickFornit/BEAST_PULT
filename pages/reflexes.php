@@ -268,7 +268,7 @@ else
 			$title = "";
 			if (empty($par[1])) {
 				$bg = "style='background-color:#FFDADD;'";
-				$title = "title='Рефлекс будет привящан ко всем узлам дерева данного уровня.'";
+				$title = "title='Рефлекс будет привязан ко всем узлам дерева данного уровня.'";
 			}
 			echo "<td class='table_cell'><input class='table_input firstlevel' type='text' name='id2[" . $id . "]' " . only_int_inp() . "  value='" . $par[1] . "'  " . $bg . " " . $title . "></td>";
 			$bg = "";
@@ -327,17 +327,23 @@ echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%
 </form>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
-	function check_and_sabmit(removeNotAllowe) {
-if(removeNotAllowe)
-			{
-	document.getElementById('removeNotAllowe_id').value=1;
-			}  
+
+function check_and_sabmit(removeNotAllowe) {
+	if(removeNotAllowe)
+		document.getElementById('removeNotAllowe_id').value=1;
 
 		var nodes = document.getElementsByClassName('firstlevel'); //alert(nodes.length);
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].value.length == 0) {
-				show_dlg_alert("ID 1 и 2-го  уровеня (стоблцы 2 и 3) должны быть заполнены.", 0); 
+				show_dlg_alert("ID 1 и 2-го  уровня (стоблцы 2 и 3) должны быть заполнены.", 0); 
 				return;
+			}
+			if (nodes[i].id == "") {
+				const base_arr = ["1", "2", "3"];
+				if (base_arr.indexOf(nodes[i].value) == -1) {
+					show_dlg_alert("Указан несуществующий ID базового состояния: " + nodes[i].value + "!", 0);
+					return;
+				}
 			}
 		}
 		//document.forms.form.submit();
