@@ -203,13 +203,25 @@ border-radius: 4px;
 #box-shadow: 2px 2px 2px 0px rgba(122,122,122,0.3);
 cursor:pointer;
 }
+.action_poz1 {
+  width:80px;
+  display:inline-block;
+}
+.action_poz2 {
+  width:90px;
+  display:inline-block;
+}
+.action_poz3 {
+  width:120px;
+  display:inline-block;
+}
 .actions_red
 {
 background-color:#FFC9D0;
 }
 .actions_green
 {
-background-color:#E4FFEB;
+background-color:#9ff0b3;
 }
 .actions_blue
 {
@@ -217,7 +229,7 @@ background-color:#C5F5FF;
 }
 .actions_gray
 {
-background-color:#eeeeee;
+background-color:#e0dfdf;
 }
 .highlighting
 {
