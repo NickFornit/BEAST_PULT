@@ -56,19 +56,24 @@ return; // кривая акция
 actKind=act[0];   //actKind=3;
 actStr=act[1];
 
-if(actKind==1)
+switch(actKind)
+{
+case "0":
+aOut+="<b>Простейший инстинкт:</b><br>"+actStr+"<br>";
+break;
+case "1":
 aOut+="<b>Безусловный рефлекс:</b><br>"+actStr+"<br>";
-else
-if(actKind==2)
+break;
+case "2":
 aOut+="<b>Beast говорит:</b><br>"+actStr+"<br>";
-else
-if(actKind==3)// автоматизм
+break;
+case "3":// автоматизм
 aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Автоматизм:</b><br>"+actStr+"</div>";
-else
-	{
+break;
+default:
 alert("Неверно прописана акция: "+act_str);
-return; // кривая акция
-	}
+break; // кривая акция
+}
 }
 
 show_dlg_bot_action(aOut);

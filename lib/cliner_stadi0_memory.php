@@ -25,7 +25,7 @@ function cliner_file($file)
 $hf=fopen($file,"wb+");
 if($hf)
 {
-fwrite($hf,$content,"");
+fwrite($hf,"",0);
 fclose($hf);
 return 1;
 }
