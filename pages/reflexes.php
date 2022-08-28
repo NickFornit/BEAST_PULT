@@ -60,22 +60,19 @@ if (isset($_GET['delete_id'])) {
 	$str = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
 	$list = explode("\r\n", $str);  //exit("! $str | ".$_GET['delete_id']);
 	$wArr = array();
-	$out = "";
-	$n = 0;
+	$out = "";   
 	foreach ($list as $s) {
 		if (empty($s)) {
-			$n++;
 			continue;
 		}
-		//exit("! $id | $s");
-		if ($n == $deln) {
-			$n++;
+		$id=(int)substr($s,0,strpos($s,'|'));
+		//	exit("! $s <hr> $id");
+		if ($id == $deln) {     
 			continue;
 		}
 		$out .= $s . "\r\n";
-		$n++;
 	}
-	//exit("! $deln | $n");
+	//exit("! $out | $n");
 	write_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt", $out);
 
 	echo "<form name=\"refresh\" method=\"post\" action=\"/pages/reflexes.php\"></form>";
@@ -184,6 +181,9 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 <span class="filtre_item" onClick='set_philter(3)' <?echo set_filter_bg(3)?>>Хорошо</span>&nbsp;&nbsp;&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?>>Без Пусковых стимулов</span>
 <span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
+
+<div style='position:absolute;top:0px;right:150px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
+<div style='position:absolute;top:0px;right:0px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
 </div>
 <?
 function set_filter_bg($nF)
@@ -302,7 +302,7 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 				$title = "title='Рефлекс - БЕЗ ДЕЙСТВИЙ!'";
 			}
 			echo "<td class='table_cell'><input id='lev4_" . $id . "' class='table_input' type='text' name='id5[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[4] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,4," . $id . ")' title='Выбор значений'></td>";
-			echo "<td class='table_cell' align='center'  title='Удалить рефлекс'><a href='/pages/reflexes.php?delete_id=" . $n . "' onclick='return confirm(\"Точно удалить?!\")'><img src='/img/delete.gif'></a></td>
+			echo "<td class='table_cell' align='center'  title='Удалить рефлекс' style='cursor:pointer;' onclick='event.stopPropagation();remove_reflex(" . $id . ")'><img src='/img/delete.gif'></td>
 </tr>";
 			$n++;
 			$lastID = $id + 1;
@@ -605,6 +605,44 @@ var link='/pages/reflexes.php?selected='+kind;
 echo "link+='&sorting=".$sorting."';";	
 }?>
 location.href=link;
+}
+//////////// удаление
+var cur_del_id=0;
+function remove_reflex(id)
+{ 
+cur_del_id=id;
+show_dlg_confirm("Рефлекс может быть включен в зависимые от него файлы памяти, которые будет необходимо очистить полностью: щелкнуть по Очистить память.","Удалить","Отменить удаление",remove_reflex2);
+}
+function remove_reflex2()
+{
+location.href="/pages/reflexes.php?delete_id="+cur_del_id;
+}
+////////////////////////////////////
+function cliner_reflex_memory()
+{
+show_dlg_confirm("Очистить память, зависимую от рефлексов: Дерево безусловных и условных рефлексов.","Очистить","Отменить",cliner_reflex_memory2);
+}
+function cliner_reflex_memory2()
+{
+var AJAX = new ajax_support("/lib/cliner_reflex_memory.php", sent_cliner_reflex_memory);
+AJAX.send_reqest();
+function sent_cliner_reflex_memory(res) {
+show_dlg_alert("Память, зависимая от рефлексов, очищена. Теперь дерево рефлексов будет формироваться заново.",0);
+}
+}
+/////////////////////////////
+function cliner_reflexes()
+{
+show_dlg_confirm("Удалить ВСЕ РЕФЛЕКСЫ и память, зависимую от рефлексов: Дерево безусловных и условных рефлексов.","Удалить рефлексы","Отменить",cliner_reflexes2);
+}
+function cliner_reflexes2()
+{
+var AJAX = new ajax_support("/lib/cliner_reflexes.php", sent_cliner_reflex_reflexes);
+AJAX.send_reqest();
+function sent_cliner_reflex_reflexes(res) {
+show_dlg_alert("Рефлексы и память, зависимая от рефлексов, очищены.<br>Перезагрузка страницы.",2000);
+setTimeout("location.reload(true)",2000);
+}
 }
 </script>
 </div>

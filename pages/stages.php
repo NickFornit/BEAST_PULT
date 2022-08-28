@@ -115,7 +115,7 @@ cursor:pointer;
 <br>
 <br>
 <br>
-
+<script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 var stages='<?=$stages?>';
 var next_level=0;
@@ -124,7 +124,7 @@ function goto_stages(next)
 next_level=next;   
 if(next<stages)
 {
-show_dlg_confirm("Точно вернуться к предыдущему уровню развития?","ДА","НЕТ",gotonextlevel);
+show_dlg_confirm("Точно вернуться к предыдущему уровню развития? Будет удалена память, зависимая от стадии До рождения.","ДА","НЕТ",gotonextlevel);
 return;
 }
 /////////////////
@@ -136,6 +136,15 @@ gotonextlevel();
 }
 ///////////////////////
 function gotonextlevel()
+{
+var AJAX = new ajax_support("/lib/cliner_stadi0_memory.php", sent_cliner_reflex_memory);
+AJAX.send_reqest();
+function sent_cliner_reflex_memory(res) {
+show_dlg_alert("Память, зависимая от стадии До рождения, очищена.",2000);
+setTimeout("gotonextlevel2();",2000);
+}
+}
+function gotonextlevel2()
 {
 var form=document.getElementById("goto1");
 form.next.value=next_level; 
