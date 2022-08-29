@@ -9,7 +9,7 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 </select>';
 ?>
 <br>
-<div id="action_block_id" style='padding:10px;background-color:#ffffff;'>
+<div id="action_block_id" style='padding:5px;background-color:#ffffff;'>
 	<div style='position:relative;'>
 		<b>(Де)мотивирующие дйствия в ответ на действия Beast</b> (могут вызывать безусловные рефлексы):
 		<a href='/pages/reflex_tree.php' style='position:absolute;top:0px;right:0px;'>Дерево рефлексов</a>
@@ -24,14 +24,14 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='Пополнение энергии.'><?= $food_portion ?>Накормить</div>
 	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Уменьшение потребности в общении при критическом значении.">Поиграть</div>
 	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Уменьшение потребности учиться при критическом значении.">Поучить</div>
-	<br><br>
+	<br><div style='font-size:5px;'>&nbsp;</div>
 	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="Оператор понимает-одобряет действия Beast.">Понятно</div>
 	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="Поощрение действий Beast">Поощрить</div>
 	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="Улучшение нескольких показателей.">Засмеяться</div>
 	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="Улучшение нескольких показателей.">Сделать приятно</div>
 	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="Поощрить действия Beast, показать сопреживание.">Обрадоваться</div>
 	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="Показательное игнорирование.">Игнорировать</div>
-	<br><br>
+	<br><div style='font-size:5px;'>&nbsp;</div>
 	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="Снижение сресса.">Успокоить</div>
 	<div id="act_16" class='actions actions_blue action_poz1' onClick="to_action(16)" title="Улучшение ранее ухудшенных состояний.">Простить</div>
 	<div id="act_17" class='actions actions_blue action_poz1' onClick="to_action(17)" title="Улучшение параметра Повреждения.">Вылечить</div>
