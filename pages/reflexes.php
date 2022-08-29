@@ -286,14 +286,14 @@ $c_title="title='НЕВОЗМОЖНОЕ сочетание Базовых кон
 $notAllowContexts=1;// 1 - есть невозможные сочетания контекстов
 }
 
-			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $c_title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,2," . $id . ")' title='Выберите сочетание'></td>";
+			echo "<td class='table_cell'><input id='lev2_" . $id . "' class='table_input firstlevel' type='text' name='id3[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[2] . "' " . $bg . " " . $c_title . "><img src='/img/down17.png' class='select_control' onClick='event.stopPropagation();show_control(this,2," . $id . ")' title='Выберите сочетание'></td>";
 			$bg = "";
 			$title = "";
 			if (empty($par[3])) {
 				$bg = "style='background-color:#FFDADD;'";
 				$title = "title='Рефлекс будет привящан ко всем узлам дерева данного уровня.'";
 			}
-			echo "<td class='table_cell'><input id='lev3_" . $id . "' class='table_input' type='text' name='id4[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[3] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,3," . $id . ")' title='Выбор значений'></td>";
+			echo "<td class='table_cell'><input id='lev3_" . $id . "' class='table_input' type='text' name='id4[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[3] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='event.stopPropagation();show_control(this,3," . $id . ")' title='Выбор значений'></td>";
 
 			$bg = "";
 			$title = "";
@@ -301,7 +301,7 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 				$bg = "style='background-color:#FFB8B8;'";
 				$title = "title='Рефлекс - БЕЗ ДЕЙСТВИЙ!'";
 			}
-			echo "<td class='table_cell'><input id='lev4_" . $id . "' class='table_input' type='text' name='id5[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[4] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='show_control(this,4," . $id . ")' title='Выбор значений'></td>";
+			echo "<td class='table_cell'><input id='lev4_" . $id . "' class='table_input' type='text' name='id5[" . $id . "]' " . only_numbers_and_Comma_input() . "  value='" . $par[4] . "' " . $bg . " " . $title . "><img src='/img/down17.png' class='select_control' onClick='event.stopPropagation();show_control(this,4," . $id . ")' title='Выбор значений'></td>";
 			echo "<td class='table_cell' align='center'  title='Удалить рефлекс' style='cursor:pointer;' onclick='event.stopPropagation();remove_reflex(" . $id . ")'><img src='/img/delete.gif'></td>
 </tr>";
 			$n++;
@@ -442,11 +442,14 @@ if(parseInt(document.getElementById('lib_block_id').style.height)==0)
 	////////////////////////////
 	function set_help(tr, inf) {
 		document.getElementById("helper_id").style.display = "block";
-		document.getElementById("helper_id").innerHTML = inf;
+		document.getElementById("helper_id").innerHTML = "<div class='alert_exit' style='top:0; right:0;' title='закрыть' onClick='end_helper_dlg();'><span style='position:relative; top:-1px; left:1px;'>&#10006;</span></div><br>"+inf;
 	}
-
+function end_helper_dlg()
+{
+document.getElementById("helper_id").style.display = "none";
+}
 	window.onmouseup = function(e) {
-		document.getElementById("helper_id").style.display = "none";
+		//document.getElementById("helper_id").style.display = "none";
 		var nodes = document.getElementsByClassName('highlighting'); //alert(nodes.length);
 		for (var i = 0; i < nodes.length; i++) {
 			nodes[i].style.border = "solid 1px #000000";
@@ -456,6 +459,7 @@ if(parseInt(document.getElementById('lib_block_id').style.height)==0)
 	////////////////////////////
 	function show_control(img, kind, id) {
 		event.stopPropagation();
+		event.preventDefault();
 // alert(kind+" | "+id);
 if(kind==2)// более удобный контрол сочетаний контекстов
 {
