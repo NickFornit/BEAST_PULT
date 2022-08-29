@@ -11,30 +11,45 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 <br>
 <div id="action_block_id" style='padding:5px;background-color:#ffffff;'>
 	<div style='position:relative;'>
-		<b>(Де)мотивирующие дйствия в ответ на действия Beast</b> (могут вызывать безусловные рефлексы):
+		<b>(Де)мотивирующие дйствия в ответ на действия Beast</b> (Пусковые стимулы):
 		<a href='/pages/reflex_tree.php' style='position:absolute;top:0px;right:0px;'>Дерево рефлексов</a>
 	</div>
-	Могут быть совершены несколько действий подряд, контекст которых удерживается в течении 10 пульсов для рефлексов. Для психики контекст последнего действия остается до следующего любого действия или до 100 пульсов.<br>
-	<br>
-	<div id="act_1" class='actions actions_red action_poz1' onClick="to_action(1)" title="Оператору непонятны-неодобряет действия Beast.">Непонятно</div>
-	<div id="act_3" class='actions actions_red action_poz1' onClick="to_action(3)" title="Наказание за действия Beast.">Наказать</div>
-	<div id="act_12" class='actions actions_red action_poz1' onClick="to_action(12)" title="Показательная обида">Заплакать</div>
-	<div id="act_10" class='actions actions_red action_poz3' onClick="to_action(10)" title="Увеличить повреждения.">Сделать больно</div>
-	<div id="act_15" class='actions actions_red action_poz2' onClick="to_action(15)" title="Показательное недовольство опасными действиями Beast.">Испугаться</div>
-	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='Пополнение энергии.'><?= $food_portion ?>Накормить</div>
-	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Уменьшение потребности в общении при критическом значении.">Поиграть</div>
-	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Уменьшение потребности учиться при критическом значении.">Поучить</div>
+	Можно набрать несколько действий подряд для отсылки общего Пускового стимула (но не стоит наборать более 3-х действий). Для психики контекст Пускового стимула остается до следующего Пускового стимула или до 100 пульсов.<br>
+<?
+// вставка треугольничка отправки единственного действия
+function setGo($id)
+{
+echo "<img style='position:absolute;top:50%;transform: translate(0, -50%);right:-4px;' src='/img/go.png' onClick='event.stopPropagation();single_action(".$id.")' title='Сразу совершить это одно действие'>";
+}
+?>
+	<div style='position:relative;margin-top:5px;'>
+	<div id="act_1" class='actions actions_red action_poz1' onClick="to_action(1)" title="Оператору непонятны-неодобряет действия Beast." >Непонятно<?=setGo(1)?></div>
+	<div id="act_3" class='actions actions_red action_poz1' onClick="to_action(3)" title="Наказание за действия Beast.">Наказать<?=setGo(3)?></div>
+	<div id="act_12" class='actions actions_red action_poz1' onClick="to_action(12)" title="Показательная обида">Заплакать<?=setGo(12)?></div>
+	<div id="act_10" class='actions actions_red action_poz3' onClick="to_action(10)" title="Увеличить повреждения.">Сделать больно<?=setGo(10)?></div>
+	<div id="act_15" class='actions actions_red action_poz2' onClick="to_action(15)" title="Показательное недовольство опасными действиями Beast.">Испугаться<?=setGo(15)?></div>
+	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='Пополнение энергии.'><?= $food_portion ?>Накормить<?=setGo(5)?></div>
+	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Уменьшение потребности в общении при критическом значении.">Поиграть<?=setGo(7)?></div>
+	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Уменьшение потребности учиться при критическом значении.">Поучить<?=setGo(8)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
-	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="Оператор понимает-одобряет действия Beast.">Понятно</div>
-	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="Поощрение действий Beast">Поощрить</div>
-	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="Улучшение нескольких показателей.">Засмеяться</div>
-	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="Улучшение нескольких показателей.">Сделать приятно</div>
-	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="Поощрить действия Beast, показать сопреживание.">Обрадоваться</div>
-	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="Показательное игнорирование.">Игнорировать</div>
+	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="Оператор понимает-одобряет действия Beast.">Понятно<?=setGo(2)?></div>
+	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="Поощрение действий Beast">Поощрить<?=setGo(1)?></div>
+	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="Улучшение нескольких показателей.">Засмеяться<?=setGo(13)?></div>
+	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="Улучшение нескольких показателей.">Сделать приятно<?=setGo(11)?></div>
+	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="Поощрить действия Beast, показать сопреживание.">Обрадоваться<?=setGo(14)?></div>
+	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="Показательное игнорирование.">Игнорировать<?=setGo(9)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
-	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="Снижение сресса.">Успокоить</div>
-	<div id="act_16" class='actions actions_blue action_poz1' onClick="to_action(16)" title="Улучшение ранее ухудшенных состояний.">Простить</div>
-	<div id="act_17" class='actions actions_blue action_poz1' onClick="to_action(17)" title="Улучшение параметра Повреждения.">Вылечить</div>
+	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="Снижение сресса.">Успокоить<?=setGo(6)?></div>
+	<div id="act_16" class='actions actions_blue action_poz1' onClick="to_action(16)" title="Улучшение ранее ухудшенных состояний.">Простить<?=setGo(16)?></div>
+	<div id="act_17" class='actions actions_blue action_poz1' onClick="to_action(17)" title="Улучшение параметра Повреждения.">Вылечить<?=setGo(17)?></div>
+
+<div id="cliner_trigger_stimuls_id" class='actions' style="position:absolute;bottom:25px;right:0px;background-color:#eeeeee;color:grey;text-align:center;" onClick="desactivationAll()" title="Послать сочетание пусковых стимулов.">Очистить</div>
+
+
+	<div id="sent_trigger_stimuls_id" class='actions' style="position:absolute;bottom:0px;right:0px;background-color:#eeeeee;color:grey;text-align:center;" onClick="sent_trigger_stimuls()" title="Послать сочетание пусковых стимулов.">Послать&nbsp;для&nbsp;Beast</div>
+	</div>
+
+
 </div>
 <script>
 
@@ -58,10 +73,12 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 		}
 		return false;
 	}
-	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
-	var actionsArr = new Array();
 
-	function to_action(id) {
+///////////////////////////////// 
+// список нажатых действий
+var actionsArr = new Array();
+var allow_sent_to_beast=0;// разрешается посылать 
+function to_action(id) {
 		// Не позволять включать антагонистов
 		var antagonst = 0;
 		// есть ли среди нажатых кнопок actionsArr антагонисты
@@ -79,25 +96,22 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 			show_dlg_alert("Уже действует антагонист.", 2000);
 			return;
 		}
-		// 1 - тестирование без Beast
-		if (0) {
-			actionsArr.push(id);
-			document.getElementById("act_" + id).style.boxShadow = "0px 0px 6px 6px #FFFFCC";
-			set_desactivation(id);
-		}
-		var food_portion = document.getElementById("food_portion_id").selectedIndex + 1;
-		//alert(food_portion);
-		var AJAX = new ajax_support(linking_address + "?set_action=" + id + "&food_portion=" + food_portion, sent_action);
-		AJAX.send_reqest();
+		
+		
 
-		function sent_action(res) {
-			actionsArr.push(id);
-			document.getElementById("act_" + id).style.boxShadow = "0px 0px 6px 6px #FFFFCC";
-			set_desactivation(id);
-			show_dlg_alert("Действие совершено.", 2000);
-		}
+		var trigBtn=document.getElementById("act_" + id); 
+	if(trigBtn.className.indexOf('selButton')<0)
+	{
+actionsArr.push(id);
+trigBtn.className+=' selButton'; // рамка вокруг
+	}
+	else// убрать класс рамки
+	{
+actionsArr.splice(actionsArr.indexOf(id),1);
+trigBtn.className=trigBtn.className.substr(0,trigBtn.className.indexOf(' selButton'));
+	}
 
-		//МЕНЯТЬ ФОН (розовый или голубой) БЛОКА ДЕЙСТВИЙ /pult_actions.php ПРИ НАЖАТИЯХ НА 5 ПУЛЬСОВ
+		//МЕНЯТЬ ФОН (розовый или голубой) БЛОКА ДЕЙСТВИЙ /pult_actions.php ПРИ НАЖАТИЯХ НА копки действий
 		var AJAX = new ajax_support("/pages/gomeostaz_get_motivation.php?id=" + id, sent_motivation_action);
 		AJAX.send_reqest();
 
@@ -108,33 +122,83 @@ $food_portion = '<select id="food_portion_id" title="Порция энергии
 			if (res == "-")
 				document.getElementById("action_block_id").style.backgroundColor = "#FFE4E1";
 		}
-		clearTimeout(actionMoodTimerID);
-		actionMoodTimerID = setTimeout("clinerBGmotivationAct()", 10000);
-	}
-	var actionMoodTimerID = 0
 
-	function clinerBGmotivationAct() {
-		document.getElementById("action_block_id").style.backgroundColor = "";
+	if(actionsArr.length>0)
+	{
+allow_sent_to_beast=1;
+document.getElementById("sent_trigger_stimuls_id").style.outline="solid 1px #000000";
+document.getElementById("sent_trigger_stimuls_id").style.color="#000000";
+document.getElementById("cliner_trigger_stimuls_id").style.outline="solid 1px #000000";
+document.getElementById("cliner_trigger_stimuls_id").style.color="#000000";
 	}
-	var actionTimerID = 0
-
-	function set_desactivation(id) {
-		actionTimerID = setTimeout("desactivation(" + id + ")", 10000);
+	else
+	{
+allow_sent_to_beast=0;
+document.getElementById("sent_trigger_stimuls_id").style.outline="solid 0px #000000";
+document.getElementById("sent_trigger_stimuls_id").style.color="grey";
+document.getElementById("cliner_trigger_stimuls_id").style.outline="solid 0px #000000";
+document.getElementById("cliner_trigger_stimuls_id").style.color="grey";
 	}
 
-	function desactivation(id) {
-		//actionsArr[id]=0;
-		for (i = 0; i < actionsArr.length; i++) {
-			if (actionsArr[i] == id)
-				delete actionsArr[i];
+	}
+//////////////////////////////////////////////////////////
+function sent_trigger_stimuls()
+{ 
+	if(!allow_sent_to_beast)
+	{
+		show_dlg_alert("Не выбрано ни одного действия.", 0);
+		return;
+	}
+var triggers_str="";
+// получить список пусковых стимулов (class='actions', но есть actionsArr)
+for(i=0;i<actionsArr.length;i++)
+	{
+triggers_str+=actionsArr[i]+";";
+	}
+
+	sending_trigg(triggers_str);
+}
+////////////////////////////////
+function single_action(id)
+{
+sending_trigg(id);
+}
+///////////////////////////////////
+function sending_trigg(triggers_str)
+{
+//alert(triggers_str);desactivationAll();return;
+
+var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
+		var food_portion = document.getElementById("food_portion_id").selectedIndex + 1;
+		//alert(food_portion);
+		var AJAX = new ajax_support(linking_address + "?set_action=" + triggers_str + "&food_portion=" + food_portion, sent_action);
+		AJAX.send_reqest();
+
+		function sent_action(res) {		
+			desactivationAll();
+			show_dlg_alert("Пусковой стимул принят Beast.", 2000);
 		}
-		document.getElementById("act_" + id).style.boxShadow = "";
-	}
+}
+/////////////////////////////////////
 
-	function desactivationAll() {
+
+//////////////////////////////////////////////////////////
+
+
+
+function desactivationAll() {
+		actionsArr.length = 0;// очистить массив
 		var nodes = document.getElementsByClassName('actions'); //alert(nodes.length);
 		for (var i = 0; i < nodes.length; i++) {
-			nodes[i].style.boxShadow = "";
+			if(nodes[i].className.indexOf('selButton')>=0)
+			nodes[i].className=nodes[i].className.substr(0,nodes[i].className.indexOf(' selButton'));
 		}
-	}
+allow_sent_to_beast=0;
+document.getElementById("sent_trigger_stimuls_id").style.outline="solid 0px #000000";
+document.getElementById("sent_trigger_stimuls_id").style.color="grey";
+document.getElementById("cliner_trigger_stimuls_id").style.outline="solid 0px #000000";
+document.getElementById("cliner_trigger_stimuls_id").style.color="grey";
+// убрать фон действий с пульта
+document.getElementById("action_block_id").style.backgroundColor = "#ffffff";
+}
 </script>

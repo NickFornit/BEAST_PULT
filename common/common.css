@@ -187,21 +187,25 @@ animation: animate_1 1s linear infinite;
 {
 margin-left:10px;
 padding:4px;
-padding-left:4px;
-padding-right:4px;
+padding-left:8px;
+padding-right:8px;
 border-radius: 4px;
 box-shadow: 2px 2px 2px 0px rgba(122,122,122,0.3);
 }
 
 .actions
 {
+position:relative;
 margin-left:5px;
-padding:4px;
-padding-left:8px;
-padding-right:8px;
+padding:2px;
+padding-left:4px;
+padding-right:4px;
 border-radius: 4px;
 #box-shadow: 2px 2px 2px 0px rgba(122,122,122,0.3);
 cursor:pointer;
+text-align:left;
+min-width:100px;
+white-space: nowrap;
 }
 .action_poz1 {
   width:80px;
@@ -213,10 +217,6 @@ cursor:pointer;
 }
 .action_poz3 {
   width:120px;
-  display:inline-block;
-}
-.action_poz4 {
-  width:57px;
   display:inline-block;
 }
 .actions_red
@@ -333,4 +333,8 @@ border-radius: 3px;
 .filtre_item:hover
 {
 border:solid 1px #666666;
+}
+.selButton
+{
+outline:solid 1px #000000;
 }

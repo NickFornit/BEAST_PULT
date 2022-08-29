@@ -333,7 +333,6 @@ function check_and_sabmit(removeNotAllowe) {
 		document.getElementById('removeNotAllowe_id').value=1;
 
 		var nodes = document.getElementsByClassName('firstlevel'); //alert(nodes.length);
-		let id_str ="";
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].value.length == 0) {
 				show_dlg_alert("ID 1 и 2-го  уровня (стоблцы 2 и 3) должны быть заполнены.", 0); 
@@ -342,9 +341,7 @@ function check_and_sabmit(removeNotAllowe) {
 			if (nodes[i].id == "") {
 				const base_arr = ["1", "2", "3"];
 				if (base_arr.indexOf(nodes[i].value) == -1) {
-					id_str = nodes[i].name;
-					id_str = id_str.replace("id2[", "").slice(0, -1);
-					show_dlg_alert("В строке " + id_str + " указан несуществующий ID базового состояния " + nodes[i].value + "!", 0);
+					show_dlg_alert("Указан несуществующий ID базового состояния: " + nodes[i].value + "!", 0);
 					return;
 				}
 			}

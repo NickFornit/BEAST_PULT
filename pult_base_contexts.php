@@ -7,18 +7,18 @@ include_once($_SERVER['DOCUMENT_ROOT']."/pult_base_contexts.php");
 ?><br>
 <div style="position:relative;">
 <div style="margin-bottom:10px;"><b>Состояние базовых контекстов:</b></div>
-<div id='context_1' class='context action_poz4' >Пищевой</div>
-<div id='context_2' class='context action_poz4' >Поиск</div>
-<div id='context_3' class='context action_poz4' >Игра</div>
-<div id='context_4' class='context action_poz4' >Гон</div>
-<div id='context_5' class='context action_poz4' >Защита</div>
-<div id='context_6' class='context action_poz4' >Лень</div>
-<div id='context_7' class='context action_poz4' >Ступор</div>
-<div id='context_8' class='context action_poz4' >Страх</div>
-<div id='context_9' class='context action_poz4' >Агрессия</div>
-<div id='context_10' class='context action_poz4' >Злость</div>
-<div id='context_11' class='context action_poz4' >Доброта</div>
-<div id='context_12' class='context action_poz4' >Сон</div>
+<span id='context_1' class='context' >Пищевой</span>
+<span id='context_2' class='context' >Поиск</span>
+<span id='context_3' class='context' >Игра</span>
+<span id='context_4' class='context' >Гон</span>
+<span id='context_5' class='context' >Защита</span>
+<span id='context_6' class='context' >Лень</span>
+<span id='context_7' class='context' >Ступор</span>
+<span id='context_8' class='context' >Страх</span>
+<span id='context_9' class='context' >Агрессия</span>
+<span id='context_10' class='context' >Злость</span>
+<span id='context_11' class='context' >Доброта</span>
+<span id='context_12' class='context' >Сон</span>
 
 <div style="position:absolute;top:0px;right:0px;color:#66B15C;"><b>
 <?

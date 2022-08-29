@@ -41,19 +41,19 @@ is_input_rejim=1;
 <div style="position:absolute;top:10px;left:-20px;color:red;cursor:pointer;padding:4px;border:solid 1px #8A3CA4;border-radius:50%;background-color:#ffffff" title="Очистить окно ввода" onClick="cliner_textarea()"><b>X</b></div>
 <textarea id="input_id"  style="width:calc(100% - 10px);;" rows="6" maxlength="500" onMouseDown="click_textarea()" onKeyDown="click_textarea()" disabled>Привет</textarea><br>
 <b>Тон:</b> 
-<input id='radio_1' type='radio' name='rdi' value='4' >повышенный 
-<input id="radio_2" type='radio' name='rdi' value='0' checked>нормальный 
-<input id="radio_3" type='radio' name='rdi' value='3'>вялый 
+<input id='radio_1' type='radio' name='rdi' value='4' >-повышенный 
+<input id="radio_2" type='radio' name='rdi' value='0' checked>-нормальный 
+<input id="radio_3" type='radio' name='rdi' value='3'>-вялый 
 
 &nbsp;&nbsp;<b>Передать контекст своего настроения:</b><br>
-<input id='radio2_4' type='radio' name='rdi2' value='0' checked>Нормальное &nbsp;&nbsp;
-<input id='radio2_4' type='radio' name='rdi2' value='20' >Хорошее &nbsp;&nbsp; 
-<input id="radio2_5" type='radio' name='rdi2' value='21' >Плохое &nbsp;&nbsp;
-<input id="radio2_6" type='radio' name='rdi2' value='22'>Игровое &nbsp;&nbsp;
-<input id="radio2_7" type='radio' name='rdi2' value='23'>Учитель &nbsp;&nbsp;
-<input id="radio2_8" type='radio' name='rdi2' value='24'>Агрессивное&nbsp;&nbsp;
-<input id="radio2_9" type='radio' name='rdi2' value='25'>Защитное &nbsp;&nbsp;
-<input id="radio2_10" type='radio' name='rdi2' value='26'>Протест &nbsp;&nbsp;
+<input id='radio2_4' type='radio' name='rdi2' value='0' checked>-Нормальное &nbsp;&nbsp;
+<input id='radio2_4' type='radio' name='rdi2' value='20' >-Хорошее &nbsp;&nbsp; 
+<input id="radio2_5" type='radio' name='rdi2' value='21' >-Плохое &nbsp;&nbsp;
+<input id="radio2_6" type='radio' name='rdi2' value='22'>-Игровое &nbsp;&nbsp;
+<input id="radio2_7" type='radio' name='rdi2' value='23'>-Учитель &nbsp;&nbsp;
+<input id="radio2_8" type='radio' name='rdi2' value='24'>-Агрессивное&nbsp;&nbsp;
+<input id="radio2_9" type='radio' name='rdi2' value='25'>-Защитное &nbsp;&nbsp;
+<input id="radio2_10" type='radio' name='rdi2' value='26'>-Протест &nbsp;&nbsp;
 
 <input id="input_button_id" type="button"  value="Послать" onClick="sent_go()" style="position:absolute;bottom:0px;right:0px;padding:4px;" disabled> 
 </div>
