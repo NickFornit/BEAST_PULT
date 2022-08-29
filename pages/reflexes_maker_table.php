@@ -191,7 +191,7 @@ $resArr=get_reflex_exists($bsID,$id_list,$list);// вернуть ID и дейс
 //if($nid==2)exit("$bsID, $id_list, $list");
 //if($bsID=="1" && $id_list=="1;8" && $list=="1;3")exit("!!!!!");
 
-$out.="<tr class='highlighting' style='background-color:#eeeeee;' onClick='set_sel(this," . $id . ")'>";
+$out.="<tr class='r_table highlighting' style='background-color:#eeeeee;' onClick='set_sel(this," . $id . ")'>";
 $out.="<td >" . $resArr[0] . "</td>";
 $out.="<td ><input type='hidden' value='" . $list . "'>".get_actions_names_list($list)."</td>";
 if(empty($resArr[0]))// еще нет рефлекса
