@@ -310,5 +310,14 @@ function close_all_dlg()
 {
 // просто чтобы была такая пустая и не было варннига при закрытии по фону
 }
+	////////////////////////////
+	function set_sel(tr, id) {
+		//	alert(id);
+		var nodes = document.getElementsByClassName('highlighting'); //alert(nodes.length);
+		for (var i = 0; i < nodes.length; i++) {
+			nodes[i].style.border = "solid 1px #000000";
+		}
+		tr.style.border = "solid 2px #000000";
+	}
 </script>
 

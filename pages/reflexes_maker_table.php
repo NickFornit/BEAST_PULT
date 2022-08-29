@@ -187,11 +187,11 @@ $list=reduce_list($list);
 
 // есть ли такой рефлекс?
 $resArr=get_reflex_exists($bsID,$id_list,$list);// вернуть ID и действия рефлекса
-
+//var_dump($resArr);exit();
 //if($nid==2)exit("$bsID, $id_list, $list");
 //if($bsID=="1" && $id_list=="1;8" && $list=="1;3")exit("!!!!!");
 
-$out.="<tr class='r_table' style='background-color:#eeeeee;'>";
+$out.="<tr class='highlighting' style='background-color:#eeeeee;' onClick='set_sel(this," . $id . ")'>";
 $out.="<td >" . $resArr[0] . "</td>";
 $out.="<td ><input type='hidden' value='" . $list . "'>".get_actions_names_list($list)."</td>";
 if(empty($resArr[0]))// еще нет рефлекса
@@ -229,7 +229,7 @@ global $reflexArr;
 foreach ($reflexArr as $reflex)
 {
 	if($reflex[1]==$bsID && $reflex[2]==$id_list && $reflex[3]==$actions)
-		return array($bsID,$reflex[4]);// вернуть ID и действия рефлекса
+		return array($reflex[0],$bsID,$reflex[4]);// вернуть ID и действия рефлекса
 }
 
 return array("","");
