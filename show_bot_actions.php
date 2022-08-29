@@ -62,7 +62,7 @@ case "0":
 aOut+="<b>Простейший инстинкт:</b><br>"+actStr+"<br>";
 break;
 case "1":
-aOut+="<b>Безусловный рефлекс:</b><br>"+actStr+"<br>";
+aOut+=""+actStr+"<br>";// уже есть (в reflex_action.go) <b>БЕССМЫСЛЕННЫЙ безусловный рефлекс:</b>
 break;
 case "2":
 aOut+="<b>Beast говорит:</b><br>"+actStr+"<br>";
