@@ -74,7 +74,7 @@ $out.="<td style='background-color:#FFB8B8;' title='Рефлекс - БЕЗ ДЕ
 if(empty($resArr[0]))// еще нет рефлекса
 $out.="<td class='table_cell'><input id='input_0' class='table_input' type='text'  " . only_numbers_and_Comma_input() . "  value='" . $resArr[1] . "' ><img src='/img/down17.png' class='select_control' onClick='show_actions_list(0)' title='Выбор действий'></td>";
 else // старый рефлекс - нередактируемый список действий
-$out.="<td ><input type='hidden' value='" . $resArr[1] . "'>" . $resArr[1] . "</td>";
+$out.="<td ><input type='hidden' value='" . $resArr[1] . "'>" . $resArr[2] . "</td>";
 $out.="</tr>";
 ////////////////////////////////////////////
 
@@ -197,7 +197,7 @@ $out.="<td ><input type='hidden' value='" . $list . "'>".get_actions_names_list(
 if(empty($resArr[0]))// еще нет рефлекса
 $out.="<td  class='table_cell'><input id='input_".$nid."' class='table_input' type='text'  " . only_numbers_and_Comma_input() . "  value='" . $resArr[1] . "' ><img src='/img/down17.png' class='select_control' onClick='show_actions_list(".$nid.")' title='Выбор действий'></td>";
 else // старый рефлекс - нередактируемый список действий
-$out.="<td >" . $resArr[1] . "</td>";
+$out.="<td >" . $resArr[2] . "</td>";
 $out.="</tr>";
 
 $nid++;
