@@ -77,6 +77,14 @@ break; // кривая акция
 }
 
 show_dlg_bot_action(aOut);
+
+log=aOut.replace( /(<([^>]+)>)/ig, '' );
+log=log.replace(/\</g,'');
+log=log.replace(/\>/g,'');
+log=log.replace(/&nbsp;/g,' ');// иначе не передает POST
+//log+="\r\n";
+//alert(log);
+set_consol(log);
 }
 ////////////////////////
 var actTimer=0;
@@ -107,4 +115,7 @@ document.getElementById('div_bot_action').style.display="none";
 }
 
 //new_bot_action("1|Предлогает поиграть||2|Привет!");
+
+
+//////////////////////////////////
 </script>

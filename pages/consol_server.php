@@ -10,13 +10,15 @@ header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
-$info = $_POST['info'];
+$info = urldecode($_POST['info']); //exit($info);
 
 write_file($_SERVER["DOCUMENT_ROOT"] . "/pult_consol.txt", $info);
 
+ echo $info;
+
 function write_file($file, $content)
 {
-  $hf = fopen($file, "wb+");
+  $hf = fopen($file, "ab+");
   if ($hf) {
     fwrite($hf, $content, strlen($content));
     fclose($hf);

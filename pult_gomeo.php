@@ -228,6 +228,23 @@ document.getElementById('condition_button_id').style.display="block";
 else
 document.getElementById('condition_button_id').style.display="none";
 
+// показывать состояние контекстов 
+var cA=current_condition.split("|"); 
+if(cA[1].length>0)
+{
+var c=cA[1].split(",");
+var cStr="";
+for(i=0;i<c.length;i++)
+	{
+	if(cStr.length>0)
+		cStr+=", ";
+cStr+=contextsName[c[i]];
+	}
+document.getElementById('contect_list_id').innerHTML="("+cStr+")";
+}
+else
+document.getElementById('contect_list_id').innerHTML="";
+
 // alert(p[5]);
 		if (p[5].indexOf("NOREFLEX") == 0) {
 			dialog_no_reflex(current_condition, 0);
@@ -237,5 +254,19 @@ document.getElementById('condition_button_id').style.display="none";
 		}
 
 		
-	}
+}
+var contextsName={
+1:"1 Пищевой",
+2:"2 Поиск",
+3:"3 Игра",
+4:"4 Гон",
+5:"5 Защита",
+6:"6 Лень",
+7:"7 Ступор",
+8:"8 Страх",
+9:"9 Агрессия",
+10:"10 Злость",
+11:"11 Доброта",
+12:"12 Сон"
+};
 </script>

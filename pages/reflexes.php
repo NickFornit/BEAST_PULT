@@ -186,7 +186,7 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 <span class="filtre_item" onClick='set_philter(1)' <?echo set_filter_bg(1)?>>Плохо</span>&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(2)' <?echo set_filter_bg(2)?>>Норма</span>&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(3)' <?echo set_filter_bg(3)?>>Хорошо</span>&nbsp;&nbsp;
-<span class="filtre_item" onClick='set_philter(5)' <?echo set_filter_bg(5)?> title="Только указанное сочтенаие ID Базовых контекстов."><input id="context_id" type="text" value="<?=$contexts?>" style="width:60px;" title="Только указанное сочтенаие ID Базовых контекстов.">-ID контекстов</span>
+<span class="filtre_item" onClick='set_philter(5)' <?echo set_filter_bg(5)?> title="Только указанное сочтенаие ID Базовых контекстов."><input id="context_id" type="text" value="<?=$contexts?>" style="width:60px;height:10px;" title="Только указанное сочтенаие ID Базовых контекстов.">-ID контекстов</span>
 <span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?>>Без Пусковых стимулов</span>
 <span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
 </div>

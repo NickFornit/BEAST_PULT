@@ -414,7 +414,7 @@ function choose_actions(conditions) {
 
 		function sent_act_info(res) {
 			//alert(res);
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса:<br>(Lkz dsltktybq используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Создать рефлекс' onClick='create_reflex(`" + conditions + "`)'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса:<br>(Для выделений используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Создать рефлекс' onClick='create_reflex(`" + conditions + "`)'>", 2);
 		}
 		
 */
@@ -489,7 +489,7 @@ end_dlg_alert2();
 
 		function sent_act_info(res) {
 			//alert(res);
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса ID=" + id + ":<br>(Lkz dsltktybq используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Изменить действия рефлекса' onClick='correct_reflex(" + id + ")'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса ID=" + id + ":<br>(Для выделений используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Изменить действия рефлекса' onClick='correct_reflex(" + id + ")'>", 2);
 		}
 	}
 

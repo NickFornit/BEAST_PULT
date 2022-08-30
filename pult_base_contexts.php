@@ -5,7 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/pult_base_contexts.php");
 
 ?><br>
 <div style="position:relative;">
-<div style="margin-bottom:10px;"><b>Состояние базовых контекстов:</b></div>
+<div style="margin-bottom:10px;"><b>Состояние базовых контекстов:</b> <span id="contect_list_id"></span></div>
 <div id='context_1' class='context action_poz4' >Пищевой</div>
 <div id='context_2' class='context action_poz4' >Поиск</div>
 <div id='context_3' class='context action_poz4' >Игра</div>
