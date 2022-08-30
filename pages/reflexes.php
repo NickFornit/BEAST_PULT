@@ -10,6 +10,10 @@ $selected=0;
 if(isset($_GET['selected']))
 $selected=$_GET['selected'];
 
+$contexts="";
+if(isset($_GET['contexts']))
+$contexts=$_GET['contexts'];
+
 $page_id = 4;
 $title = "Редактор безусловных рефлексов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
@@ -172,6 +176,9 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 	<h2 id="h2_id" class="header_h2" style="margin-top:0px;">Рефлексы:</h2>
 	<div style="position:absolute;top:0px;left:150px;">Сохранение: <b>Ctrl+S</b></div>
 	<a style="position:absolute;top:0px;right:0px;cursor:pointer;" href="/pages/reflexes_help.htm" target="_blank">Пояснение как заполнять таблицу</a>
+
+<div style='position:absolute;top:0px;left:370px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
+<div style='position:absolute;top:0px;left:500px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
 </div>
 
 <div style="position:relative;margin-bottom:4px;">
@@ -180,22 +187,23 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 <span class="filtre_item" onClick='set_philter(2)' <?echo set_filter_bg(2)?>>Норма</span>&nbsp;&nbsp;&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(3)' <?echo set_filter_bg(3)?>>Хорошо</span>&nbsp;&nbsp;&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?>>Без Пусковых стимулов</span>
-<span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
 
-<div style='position:absolute;top:0px;right:150px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
-<div style='position:absolute;top:0px;right:0px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
+<span class="filtre_item" onClick='set_philter(5)' <?echo set_filter_bg(5)?> title="Только указанное сочтенаие ID Базовых контекстов."><input id="context_id" type="text" value="<?=$contexts?>" style="width:60px;" title="Только указанное сочтенаие ID Базовых контекстов.">-ID контекстов</span>
+
+<span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
 </div>
 <?
 function set_filter_bg($nF)
 {
-	global $selected;  // exit("! $selected");
+	global $selected,$contexts;  // exit("! $selected");
 	switch($nF)
 	{
 case 1: if($selected==1)return "style='background-color:#C2FFC5;'"; break;
 case 2: if($selected==2)return "style='background-color:#C2FFC5;'"; break;
 case 3: if($selected==3)return "style='background-color:#C2FFC5;'"; break;
 case 4: if($selected==4)return "style='background-color:#C2FFC5;'"; break;
-case 0: if($selected==0)return "style='background-color:#C2FFC5;'"; break;
+case 5: if(!empty($contexts)) return "style='background-color:#C2FFC5;'"; break;
+case 0: if(empty($contexts) && $selected==0)return "style='background-color:#C2FFC5;'"; break;
 	}
 }
 ?>
@@ -249,10 +257,12 @@ function sort_cmp($a, $b)
 			$par = explode("|", $str);
 			$id = $par[0];
 //exit("$selected | ".$par[1]);
-if($selected==1 && $par[1]!=1 ||
+if(($selected==1 && $par[1]!=1 ||
 	$selected==2 && $par[1]!=2 ||
 	$selected==3 && $par[1]!=3 ||
-	$selected==4 && !empty($par[3]))// не показывать эту строку
+	$selected==4 && !empty($par[3])) ||
+(!empty($contexts) && $contexts!=$par[2])
+	)// не показывать эту строку
 {
 echo "<input type='hidden' name='id1[" . $id . "]' value='" . $par[0] . "'  >";
 echo "<input type='hidden' name='id2[" . $id . "]' value='" . $par[1] . "'  >";
@@ -599,6 +609,22 @@ location.href=link;
 ////////////////////
 function set_philter(kind)
 {
+	if(kind==5)//Только указанное сочтенаие ID Базовых контекстов.
+	{
+var val=document.getElementById("context_id").value;
+if(val.length==0)
+		{
+show_dlg_alert("Не выбрано сочетание ID Базовых контекстов.",2000);
+return;
+		}
+
+var link='/pages/reflexes.php?contexts='+val;
+if(location.href.indexOf('selected')>0)
+link=location.href+"&contexts="+val;  // alert(link);
+location.href=link;
+return;
+	}
+/////////////////////////////////////
 	if(kind==0)
 	{
 location.href='/pages/reflexes.php';
