@@ -153,7 +153,7 @@ var triggers_str="";
 // получить список пусковых стимулов (class='actions', но есть actionsArr)
 for(i=0;i<actionsArr.length;i++)
 	{
-triggers_str+=actionsArr[i]+";";
+triggers_str+=actionsArr[i]+"|";//! нельзя разделять ; или ,
 	}
 
 	sending_trigg(triggers_str);
@@ -171,6 +171,7 @@ function sending_trigg(triggers_str)
 var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
 		var food_portion = document.getElementById("food_portion_id").selectedIndex + 1;
 		//alert(food_portion);
+//alert(linking_address + "?set_action=" + triggers_str);
 		var AJAX = new ajax_support(linking_address + "?set_action=" + triggers_str + "&food_portion=" + food_portion, sent_action);
 		AJAX.send_reqest();
 

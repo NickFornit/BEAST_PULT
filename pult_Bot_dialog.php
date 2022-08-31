@@ -46,6 +46,7 @@ is_input_rejim=1;
 <input id="radio_3" type='radio' name='rdi' value='3'>вялый 
 
 &nbsp;&nbsp;<b>Передать контекст своего настроения:</b><br>
+
 <input id='radio2_4' type='radio' name='rdi2' value='0' checked>Нормальное &nbsp;&nbsp;
 <input id='radio2_4' type='radio' name='rdi2' value='20' >Хорошее &nbsp;&nbsp; 
 <input id="radio2_5" type='radio' name='rdi2' value='21' >Плохое &nbsp;&nbsp;
@@ -55,7 +56,7 @@ is_input_rejim=1;
 <input id="radio2_9" type='radio' name='rdi2' value='25'>Защитное &nbsp;&nbsp;
 <input id="radio2_10" type='radio' name='rdi2' value='26'>Протест &nbsp;&nbsp;
 
-<input id="input_button_id" type="button"  value="Послать" onClick="sent_go()" style="position:absolute;bottom:0px;right:0px;padding:4px;" disabled> 
+<input id="input_button_id" type="button"  value="Послать" onClick="sent_go()" style="position:absolute;bottom:-8px;right:0px;padding:4px;" disabled> 
 </div>
 <div id='recognized_block_id' style="position:relative;margin-top:10px;background-color:#eeeeee;padding:4px;min-height:40px;">
 <div style="position:absolute;top:4px;right:170px;font-size:12px;"><nobr><a href='/pages/words_tree.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Дерево слов</a></nobr></div>
@@ -63,6 +64,8 @@ is_input_rejim=1;
 <div style="position:absolute;top:4px;right:4px;font-size:12px;cursor:pointer;" onClick="tree_cliner()" title="Очистить дерево слов и фраз чтобы начать заново.">- очистить</div>
 
 <span style="color:#666666;font-size:15px;">Распознаное:</span><br><span id="pult_result_id" style="margin-top:10px;height:20px;"></span>
+
+<div style="position:absolute;top:-47px;right:10px;color:green;cursor:pointer;"  onClick='explane_sending()'><b>Добавить действия</b></div>
 </div>
 
 </div>
@@ -70,6 +73,10 @@ is_input_rejim=1;
 
 <script Language="JavaScript" src="/ajax/ajax_post.js"></script>
 <script>
+function explane_sending()
+{
+show_dlg_alert("Чтобы добавить действия (кнопки внизу) нужно просто выделить нужные, не нажимая там кнопку на Послать для Beast. Тогда действия добавятся в образ сообщения.",0);
+}
 
 function tree_cliner()
 {
@@ -126,8 +133,25 @@ var AJAX = new ajax_post_support(server,params,sent_request_bot,1);
 AJAX.send_reqest();
 function sent_request_bot(res)
 {
-//alert(res);return;
-bot_contact("is_input_rejim="+is_input_rejim+"&pult_tone="+tone+"&pult_mood="+moode+"&text_dlg="+res,text_bot_answer);
+// если выбрены действия для добавления
+//alert(allow_sent_to_beast);
+params="is_input_rejim="+is_input_rejim+"&pult_tone="+tone+"&pult_mood="+moode+"&text_dlg="+res;
+if(allow_sent_to_beast)
+{		
+var triggers_str="";
+// получить список пусковых стимулов (class='actions', но есть actionsArr)
+for(i=0;i<actionsArr.length;i++)
+	{
+triggers_str+=actionsArr[i]+"|";//! нельзя разделять ; или ,
+	}
+params+="&set_img_action=" + triggers_str;
+
+desactivationAll();
+}
+
+//alert(params);return;
+bot_contact(params,text_bot_answer);
+
 }
 }
 

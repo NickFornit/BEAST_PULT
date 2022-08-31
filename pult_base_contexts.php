@@ -113,6 +113,10 @@ function show_condition_info()
 	if(current_condition.length<3)
 	{alert('Не передана информация по текущим условиям.');return;}
 
+
+document.getElementById("helper_pult_id").style.display = "block";
+document.getElementById("helper_pult_id").innerHTML = "<div class='alert_exit' style='top:0; right:0;' title='закрыть' onClick='end_helper_dlg();'><span style='position:relative; top:-1px; left:1px;'>&#10006;</span></div><br>"+ful_condition_str;
+/*
 var AJAX = new ajax_support("/lib/condition_info_translate.php?current_condition="+current_condition, sent_condition_info);
 AJAX.send_reqest();
 //alert("1");
@@ -122,7 +126,7 @@ function sent_condition_info(res)
 document.getElementById("helper_pult_id").style.display = "block";
 document.getElementById("helper_pult_id").innerHTML = "<div class='alert_exit' style='top:0; right:0;' title='закрыть' onClick='end_helper_dlg();'><span style='position:relative; top:-1px; left:1px;'>&#10006;</span></div><br>"+res;
 	}
-
+*/
 }
 function end_helper_dlg()
 {

@@ -387,7 +387,7 @@ echo "</div>";
 	var oldActipnStr = "";
 	var stopReflexCreate = 0;
 
-	function dialog_no_reflex(conditions, ignor) {
+	function dialog_no_reflex(conditions, ful_condition_str,ignor) {  // return;
 		if (stopReflexCreate) {
 			return;
 		}
@@ -397,10 +397,13 @@ echo "</div>";
 		}
 		oldActipnStr = conditions;
 		// alert(conditions);
+		var reason = "Для данных условий:<br>";
 
-		var reason = "Для данных условий нет безусловного рефлекса";
+		reason +="<div style='font-weight:normal;text-align:left;font-size:12px;background-color:#D7DAFF;padding:8px;'>"+ful_condition_str+"</div>";
+
+		reason += "нет безусловного рефлекса";
 		if (ignor) {
-			var reason = "Для данных условий есть только рефлекс игнорирования";
+			reason += "есть только рефлекс игнорирования";
 		}
 
 		show_dlg_alert2("<br><span style='font-weight:normal;'>" + reason + "<br>(редактор http://go/pages/reflexes.php)</span><br><br><span onClick='choose_actions(`" + conditions + "`)' style='cursor:pointer;color:blue;'>Создать подходящий рефлекс</span><br><br><span onClick='stop_reflex_create()' style='cursor:pointer;color:blue;'>Больше не показывать этот диалог</span>", 2);

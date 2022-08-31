@@ -94,6 +94,10 @@ EOD;
 <script>
 // текущие условия в виде "3|2,5,8|11" - базовое|сочетание контекстов|пусковые стимулы
 var current_condition="";
+var current_basik="";
+var current_contexts="";
+var current_triggers="";
+var ful_condition_str="";
 
 	//get_cut_bot_params();// начать опрос состояния Beast раз в 2 сек
 	var consol_win_id = 0;
@@ -228,29 +232,51 @@ document.getElementById('condition_button_id').style.display="block";
 else
 document.getElementById('condition_button_id').style.display="none";
 
-// показывать состояние контекстов 
-var cA=current_condition.split("|"); 
+// строка контекстов
+current_contexts="";   // alert(current_condition);
+var cA=current_condition.split("|");  
 if(cA[1].length>0)
 {
 var c=cA[1].split(",");
-var cStr="";
 for(i=0;i<c.length;i++)
 	{
-	if(cStr.length>0)
-		cStr+=", ";
-cStr+=contextsName[c[i]];
+	if(current_contexts.length>0)
+		current_contexts+=", ";
+current_contexts+=contextsName[parseInt(c[i])];
 	}
-document.getElementById('contect_list_id').innerHTML="("+cStr+")";
+document.getElementById('contect_list_id').innerHTML="("+current_contexts+")";
 }
 else
 document.getElementById('contect_list_id').innerHTML="";
 
-// alert(p[5]);
+// текущее базовое состояние
+var current_basik="";   
+switch(parseInt(cA[0]))
+{
+case 1: current_basik="1 Плохо"; break;
+case 2: current_basik="2 Норма"; break;
+case 3: current_basik="3 Хорошо"; break;
+} // alert(current_basik);
+// текущее состояние пусковых стимулов 
+var current_triggers=""; // show_dlg_alert2(cA[2],0);
+if(cA[2].length>0)  
+{
+var c=cA[2].split(",");
+for(i=0;i<c.length;i++)
+	{
+	if(current_triggers.length>0)
+		current_triggers+=", ";
+current_triggers+=triggersName[parseInt(c[i])];
+	}
+}
+ful_condition_str=current_basik+"<br>"+current_contexts+"<br>"+current_triggers+"<br>";
+// alert(ful_condition_str);
+
 		if (p[5].indexOf("NOREFLEX") == 0) {
-			dialog_no_reflex(current_condition, 0);
+			dialog_no_reflex(current_condition, ful_condition_str,0);
 		}
 		if (p[5].indexOf("IGNORED") == 0) {
-			dialog_no_reflex(current_condition, 1);
+			dialog_no_reflex(current_condition, ful_condition_str,1);
 		}
 
 		
@@ -268,5 +294,24 @@ var contextsName={
 10:"10 Злость",
 11:"11 Доброта",
 12:"12 Сон"
+};
+var triggersName={
+1:"1 Непонятно ",
+2:"2 Понятно ",
+3:"3 Наказать ",
+4:"4 Поощрить ",
+5:"5 Накормить ",
+6:"6 Успокоить ",
+7:"7 Предложить поиграть",
+8:"8 Предложить поучить",
+9:"9 Игнорировать ",
+10:"10 Сделать больно",
+11:"11 Сделать приятно",
+12:"12 Заплакать ",
+13:"13 Засмеяться ",
+14:"14 Обрадоваться",
+15:"15 Испугаться ",
+16:"16 Простить",
+17:"17 Вылечить"
 };
 </script>
