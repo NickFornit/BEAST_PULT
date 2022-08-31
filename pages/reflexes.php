@@ -173,12 +173,12 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 <span style="color:red">Если для каких-то действий НЕ заполнена строка рефлекса, задающая условия</span>, то будет выдавать "<b>Игнорирует</b>".<br>
 <br>
 <div style="position:relative;">
-	<h2 id="h2_id" class="header_h2" style="margin-top:0px;">Рефлексы:</h2>
-	<div style="position:absolute;top:0px;left:150px;">Сохранение: <b>Ctrl+S</b></div>
+	<h2 id="h2_id" class="header_h2" style="margin-top:0px;">Рефлексы <span id="reflex_count_id" style="font-size:12px;"></span>:</h2>
+	<div style="position:absolute;top:0px;left:300px;">(Сохранение: <b>Ctrl+S)</b></div>
 	<a style="position:absolute;top:0px;right:0px;cursor:pointer;" href="/pages/reflexes_help.htm" target="_blank">Пояснение как заполнять таблицу</a>
 
-<div style='position:absolute;top:0px;left:370px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
-<div style='position:absolute;top:0px;left:500px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
+<div style='position:absolute;top:0px;left:470px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
+<div style='position:absolute;top:0px;left:600px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
 </div>
 
 <div style="position:relative;margin-bottom:4px;">
@@ -249,7 +249,8 @@ function sort_cmp($a, $b)
 		$n = 0;
 		$lastID = 1;
 		$notAllowContexts=0;// 1 - есть невозможные сочетания контекстов
-		foreach ($strArr as $str) {
+$mCount=1;
+foreach ($strArr as $str) {
 			if (empty($str))
 				continue;
 			$par = explode("|", $str);
@@ -267,6 +268,7 @@ echo "<input type='hidden' name='id2[" . $id . "]' value='" . $par[1] . "'  >";
 echo "<input type='hidden' name='id3[" . $id . "]' value='" . $par[2] . "'  >";
 echo "<input type='hidden' name='id4[" . $id . "]' value='" . $par[3] . "'  >";
 echo "<input type='hidden' name='id5[" . $id . "]' value='" . $par[4] . "'  >";
+$mCount++;
 }
 else
 {
@@ -314,6 +316,7 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 </tr>";
 			$n++;
 			$lastID = $id + 1;
+$mCount++;
 }
 		}
 		?>
@@ -335,6 +338,11 @@ echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%
 </form>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
+<?
+if($mCount>1){
+echo "document.getElementById('reflex_count_id').innerHTML='(всего: $mCount)';";
+}
+?>
 
 function check_and_sabmit(removeNotAllowe) {
 	if(removeNotAllowe)

@@ -180,6 +180,7 @@ write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers_
 
 ////////////////////////////////////// вывод таблицы
 $nid=1;
+
 foreach ($actionArr as $list)
 {
 // не более 3-х действий подряд: оставляем первый и 2 последних. Это еще и добавит сочетаний.
