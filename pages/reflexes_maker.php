@@ -12,7 +12,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 
 $bsID=0;
 if(isset($_GET['bsID']))
-$bsID=$_GET['bsID'];
+$bsID=$_GET['bsID'];            //  exit("> $bsID");
 
 $id_list="";
 $get_list="";
@@ -71,14 +71,14 @@ echo "<div style='position:absolute;top:10px;right:10px;border:solid 1px #8A3CA4
 
 // onChange='choode_base_cond(this)' - нет определенной зависимости...
 echo "<b>Базовое состояние:</b><br>
-<select id='base_id' > 
+<select id='base_id' onChange='refresh_context_combo(this)'> 
 <option value='1' "; if($bsID==1)echo "selected"; echo ">Плохо</option>
 <option value='2' "; if($bsID==2)echo "selected"; echo ">Норма</option>
 <option value='3' "; if($bsID==3)echo "selected"; echo ">Хорошо</option>
 </select><span title='Общее Базовое состояние формируется из отдельных состояний Базовых параметров гомеостаза и при этом никак не коррелирует с диапазонами состояний параметров гомеостаза.'> - Общее Базовое состояние</span><br>
 ";
 
-
+//exit("> $bsID");
 
 
 
@@ -96,13 +96,19 @@ echo "<b>Выбрать сочетания контекстов:</b><br>
 
 ?>
 <script>
+var current_base_condition=1;// при обновлении страницы - Плохо
+function refresh_context_combo(combo)
+{
+current_base_condition=combo.options[combo.selectedIndex].value; //alert(current_base_condition);
+get_context_variations(1);
+}
 
 function get_context_variations(bc)
-{
+{ 
 	wait_begin();
 	// base_condition="+bc+"& 
 //	alert("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>");
-var AJAX = new ajax_support("/pages/reflexes_maker_b_contexts.php?get_list=<?=$id_list?>", send_context_variations);
+var AJAX = new ajax_support("/pages/reflexes_maker_b_contexts.php?current_base_condition="+current_base_condition+"&get_list=<?=$id_list?>", send_context_variations);
 		AJAX.send_reqest();
 
 function send_context_variations(res) 
@@ -113,7 +119,10 @@ if(res[0]!='!')
 show_dlg_alert(res,0);
 return;
 }
-document.getElementById('context_variations_id').innerHTML=res.substr(1); //show_dlg_alert(res.substr(1),0);
+document.getElementById('context_variations_id').innerHTML=res.substr(1); 
+//alert(res.substr(1));
+
+//show_dlg_alert(res.substr(1),0);
 document.getElementById('button_table_id').style.display="";
 document.getElementById('hr_table_id').style.display="block";
 

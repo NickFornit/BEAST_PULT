@@ -25,6 +25,9 @@ setlocale(LC_ALL, "ru_RU.UTF-8");
 
 set_time_limit(0);
 
+$current_base_condition=0;
+if(isset($_GET['current_base_condition']))
+$current_base_condition=$_GET['current_base_condition']; //  exit("> $current_base_condition");
 
 
 $base_condition=$_GET['base_condition']; // НЕ ИСПОЛЬЗУЕТСЯ т.к. нет отпределенной зависимости
@@ -73,6 +76,12 @@ array_push($contextsArr,$c);
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/base_context_list.php");
 //var_dump($baseContextArr);exit();
 
+
+
+$rtxts = read_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt");
+$rtxts=trim($rtxts);
+$rtArr = explode("\r\n", $rtxts);
+
 // собрать комбобокс
 $out="<select id='base_context_id' size=12 style='max-width:360px;'>";// multiple='multiple' 
 foreach($contextsArr as $aArr)
@@ -91,13 +100,30 @@ $a=(int)$a;
 	$str.=$a."&nbsp;".$baseContextArr[$a][0];
 }
 
-$out.="<option value='".$aArr."' ";   //exit($get_list."<hr>".$aArr);
+// сколько рефлексов сделано в этом сочетании
+$combStr=preg_replace('/[^0-9,]/','',$str); //echo $combStr."<br>";
+$rcount=0;
+foreach($rtArr as $cur)
+{
+	$p = explode("|", $cur); 
+	if($p[1]==$current_base_condition && $combStr==$p[2])
+		$rcount++;
+}
+// exit($p[1]."==$current_base_condition && $combStr==".$p[2]);
+//echo $combStr." $rcount <br>";
+
+
+
+
+
+
+$out.="<option  value='".$aArr."' ";   //exit($get_list."<hr>".$aArr);
 if(!empty($get_list) && $get_list==$aArr)
 {
 $out.="selected";
 }
 
-$out.=" title='".$str."'>".$str."</option>";
+$out.=" title='".$str."'>".$str." (рефлексов: $rcount)</option>";
 //	array_push($contextsNameArr,$str);
 }
 $out.="</select><br>";
