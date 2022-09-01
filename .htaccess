@@ -8,7 +8,7 @@ php_value post_max_size 1000M
 php_value upload_max_filesize 100M  
  
 # Максимальное количество переменных
-php_value max_input_vars 20000
+php_value max_input_vars 100000
  
 # Максимальное время выполнения скрипта
 #php_value max_execution_time 600    
