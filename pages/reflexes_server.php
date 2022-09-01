@@ -16,7 +16,7 @@ if($_POST['removeNotAllowe']==1)
 $removeNotAllowe=1;
 // exit("> $removeNotAllowe");
 
-
+//exit("> ".count($_POST['id1']));
 
 //extract($_POST, EXTR_SKIP);
 $chererArr=array(); // будут сравниваться эти суммарные строки условий
