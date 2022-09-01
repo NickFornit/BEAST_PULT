@@ -65,7 +65,7 @@ is_input_rejim=1;
 
 <span style="color:#666666;font-size:15px;">Распознаное:</span><br><span id="pult_result_id" style="margin-top:10px;height:20px;"></span>
 
-<div style="position:absolute;top:-47px;right:10px;color:green;cursor:pointer;"  onClick='explane_sending()'><b>Добавить действия</b></div>
+<div style="position:absolute;top:-47px;right:10px;color:green;cursor:pointer;"  onClick='explane_sending()' title="По возможности предваряйте фразы подходящими действиями, сначала нажав кнопку (или несколько подряд) внизу."><b>Добавить действия</b></div>
 </div>
 
 </div>
