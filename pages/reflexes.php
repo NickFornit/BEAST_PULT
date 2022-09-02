@@ -60,6 +60,8 @@ exit();
 */
 ////////////////////////////////////////// УДАЛЕНИЕ
 if (isset($_GET['delete_id'])) {
+//$uri=substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],"delete_id=")-1);  exit("! ".$uri);
+
 	$deln = (int)$_GET['delete_id']; //exit("! $deln");
 	$str = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
 	$list = explode("\r\n", $str);  //exit("! $str | ".$_GET['delete_id']);
@@ -76,10 +78,12 @@ if (isset($_GET['delete_id'])) {
 		}
 		$out .= $s . "\r\n";
 	}
-	//exit("! $out | $n");
+	$uri=substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],"delete_id=")-1);  //exit("! ".$uri);
+
 	write_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt", $out);
 
-	echo "<form name=\"refresh\" method=\"post\" action=\"/pages/reflexes.php\"></form>";
+///pages/reflexes.php
+	echo "<form name=\"refresh\" method=\"post\" action=\"".$uri."\"></form>";
 	echo "<script language=\"JavaScript\">document.forms['refresh'].submit();</script>";
 	exit();
 }
@@ -651,7 +655,10 @@ show_dlg_confirm("Рефлекс может быть включен в зави�
 }
 function remove_reflex2()
 {
-location.href="/pages/reflexes.php?delete_id="+cur_del_id;
+if(location.href.indexOf('selected')>0 || location.href.indexOf('contexts')>0)
+location.href=location.href+"&delete_id="+cur_del_id;
+else
+location.href=location.href+"?delete_id="+cur_del_id;
 }
 ////////////////////////////////////
 function cliner_reflex_memory()

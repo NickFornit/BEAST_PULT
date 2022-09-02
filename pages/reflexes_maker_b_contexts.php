@@ -123,7 +123,7 @@ if(!empty($get_list) && $get_list==$aArr)
 $out.="selected";
 }
 
-$out.=" title='".$str."'>".$str." (рефлексов: $rcount)</option>";
+$out.=" title='".$str." (рефлексов: $rcount)'>".$str." (рефлексов: $rcount)</option>";
 //	array_push($contextsNameArr,$str);
 }
 $out.="</select><br>";
