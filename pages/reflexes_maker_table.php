@@ -186,6 +186,10 @@ foreach ($actionArr as $list)
 // не более 3-х действий подряд: оставляем первый и 2 последних. Это еще и добавит сочетаний.
 $list=reduce_list($list);
 
+//if($nid==4){var_dump($list);exit();}
+if(substr_count($list, ',')>1)
+	continue;
+
 // есть ли такой рефлекс?
 $resArr=get_reflex_exists($bsID,$id_list,$list);// вернуть ID и действия рефлекса
 //var_dump($resArr);exit();

@@ -70,6 +70,8 @@ $id++;
 $out.=$new;
 write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt",$out);
 
+write_file($_SERVER["DOCUMENT_ROOT"]."/pages/dnk_reflexes_seved.txt","1");
+
 echo "!";
 
 

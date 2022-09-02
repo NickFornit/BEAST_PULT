@@ -131,6 +131,17 @@ document.forms['refresh'].submit();</script>";
 }
 */
 echo "<div class='main_page_div' style=''>";
+
+$reflStr = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
+if(strlen($reflStr)>10)
+{
+
+echo "<div style='background-color:#FFDADD;padding:10px;
+border:solid 1px #8A3CA4;border-radius: 7px;' ><b>ЭТИМ РЕДАКТОРОМ НЕ СЛЕДУЕТ ПОЛЬЗОВАТЬСЯ!</b><br>
+Потому, что уже есть рефлексы в http://go/pages/reflexes.php.<br>
+При ЛЮБЫХ изменениях будуь нарушены все зависимые структуры, которые следует очистить (в редакторе http://go/pages/reflexes.php нажать на &quot;Удалить рефлексы&quot;) или же очень аккуратно, вручную все скорректировать!<br>
+</div>";
+}
 ?>
 
 <script Language="JavaScript" src="/ajax/ajax.js"></script>

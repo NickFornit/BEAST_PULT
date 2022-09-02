@@ -79,6 +79,7 @@ echo "<img style='position:absolute;top:50%;transform: translate(0, -50%);right:
 var actionsArr = new Array();
 var allow_sent_to_beast=0;// разрешается посылать 
 function to_action(id) {
+
 		// Не позволять включать антагонистов
 		var antagonst = 0;
 		// есть ли среди нажатых кнопок actionsArr антагонисты
@@ -102,6 +103,13 @@ function to_action(id) {
 		var trigBtn=document.getElementById("act_" + id); 
 	if(trigBtn.className.indexOf('selButton')<0)
 	{
+	if(actionsArr.length==2)
+	{
+			end_dlg_alert();
+			end_dlg_alert2();
+			show_dlg_alert("Не более ДВУХ выбранных действий.", 2000);
+			return;
+	}
 actionsArr.push(id);
 trigBtn.className+=' selButton'; // рамка вокруг
 	}
@@ -140,7 +148,7 @@ document.getElementById("cliner_trigger_stimuls_id").style.outline="solid 0px #0
 document.getElementById("cliner_trigger_stimuls_id").style.color="grey";
 	}
 
-	}
+}
 //////////////////////////////////////////////////////////
 function sent_trigger_stimuls()
 { 

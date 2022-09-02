@@ -19,6 +19,9 @@ $title = "Редактор безусловных рефлексов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 //include_once($_SERVER['DOCUMENT_ROOT']."/pult_js.php");
 
+
+
+
 if (filesize($_SERVER['DOCUMENT_ROOT'] . "/memory_reflex/condition_reflexes.txt") > 6) {
 	echo "<div style='color:red;border:solid 1px #8A3CA4;padding:10px;background-color:#DDEBFF;'>Этот редактор <b>НЕ СЛЕДУЕТ ИСПОЛЬЗОВАТЬ</b> потому, что уже есть условные рефлексы.<br>Чтобы использовать редактор, нужно сбросить память Beast (на странице Пульса справа вверху нажать шестеренку и выбрать &quot;Сбросить память&quot;) <br>или <b>просто удалить содержимое в файле /memory_reflex/condition_reflexes.txt</b></div>";
 }
@@ -181,8 +184,19 @@ border:solid 1px #81853D; border-radius: 7px;"></div>
 	<div style="position:absolute;top:0px;left:300px;">(Сохранение: <b>Ctrl+S)</b></div>
 	<a style="position:absolute;top:0px;right:0px;cursor:pointer;" href="/pages/reflexes_help.htm" target="_blank">Пояснение как заполнять таблицу</a>
 
-<div style='position:absolute;top:0px;left:470px;cursor:pointer;' title='Очистить всю память, зависимую от рефлексов.' onClick='cliner_reflex_memory()'>Очистить память</div>
-<div style='position:absolute;top:0px;left:600px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Очистить рефлексы</div>
+<?
+// сохранялись ли рефлексы?
+$rstatus = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/dnk_reflexes_seved.txt");
+$statusBG="";
+if($rstatus==1)
+$statusBG="color:red;";
+
+write_file($_SERVER["DOCUMENT_ROOT"]."/pages/dnk_reflexes_seved.txt","0");
+?>
+
+<div id="reflex_mem_cliner_id" style='position:absolute;top:0px;left:470px;cursor:pointer;font-size:16px;<?=$statusBG?>' title='Очистить всю память, зависимую от рефлексов.
+Это нужно делать при любом изменении рефлексов!' onClick='cliner_reflex_memory()'><b>Очистить память</b></div>
+<div style='position:absolute;top:0px;left:630px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Удалить рефлексы</div>
 </div>
 
 <div style="position:relative;margin-bottom:4px;">
@@ -229,7 +243,8 @@ case 0: if(empty($contexts) && $selected==0)return "style='background-color:#C2F
 // реально возможные сочетания контекстов
 $c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
 $c_list=str_replace(";",",",$c_list);
-$allowContextArr=explode("\r\n",$c_list); // var_dump($allowContextArr);exit();
+$allowContextArr=explode("\r\n",$c_list);  
+//var_dump($allowContextArr);exit();
 
 if($sorting)
 {
@@ -251,13 +266,16 @@ function sort_cmp($a, $b)
 ////////////////////////////////////////////////////////////////////////
 
 		$n = 0;
+		$m=0;
 		$lastID = 1;
 		$notAllowContexts=0;// 1 - есть невозможные сочетания контекстов
 $mCount=1;
+//var_dump($strArr);exit();
 foreach ($strArr as $str) {
 			if (empty($str))
 				continue;
-			$par = explode("|", $str);
+			$par = explode("|", $str);  //var_dump($par); exit("<hr>".$str);
+//if($par[0]==818){var_dump($par);exit("<hr>".$str);}
 			$id = $par[0];
 //exit("$selected | ".$par[1]);
 if(($selected==1 && $par[1]!=1 ||
@@ -293,6 +311,7 @@ else
 			}
 
 $c_title="title='Сочетание Базовых контекстов.'";
+//if($par[0]==818){var_dump($allowContextArr);exit("<hr><hr>".$par[2]);}
 if(!in_array($par[2],$allowContextArr))
 {
 $bg="style='background-color:#FF858B;'";
@@ -322,7 +341,8 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 			$lastID = $id + 1;
 $mCount++;
 }
-		}
+$m++;
+}
 		?>
 	</table>
 

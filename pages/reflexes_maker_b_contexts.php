@@ -59,12 +59,15 @@ $idText = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_conte
 //$nameText = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_names.txt");
 
 $contextsArr=array();
-$cList = explode("\r\n", $idText);  
+$cList = explode("\r\n", $idText);    // var_dump($cList);exit();
 $n=0;
 foreach($cList as $c)
 {
 	if(empty($c))
 		continue;
+if(substr_count($c, ',')>2)// не более 3-х сочетаний контектосв!
+	continue;
+
 //$contextsArr[$n]=array();
 //$p = explode(";", $aArr);
 $c=str_replace(",",";",$c);
