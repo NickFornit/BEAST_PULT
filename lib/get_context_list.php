@@ -8,14 +8,14 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 
-$nid=$_GET['nid'];
+$nid=$_GET['nid'];  // exit("> $nid");
 $selected=$_GET['selected'];
 
 
 // реально возможные сочетания контекстов
 $c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
 $c_list=str_replace(";",",",$c_list);
-$ContextIdArr=explode("\r\n",$c_list); // var_dump($ContextIdArr);exit();
+$ContextIdArr=explode("\r\n",$c_list);  //var_dump($ContextIdArr);exit();
 $nsel=0;
 $n=0;
 foreach($ContextIdArr as $str)
@@ -37,11 +37,13 @@ $out="";
 $n=0;
 foreach($ContextnamesArr as $str)
 {
+	if(substr_count($str, ',')>2)// не более 3-х сочетаний контектосв!
+	continue;
 	$bg="";
 	if($nsel==$n)
 	{
 		$bg="#cccccc";
-//		exit("> $nsel");
+		//exit("> $nsel");
 	}
 $out.="<div style='text-align:left;cursor:pointer;background-color:".$bg.";' onClick='set_input2_list(".$nid.",`".$ContextIdArr[$n]."`)'>".$str."</div>";
 $n++;

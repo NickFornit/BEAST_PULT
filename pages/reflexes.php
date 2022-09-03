@@ -177,7 +177,7 @@ box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);
 border:solid 1px #81853D; border-radius: 7px;"></div>
 
 
-<span style="color:red">Если для каких-то действий НЕ заполнена строка рефлекса, задающая условия</span>, то будет выдавать "<b>Игнорирует</b>".<br>
+<span style="color:red">Ограничения:</span> число актуальных контекстов - не более 3-х, число пусковых стимулов - не более 2-х.<br>
 <br>
 <div style="position:relative;">
 	<h2 id="h2_id" class="header_h2" style="margin-top:0px;">Рефлексы <span id="reflex_count_id" style="font-size:12px;"></span>:</h2>
@@ -520,7 +520,7 @@ return;
 		AJAX.send_reqest();
 
 		function sent_act_info(res) {
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>(используйте Ctrl+клик и Shift+клик)<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_val(" + kind + "," + id + ")'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_val(" + kind + "," + id + ")'>", 2);
 		}
 	}
 	/////////////////////////////
@@ -602,7 +602,7 @@ event.stopPropagation();
 		AJAX.send_reqest();
 
 		function sent_act_info(res) {
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>(используйте Ctrl+клик и Shift+клик)<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_list("+nid + ")'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_list("+nid + ")'>", 2);
 		}
 
 }

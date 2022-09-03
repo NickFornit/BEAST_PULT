@@ -272,13 +272,16 @@ current_triggers+=triggersName[parseInt(c[i])];
 ful_condition_str=current_basik+"<br>"+current_contexts+"<br>"+current_triggers+"<br>";
 // alert(ful_condition_str);
 
+// открывать только еще не открыт div_dlg_alert2 чтобы не перебивать уже открытый
+if(document.getElementById('div_dlg_alert2').style.display=="none")
+{
 		if (p[5].indexOf("NOREFLEX") == 0) {
 			dialog_no_reflex(current_condition, ful_condition_str,0);
 		}
 		if (p[5].indexOf("IGNORED") == 0) {
 			dialog_no_reflex(current_condition, ful_condition_str,1);
 		}
-
+}
 		
 }
 var contextsName={

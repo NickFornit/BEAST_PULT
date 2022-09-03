@@ -37,6 +37,9 @@ $out="";
 $n=0;
 foreach($triggersnamesArr as $str)
 {
+	if(substr_count($str, ',')>1)// не более 2-х сочетаний контектосв!
+	continue;
+
 	$bg="";
 	if($nsel==$n)
 	{

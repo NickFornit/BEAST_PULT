@@ -386,7 +386,6 @@ echo "</div>";
 
 	var oldActipnStr = "";
 	var stopReflexCreate = 0;
-
 	function dialog_no_reflex(conditions, ful_condition_str,ignor) {  // return;
 		if (stopReflexCreate) {
 			return;
@@ -427,7 +426,7 @@ event.stopPropagation();
 		AJAX.send_reqest();
 
 		function sent_act_info(res) { //alert(res);
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>(используйте Ctrl+клик и Shift+клик)<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='create_reflex(`" + conditions + "`)'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='create_reflex(`" + conditions + "`)'>", 2);
 		}
 		
 }
@@ -492,7 +491,7 @@ end_dlg_alert2();
 
 		function sent_act_info(res) {
 			//alert(res);
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса ID=" + id + ":<br>(Для выделений используйте Ctrl+клик и Shift+клик)" + res + "<br><input type='button' value='Изменить действия рефлекса' onClick='correct_reflex(" + id + ")'>", 2);
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите до 4-х действий рефлекса ID=" + id + ":<br>" + res + "<br><input type='button' value='Изменить действия рефлекса' onClick='correct_reflex(" + id + ")'>", 2);
 		}
 	}
 

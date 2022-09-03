@@ -46,7 +46,7 @@ if ($id < 30) {
 	$bg = "style='color:#B16DB4;'";
 }
 
-$out.="<td " . $bg . " align='left'><nobr><input class='chbx_identiser' type='checkbox' value='".$id."'"; if(in_array($id,$vArr))$out.="checked"; $out.=">-".$id."&nbsp;".$p[1]."</nobr></td>";
+$out.="<td " . $bg . " align='left'><nobr><input class='chbx_identiser' type='checkbox' value='".$id."' "; if(in_array($id,$vArr))$out.="checked"; $out.=">-".$id."&nbsp;".$p[1]."</nobr></td>";
 	
 $nCol++;
 $n++;
