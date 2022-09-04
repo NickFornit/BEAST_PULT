@@ -418,12 +418,14 @@ echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%
 	</div>
 </form>
 <?
-//if($reflexCount>$max_coun)
-{
+// exit("WWWWWWWWWWWWWWWW $sorting==0 && $selected");
+if($sorting==0 && $selected==0)
+{ 
 echo "<div style='margin-top:30px;text-align:right;'>Страницы: ";
 $page_str->show();// верхняя строка страниц
 echo "</div>";
 }
+
 ?>
 
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
@@ -433,7 +435,7 @@ if($mCount>1){
 echo "document.getElementById('reflex_count_id').innerHTML='(всего: $mCount)';";
 }
 ?>
-
+//alert("!!!!");
 function check_and_sabmit(removeNotAllowe) {
 	if(removeNotAllowe)
 		document.getElementById('removeNotAllowe_id').value=1;
