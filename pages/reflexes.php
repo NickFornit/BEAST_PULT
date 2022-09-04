@@ -2,6 +2,15 @@
 /* Редактор безусловных рефлексов
 http://go/pages/reflexes.php  
 */
+$start=0;
+if(isset($_GET['start']))
+$start=$_GET['start'];
+/*
+$diapazon=500;
+if(isset($_GET['diapazon']))
+$diapazon=$_GET['diapazon'];
+*/
+
 $sorting=0;
 if(isset($_GET['sorting']))
 $sorting=$_GET['sorting'];
@@ -192,6 +201,12 @@ if($rstatus==1)
 $statusBG="color:red;";
 
 write_file($_SERVER["DOCUMENT_ROOT"]."/pages/dnk_reflexes_seved.txt","0");
+
+		// считать файл 
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
+$strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
+$reflexCount=count($strArr); //exit("$reflexCount");
+
 ?>
 
 <div id="reflex_mem_cliner_id" style='position:absolute;top:0px;left:470px;cursor:pointer;font-size:16px;<?=$statusBG?>' title='Очистить всю память, зависимую от рефлексов.
@@ -200,13 +215,39 @@ write_file($_SERVER["DOCUMENT_ROOT"]."/pages/dnk_reflexes_seved.txt","0");
 </div>
 
 <div style="position:relative;margin-bottom:4px;">
-Показывать только: 
+Показывать: 
 <span class="filtre_item" onClick='set_philter(1)' <?echo set_filter_bg(1)?>>Плохо</span>&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(2)' <?echo set_filter_bg(2)?>>Норма</span>&nbsp;&nbsp;
 <span class="filtre_item" onClick='set_philter(3)' <?echo set_filter_bg(3)?>>Хорошо</span>&nbsp;&nbsp;
-<span class="filtre_item" onClick='set_philter(5)' <?echo set_filter_bg(5)?> title="Только указанное сочтенаие ID Базовых контекстов."><input id="context_id" type="text" value="<?=$contexts?>" style="width:60px;height:10px;" title="Только указанное сочтенаие ID Базовых контекстов.">-ID контекстов</span>
-<span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?>>Без Пусковых стимулов</span>
-<span class="filtre_item" onClick='set_philter(0)' <?echo set_filter_bg(0)?>>Показать ВСЕ</span>
+<span class="filtre_item" onClick='set_philter(5)' <?echo set_filter_bg(5)?> title="Только указанное сочтенаие ID Базовых контекстов."><input id="context_id" type="text" value="<?=$contexts?>" style="width:60px;height:10px;" title="Только введенное (через запятые) сочтенаие ID Базовых контекстов.">-ID контекстов</span>
+<span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?> title="ПОказывать только рефлексы без пусковых стимулов.">Без триггеров</span>
+<?
+$max_count=-1;
+if($sorting==0 && $selected==0)
+{
+include_once($_SERVER['DOCUMENT_ROOT']."/common/page_slider.php");
+$max_count=500;
+$padeCount=(int)($reflexCount/$max_count);
+if($reflexCount%$max_count)
+	$padeCount++;
+//$link="/pages/reflexes.php?start=0&diapazon=500";
+$link="/pages/reflexes.php?start=[N]";
+$page_str = new page_slider;
+$page_str->init($padeCount,$start,$link,1,0,"font-famaly:arial;font-size:14px;");
+if($reflexCount>$max_coun)
+{
+echo "<div style='position:absolute;top:0px;right:0px;'>Страницы: ";
+$page_str->show();// верхняя строка страниц
+echo "</div>";
+}
+
+}
+else
+{
+echo "<span class='filtre_item' style='position:absolute;top:0px;right:0px;' onClick='set_philter(0)'  title='Отменить все фильтры.'>Без ограничений</span>";
+}
+?>
+
 </div>
 <?
 function set_filter_bg($nF)
@@ -237,9 +278,7 @@ case 0: if(empty($contexts) && $selected==0)return "style='background-color:#C2F
 			<th width='30' class='table_header' title="Удалить рефлекс">Х</th>
 		</tr>
 		<?
-		// считать файл 
-		$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
-		$strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
+
 // реально возможные сочетания контекстов
 $c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/combo_contexts_str.txt");
 $c_list=str_replace(";",",",$c_list);
@@ -270,30 +309,47 @@ function sort_cmp($a, $b)
 		$lastID = 1;
 		$notAllowContexts=0;// 1 - есть невозможные сочетания контекстов
 $mCount=1;
+if($max_count>0)
+{
+	$startLine=$start*$max_count;
+	$endLine=($start+1)*$max_count;  //exit("$startLine | $endLine");
+}
 //var_dump($strArr);exit();
 foreach ($strArr as $str) {
 			if (empty($str))
 				continue;
-			$par = explode("|", $str);  //var_dump($par); exit("<hr>".$str);
+$par = explode("|", $str);  //var_dump($par); exit("<hr>".$str);
 //if($par[0]==818){var_dump($par);exit("<hr>".$str);}
-			$id = $par[0];
+$id = $par[0];
 //exit("$selected | ".$par[1]);
+
+$hideLine=0;
+if($max_count>0)
+{
+	if($mCount<=$startLine || $mCount>$endLine)
+		$hideLine=1;
+}
+
 if(($selected==1 && $par[1]!=1 ||
 	$selected==2 && $par[1]!=2 ||
 	$selected==3 && $par[1]!=3 ||
 	$selected==4 && !empty($par[3])) ||
-(!empty($contexts) && $contexts!=$par[2])
+(!empty($contexts) && $contexts!=$par[2]) ||
+	$hideLine
 	)// не показывать эту строку
 {
+/*
 echo "<input type='hidden' name='id1[" . $id . "]' value='" . $par[0] . "'  >";
 echo "<input type='hidden' name='id2[" . $id . "]' value='" . $par[1] . "'  >";
 echo "<input type='hidden' name='id3[" . $id . "]' value='" . $par[2] . "'  >";
 echo "<input type='hidden' name='id4[" . $id . "]' value='" . $par[3] . "'  >";
 echo "<input type='hidden' name='id5[" . $id . "]' value='" . $par[4] . "'  >";
+*/
 $mCount++;
+$lastID = $id + 1;
+continue;
 }
-else
-{
+
 			echo "<tr class='highlighting' onClick='set_sel(this," . $id . ")'>
 <td class='table_cell' style='width:40px;background-color:#eeeeee;' ><input type='hidden' name='id1[" . $id . "]' value='" . $par[0] . "'  >" . $par[0] . "</td>";
 			$bg = "";
@@ -340,13 +396,14 @@ $notAllowContexts=1;// 1 - есть невозможные сочетания к
 			$n++;
 			$lastID = $id + 1;
 $mCount++;
-}
 $m++;
 }
+//exit("> $m");
 		?>
 	</table>
 
 	<div style="position:relative;">
+		<input type='hidden' name='lastID' value='<?=$lastID?>'>
 		<input type='hidden' name='gogogo' value='1'>
 		<input id='removeNotAllowe_id' type='hidden' name='removeNotAllowe' value='0'>
 		<input style="position:absolute;top:0px;right:0px;" type="button" name="saver" value="Сохранить" onClick="check_and_sabmit(0)">
@@ -360,6 +417,15 @@ echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%
 		<input style="position:absolute;top:0px;left:0px;" type="button" name="addnew" value="Добавить новую строку" onClick="add_new_line()">
 	</div>
 </form>
+<?
+//if($reflexCount>$max_coun)
+{
+echo "<div style='margin-top:30px;text-align:right;'>Страницы: ";
+$page_str->show();// верхняя строка страниц
+echo "</div>";
+}
+?>
+
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 <?
@@ -403,7 +469,8 @@ function check_and_sabmit(removeNotAllowe) {
 	}
 	var lastID = <?= $lastID ?>;
 
-	function add_new_line() {
+////////////////////////////////////  НОВАЯ СТРОКА
+function add_new_line() {
 		var tbl = document.getElementById('main_table');
 		var currow = tbl.rows.length;
 		tbl.insertRow(currow);
@@ -657,7 +724,7 @@ return;
 /////////////////////////////////////
 	if(kind==0)
 	{
-location.href='/pages/reflexes.php';
+location.href='/pages/reflexes.php?start=0';
 return;
 	}
 var link='/pages/reflexes.php?selected='+kind;

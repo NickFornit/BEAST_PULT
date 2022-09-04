@@ -2,6 +2,8 @@
 /* Пpоверка перед записью и запись рефлексов
 Проверяется уникальность сочетания условий чтобы не дублировались.
 /pages/reflexes_server.php
+
+До $lastID - просто корректировать старые с имеющимся ID, а после - добавлять новые
 */
 
 header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
@@ -15,17 +17,70 @@ $removeNotAllowe=0;// 1 - При сохранении очистить табл�
 if($_POST['removeNotAllowe']==1)
 $removeNotAllowe=1;
 // exit("> $removeNotAllowe");
-
 //exit("> ".count($_POST['id1']));
+//var_dump($_POST['id1']);exit();
 
-//extract($_POST, EXTR_SKIP);
+
+
+// считать имеющиеся рефлексы
+$str = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/dnk_reflexes.txt");
+$list = explode("\r\n", $str);
+
 $chererArr=array(); // будут сравниваться эти суммарные строки условий
 $rArr=array();// сбор данных для записи рефлексов
 $n=0;
-foreach($_POST['id1'] as $id => $str)
+foreach ($list as $str) 
 {
-$id1=trim($str);
-$rArr[$n][0]=$id1;
+	if (empty($str)) {
+		continue;
+	}
+	$p=explode("|",$str);
+	$id=(int)$p[0];
+
+	if(isset($_POST['id1'][$id]))// скорректировать
+	{
+getCorrectStr($n,$id,$str);
+	}
+	else
+	{
+		$rArr[$n][0]=$id;
+		$rArr[$n][1]=$p[1];
+		$rArr[$n][2]=$p[2];
+		$rArr[$n][3]=$p[3];
+		$rArr[$n][4]=$p[4];
+	}
+//echo $id.": ".$rArr[$n][0]."|".$rArr[$n][1]."|".$rArr[$n][2]."|".$rArr[$n][3]."|".$rArr[$n][4]."<br>";
+$n++;
+}
+//var_dump($rArr);exit();
+//exit();
+
+
+// добавить новые рефлексы
+if(isset($_POST['id1']))
+{
+$lastID=$_POST['lastID'];   // exit("> $lastID");
+foreach($_POST['id1'] as $id)
+{
+	$id=trim($id);
+	if($id<$lastID)
+		continue;
+	//exit("> $lastID");
+	getCorrectStr($n,$id,$str);
+$n++;
+}
+}
+//var_dump($rArr);exit();
+
+
+
+
+//extract($_POST, EXTR_SKIP);
+function getCorrectStr($n,$id,$str)
+{
+global $chererArr,$rArr;
+
+$rArr[$n][0]=$id;
 
 $str1=trim($_POST['id2'][$id]);
 $rArr[$n][1]=trim($str1);
@@ -39,17 +94,19 @@ $str3=sorting_str($str3);
 $rArr[$n][3]=$str3;
 $sum=$str1."_".$str2."_".$str3;
 
-check_cond_str($id1,$sum);
-$chererArr[$id1]=$sum;
+check_cond_str($id,$sum);
+$chererArr[$id]=$sum;
 
 $str=trim($_POST['id5'][$id]);
 
-check_action_id($id1,$str);// проверка валидности id действий
+check_action_id($id,$str);// проверка валидности id действий
 
 $str=sorting_str($str);
 $rArr[$n][4]=$str;
 
-$n++;
+//echo $id.": ".$rArr[$n][0]."|".$rArr[$n][1]."|".$rArr[$n][2]."|".$rArr[$n][3]."|".$rArr[$n][4]."<br>";
+
+
 }
 //var_dump($chererArr);exit();
 //var_dump($rArr);exit();
@@ -76,6 +133,8 @@ function check_cond_str($id,$sum)
 global $chererArr;
 foreach($chererArr as $id0 => $ss)
 {
+if($id==$id0)// саму себя не смотреть
+	continue;
 	if($sum==$ss)
 	{
 exit("Строка с ID=$id имеет такие же условия как более ранняя строка с ID=$id0.<br><span style='color:red;'>Условия разных рефлексов не должны совпадать.</span>");
