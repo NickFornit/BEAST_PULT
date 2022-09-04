@@ -11,9 +11,11 @@ if(isset($_GET['diapazon']))
 $diapazon=$_GET['diapazon'];
 */
 
+/*  убрал сортировку, есть фильтр по 1 уровню
 $sorting=0;
 if(isset($_GET['sorting']))
 $sorting=$_GET['sorting'];
+*/
 
 $selected=0;
 if(isset($_GET['selected']))
@@ -223,7 +225,7 @@ $reflexCount=count($strArr); //exit("$reflexCount");
 <span class="filtre_item" onClick='set_philter(4)' <?echo set_filter_bg(4)?> title="ПОказывать только рефлексы без пусковых стимулов.">Без триггеров</span>
 <?
 $max_count=-1;
-if($sorting==0 && $selected==0)
+if($contexts==0 && $selected==0)
 {
 include_once($_SERVER['DOCUMENT_ROOT']."/common/page_slider.php");
 $max_count=500;
@@ -264,12 +266,15 @@ case 0: if(empty($contexts) && $selected==0)return "style='background-color:#C2F
 	}
 }
 ?>
+<script>
+wait_begin();
+</script>
 
 <form id="form_id" name="form" method="post" action="/pages/reflexes.php">
 	<table id="main_table" class="main_table" cellpadding=0 cellspacing=0 border=1 width='100%' style="font-size:14px;">
 		<tr>
-			<th width=70 class='table_header' style='cursor:pointer;background-color:#DDDDFF;' title='Сортировка по ID' onClick='sorting(1)'>ID<br>рефлекса</th>
-			<th width=70 class='table_header' style='cursor:pointer;background-color:#DDDDFF;' title='Сортировка по Базовому состоянию' onClick='sorting(2)'>ID (1 уровень)<br>
+			<th width=70 class='table_header' style='cursor:pointer;' >ID<br>рефлекса</th>
+			<th width=70 class='table_header' style='cursor:pointer;' >ID (1 уровень)<br>
 				<nobr>базового состояния</nobr>
 			</th>
 			<th width='25%' class='table_header'>ID (2) актуальных контекстов<br>через запятую</th>
@@ -285,23 +290,7 @@ $c_list=str_replace(";",",",$c_list);
 $allowContextArr=explode("\r\n",$c_list);  
 //var_dump($allowContextArr);exit();
 
-if($sorting)
-{
-	if($sorting==2)
-	{
-uasort($strArr, "sort_cmp");
-	}
-}
-function sort_cmp($a, $b)
-{
-	$par1 = explode("|", $a);
-	$par2 = explode("|", $b);
 
-    if ($par1[1] == $par2[1]) {
-        return 0;
-    }
-    return ($par1[1] < $par2[1]) ? -1 : 1;
-}
 ////////////////////////////////////////////////////////////////////////
 
 		$n = 0;
@@ -418,8 +407,8 @@ echo '<input style="position:absolute;top:0px;left:50%;transform: translate(-50%
 	</div>
 </form>
 <?
-// exit("WWWWWWWWWWWWWWWW $sorting==0 && $selected");
-if($sorting==0 && $selected==0)
+// exit("WWWWWWWWWWWWWWWW && $selected");
+if($contexts==0 && $selected==0)
 { 
 echo "<div style='margin-top:30px;text-align:right;'>Страницы: ";
 $page_str->show();// верхняя строка страниц
@@ -694,17 +683,7 @@ aStr += nodes[i].value;
 		end_dlg_alert2();
 }
 ////////////////////////////////////////////////////////////////
-function sorting(nCol)
-{
-if(nCol==2)
-var link='/pages/reflexes.php?sorting='+nCol;
-else
-var link='/pages/reflexes.php?sorting=0';
-<?if($selected){
-echo "link+='&selected=".$selected."';";
-}?> 
-location.href=link;
-}
+
 ////////////////////
 function set_philter(kind)
 {
@@ -730,9 +709,6 @@ location.href='/pages/reflexes.php?start=0';
 return;
 	}
 var link='/pages/reflexes.php?selected='+kind;
-<?if($sorting){
-echo "link+='&sorting=".$sorting."';";	
-}?>
 location.href=link;
 }
 //////////// удаление
@@ -776,6 +752,8 @@ show_dlg_alert("Рефлексы и память, зависимая от реф
 setTimeout("location.reload(true)",2000);
 }
 }
+
+wait_end();
 </script>
 </div>
 <br><br><br><a href='/pages/reflexes_maker.php' title='Начать набивать рефлексы в зависимости от разных условий.' title='Создание безусловных рефлексов в зависимости от заданных условий без коннекта с Beast.'>Быстрая набивка рефлексов</a><br><br><br><br><br><br><br><br><br><br><br><br><br>
