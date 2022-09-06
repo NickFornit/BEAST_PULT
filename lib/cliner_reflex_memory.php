@@ -16,6 +16,8 @@ mb_internal_encoding("UTF-8");
 
 cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/reflex_tree.txt");
 cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/condition_reflexes.txt");
+cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/trigger_stimuls_images.txt");
+cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/base_style_images.txt");
 
 
 

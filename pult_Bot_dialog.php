@@ -19,7 +19,7 @@ margin-top:10px;">
 
 <b>Поcлать сообщение Beast</b>: <span id="stadia_warn" style="color:red;"></span><br>
 <div style='position:absolute;top:10px;right:10px;'><nobr><input type="checkbox" value="1" onChange="switch_input_rejim(this)"> - набивка рабочих фраз без отсеивания мусорных слов</nobr></div>
-<div id="note_rejim_id" style='position:absolute;top:0px;left:50%;transform: translate(-50%, 0);color:red;display:none;'><nobr>Это - режим формирования вербальных распознавателей, а не диалог с Beast!</nobr></div>
+<div id="note_rejim_id" style='position:absolute;top:0px;left:50%;transform: translate(-50%, 0);color:red;display:none;'><nobr>Это - режим формирования вербальных распознавателей и условных рефлексов, а не диалог с Beast!</nobr></div>
 <script>
 var is_input_rejim=1;
 function switch_input_rejim(ch)
