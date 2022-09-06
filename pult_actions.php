@@ -29,8 +29,8 @@ echo "<img style='position:absolute;top:50%;transform: translate(0, -50%);right:
 	<div id="act_10" class='actions actions_red action_poz3' onClick="to_action(10)" title="Увеличить повреждения.">Сделать больно<?=setGo(10)?></div>
 	<div id="act_15" class='actions actions_red action_poz2' onClick="to_action(15)" title="Показательное недовольство опасными действиями Beast.">Испугаться<?=setGo(15)?></div>
 	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='Пополнение энергии.'><?= $food_portion ?>Накормить<?=setGo(5)?></div>
-	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Уменьшение потребности в общении при критическом значении.">Поиграть<?=setGo(7)?></div>
-	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Уменьшение потребности учиться при критическом значении.">Поучить<?=setGo(8)?></div>
+	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Увеличение потребности в игровом общении - задать контекст игрового общения.">Поиграть<?=setGo(7)?></div>
+	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Увеличение потребности учиться - задать контекст обучающего общения.">Поучить<?=setGo(8)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
 	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="Оператор понимает-одобряет действия Beast.">Понятно<?=setGo(2)?></div>
 	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="Поощрение действий Beast">Поощрить<?=setGo(1)?></div>
