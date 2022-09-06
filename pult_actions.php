@@ -21,27 +21,33 @@ function setGo($id)
 {
 echo "<img style='position:absolute;top:50%;transform: translate(0, -50%);right:-4px;' src='/img/go.png' onClick='event.stopPropagation();single_action(".$id.")' title='Сразу совершить это одно действие'>";
 }
+
+
+
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lib/actions_from_pult.php");
+//var_dump($actionsFromPultArr);exit();
+$trigg=$actionsFromPultArr;
 ?>
 	<div style='position:relative;margin-top:5px;'>
-	<div id="act_1" class='actions actions_red action_poz1' onClick="to_action(1)" title="Оператору непонятны-неодобряет действия Beast." >Непонятно<?=setGo(1)?></div>
-	<div id="act_3" class='actions actions_red action_poz1' onClick="to_action(3)" title="Наказание за действия Beast.">Наказать<?=setGo(3)?></div>
-	<div id="act_12" class='actions actions_red action_poz1' onClick="to_action(12)" title="Показательная обида">Заплакать<?=setGo(12)?></div>
-	<div id="act_10" class='actions actions_red action_poz3' onClick="to_action(10)" title="Увеличить повреждения.">Сделать больно<?=setGo(10)?></div>
-	<div id="act_15" class='actions actions_red action_poz2' onClick="to_action(15)" title="Показательное недовольство опасными действиями Beast.">Испугаться<?=setGo(15)?></div>
-	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='Пополнение энергии.'><?= $food_portion ?>Накормить<?=setGo(5)?></div>
-	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="Увеличение потребности в игровом общении - задать контекст игрового общения.">Поиграть<?=setGo(7)?></div>
+	<div id="act_1" class='actions actions_red action_poz1' onClick="to_action(1)" title="<?=$trigg[1][1]?>" ><?=$trigg[1][0]?><?=setGo(1)?></div>
+	<div id="act_3" class='actions actions_red action_poz1' onClick="to_action(3)" title="<?=$trigg[3][1]?>"><?=$trigg[3][0]?><?=setGo(3)?></div>
+	<div id="act_12" class='actions actions_red action_poz1' onClick="to_action(12)" title="<?=$trigg[12][1]?>"><?=$trigg[12][0]?><?=setGo(12)?></div>
+	<div id="act_10" class='actions actions_red action_poz3' onClick="to_action(10)" title="<?=$trigg[10][1]?>"><?=$trigg[10][0]?><?=setGo(10)?></div>
+	<div id="act_15" class='actions actions_red action_poz2' onClick="to_action(15)" title="<?=$trigg[15][1]?>">Испугаться<?=setGo(15)?></div>
+	<div id="act_5" class='actions actions_gray action_poz3' onClick="to_action(5)" title='<?=$trigg[5][1]?>'><?= $food_portion ?><?=$trigg[5][0]?><?=setGo(5)?></div>
+	<div id="act_7" class='actions actions_gray action_poz1' onClick="to_action(7)" title="<?=$trigg[7][1]?>"><?=$trigg[7][0]?><?=setGo(7)?></div>
 	<div id="act_8" class='actions actions_gray action_poz1' onClick="to_action(8)" title="Увеличение потребности учиться - задать контекст обучающего общения.">Поучить<?=setGo(8)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
-	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="Оператор понимает-одобряет действия Beast.">Понятно<?=setGo(2)?></div>
-	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="Поощрение действий Beast">Поощрить<?=setGo(1)?></div>
-	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="Улучшение нескольких показателей.">Засмеяться<?=setGo(13)?></div>
-	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="Улучшение нескольких показателей.">Сделать приятно<?=setGo(11)?></div>
-	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="Поощрить действия Beast, показать сопреживание.">Обрадоваться<?=setGo(14)?></div>
-	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="Показательное игнорирование.">Игнорировать<?=setGo(9)?></div>
+	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="<?=$trigg[2][1]?>"><?=$trigg[2][0]?><?=setGo(2)?></div>
+	<div id="act_4" class='actions actions_green action_poz1' onClick="to_action(4)" title="<?=$trigg[1][1]?>"><?=$trigg[1][0]?><?=setGo(1)?></div>
+	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="<?=$trigg[13][1]?>"><?=$trigg[13][0]?><?=setGo(13)?></div>
+	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="<?=$trigg[11][1]?>"><?=$trigg[11][0]?><?=setGo(11)?></div>
+	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="<?=$trigg[14][1]?>"><?=$trigg[14][0]?><?=setGo(14)?></div>
+	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="<?=$trigg[9][1]?>"><?=$trigg[9][0]?><?=setGo(9)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
-	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="Снижение сресса.">Успокоить<?=setGo(6)?></div>
-	<div id="act_16" class='actions actions_blue action_poz1' onClick="to_action(16)" title="Улучшение ранее ухудшенных состояний.">Простить<?=setGo(16)?></div>
-	<div id="act_17" class='actions actions_blue action_poz1' onClick="to_action(17)" title="Улучшение параметра Повреждения.">Вылечить<?=setGo(17)?></div>
+	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="<?=$trigg[6][1]?>"><?=$trigg[6][0]?><?=setGo(6)?></div>
+	<div id="act_16" class='actions actions_blue action_poz1' onClick="to_action(16)" title="<?=$trigg[16][1]?>"><?=$trigg[16][0]?><?=setGo(16)?></div>
+	<div id="act_17" class='actions actions_blue action_poz1' onClick="to_action(17)" title="<?=$trigg[17][1]?>"><?=$trigg[17][0]?><?=setGo(17)?></div>
 
 <div id="cliner_trigger_stimuls_id" class='actions' style="position:absolute;bottom:25px;right:0px;background-color:#eeeeee;color:grey;text-align:center;" onClick="desactivationAll()" title="Послать сочетание пусковых стимулов.">Очистить</div>
 
