@@ -53,7 +53,7 @@ echo "<div id='hr_table_id' style='position:relative;display:none;'>
 <div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода фраз-синонимов</b>
 </div>";
 
-echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/pages/reflexes_maker.htm'>Страница пояснений</a></div>";
+echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/pages/condition_reflexes_basic_phrases.htm'>Страница пояснений</a></div>";
 
 echo "<div style='position:absolute;top:60px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:65%;font-size:14px;'>
 <b>Поясненния:</b><br>

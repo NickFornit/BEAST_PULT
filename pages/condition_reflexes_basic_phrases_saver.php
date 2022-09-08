@@ -23,6 +23,14 @@ $id_list="2";
 $saveStr="3435||1,50,76|aaaaaaaaaa||";
 }
 
+// создать /lib/condition_reflexes_basic_phrases если его нет
+$dir=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/";
+if(!is_dir($dir))
+{
+$mod=0755;
+mkdir($dir, $mod);
+}
+
 $id_list = str_replace(";",",",$id_list); // exit("$id_list");
 
 $out="";
