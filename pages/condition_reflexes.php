@@ -90,7 +90,12 @@ if (isset($_POST['rdelID'])) {
 }
 ?>
 
+<div style='position:absolute;top:40px;right:300px;font-size:16px;cursor:pointer;color:#7E58FF;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases.php')" title="Создание базы простейщих фраз для заливки базы условных рефлексов."><b>Набить базовые фразы</b></div>
+
 <div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()"><b>Обновить</b></div>
+
+
+
 <div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
 </div>
 

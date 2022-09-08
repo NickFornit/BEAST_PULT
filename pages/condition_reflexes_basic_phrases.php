@@ -1,14 +1,13 @@
 <?
-/* Редактор безусловных рефлексов
-http://go/pages/reflexes_maker.php  
-*/
+/* набивальщик базы простейщих фраз для заливки базы условных рефлексов
 
+http://go/pages/condition_reflexes_basic_phrases.php
+*/
 $page_id = -1;
-$title = "Создание безусловных рефлексов без коннекта с Beast";
+$title = "Создание базы простейщих фраз для заливки базы условных рефлексов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 //include_once($_SERVER['DOCUMENT_ROOT']."/pult_js.php");
 //////////////////////////////////////////////////////////////
-
 
 $bsID=0;
 if(isset($_GET['bsID']))
@@ -30,7 +29,7 @@ $get_list=explode(";",$id_list);
 var is_table_shoved=0;// 1 таблица показывается
 function get_table()
 {
-var link="/pages/reflexes_maker_table.php?"+cur_condition_choose;
+var link="/pages/condition_reflexes_basic_phrases_table.php?"+cur_condition_choose;
 //alert(link);
 var AJAX = new ajax_support(link, sent_table_info);
 AJAX.send_reqest();
@@ -56,16 +55,14 @@ echo "<div id='hr_table_id' style='position:relative;display:none;'>
 
 echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/pages/reflexes_maker.htm'>Страница пояснений</a></div>";
 
-echo "<div style='position:absolute;top:10px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:65%;font-size:14px;'>
+echo "<div style='position:absolute;top:60px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:65%;font-size:14px;'>
 <b>Поясненния:</b><br>
-Редактор позволяет системно и быстро создавать новые безусловные рефлексы.<br>
-Системно потому, что при выборе основных условий (в виде Базового состояния и сочетания Базовых контекстов) создается таблица со всеми возможными состояниями пусковых стимулов (действий с Пульта).
-В таблице используются до 3-х всех допустимых сочетаний пусковых стимулов (ПС), исключая антагонистов (несовместимых) ПС.<br>
-Остается дополнить правую колонку перечислением действий.<br>
-Если для данного сочетания условий уже есть рефлекс, то он отмечается вставкой ID в первой колонке и его список действий невозможно исправить здесь (можно только в <a href='/pages/reflexes.php'>основном редакторе рефлексов</a>).<br>
+Редактор позволяет создавать фразы - синонимы безусловных рефлексов.<br>
+Остается дополнить правую колонку Фразой-синонимом.<br>
+
 <b>Использование:</b><br>
-В верхнем выпадающем списке выбрать Базовый контекст и под ним – выбрать одно из сочетаний Базовых контекстов, которые станут условиями рефлекса.<br>
-После нажатия кнопки “Создать таблицу для заполнения рефлексами” будет сформирована таблица, в правой колонке которой нужно выбрать список действий. После заполнения таблицы следует нажать под ней “Сохранить рефлексы”, после чего новые рефлексы будут дописаны после старых. 
+В верхнем выпадающем списке выбрать Базовый контекст и под ним – выбрать одно из сочетаний Базовых контекстов.<br>
+После нажатия кнопки “Создать таблицу для заполнения фразами” будет сформирована таблица, в правой колонке которой нужно ввести фразу-синоним рефлекса. После заполнения таблицы следует нажать под ней “Сохранить рефлексы” или просто нажать Ctrl+S. 
 
 </div>";
 
@@ -142,18 +139,18 @@ get_context_variations(bc);
 
 
 
-echo "<br><input id='button_table_id' type='button' value='Создать таблицу для заполнения рефлексами' onClick='choose_0()' style='display:none;'>";
+echo "<br><input id='button_table_id' type='button' value='Создать таблицу для заполнения фразами' onClick='choose_0()' style='display:none;'>";
 //////////////////////////////////////////////////////////////
 
 echo "<div style='position:relative;'>
 <hr>
-<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Таблица для заполнения рефлексами</b>
+<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Таблица для заполнения фразами-синонимами</b>
 </div>";
 //var_dump($contextsArr);exit();
 //////////////////////////////////////////////////////////////
 
 echo "<div id='conditions_block_id' style='position:relative;display:none'>";
-echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='reflex_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение рефлексов</span> - по <b>Ctrl+S</b></div>";
+echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='prases_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение рефлексов</span> - по <b>Ctrl+S</b></div>";
 echo "<b>Выбранные условия:</b><br>";
 
 echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
@@ -211,33 +208,34 @@ get_table();
 }
 //////////////////////////////////////////////
 
-function reflex_saver()
+function prases_saver()
 {
+//	alert("ЗАПИСЬ");	return;
 var saveStr="";
 var tr =0;
 var nodes = document.getElementsByClassName('r_table'); //alert(nodes.length);
 for(var i=0; i<nodes.length; i++) 
 {
-tr=nodes[i]; //alert(tr.cells[2].childNodes[0].value);return;
-// пропускаем все, что имеет ID
-if(tr.cells[0].innerHTML.length>0)
-	continue;
-// пропускаем все, что не содержит действий
-if(tr.cells[2].childNodes[0].value.length==0)
+tr=nodes[i]; //alert(tr.cells[0].innerHTML+"|"+tr.cells[3].childNodes[0].value);return;
+
+// пропускаем все, что не содержит фраз
+if(tr.cells[3].childNodes[0].value==0)
 	continue;
 
-//alert(tr.cells[1].innerHTML);return;
-saveStr+=tr.cells[1].childNodes[0].value+"|"+tr.cells[2].childNodes[0].value+"||";
+//alert(tr.cells[0].innerHTML+"|"+tr.cells[3].childNodes[0].value);return;
+saveStr+=tr.cells[0].innerHTML+"|"+tr.cells[1].childNodes[0].value+"|"+tr.cells[2].childNodes[0].value+"|"+tr.cells[3].childNodes[0].value+"|||";
 }//for(
+//  alert(saveStr);return;
 
 if(saveStr.length==0)
 {
-show_dlg_alert("Нет новых рефлексов, содержащих ID действий.",2000);
+show_dlg_alert("Нет новых фраз-синонимов.",2000);
 return;
 }
+//alert(saveStr); // return;
 /////////////////////////
 saveStr=cur_condition_choose+"&saveStr="+saveStr;  // alert(saveStr);return;
-var link="/pages/reflexes_maker_saver.php";
+var link="/pages/condition_reflexes_basic_phrases_saver.php";
 //alert(link);
 var AJAX = new ajax_post_support(link,saveStr, sent_table_save,1);
 AJAX.send_reqest();
@@ -249,45 +247,14 @@ if(res[0]!='!')
 show_dlg_alert(res,0);
 return;
 }
-show_dlg_alert("Записаны новые рефлексы.",2000);
-// убрать таблицу, чтобы второй раз не записывать (т.к. там нет ID рефлексов у только что записанных)
-document.getElementById('table_id').innerHTML="";
-is_table_shoved=0;
+show_dlg_alert("Записаны новые фразы.",2000);
+// убрать таблицу, чтобы второй раз не записывать (т.к. там нет ID рефлексов у только что записанных) НЕЗАЧЕМ УБИРАТЬ ТАБЛИЦУ!
+//document.getElementById('table_id').innerHTML="";
+//is_table_shoved=0;
 }
 }
 ////////////////////////////////
-function show_actions_list(nid)
-{
-event.stopPropagation();
-var selected=document.getElementById("input_" + nid).value;
-//show_dlg_alert(nid,0);
-event.stopPropagation();
-		var AJAX = new ajax_support("/lib/get_actions_list.php?selected="+selected, sent_act_info);
-		AJAX.send_reqest();
 
-		function sent_act_info(res) {
-			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_list("+nid + ")'>", 2);
-		}
-
-}
-/////////////////////////////
-function set_input_list(nid) {
-var aStr = "";
-var nodes = document.getElementsByClassName('chbx_identiser'); //alert(nodes.length);
-for(var i=0; i<nodes.length; i++) 
-{
-if(nodes[i].checked)
-	{
-if(aStr.length > 0)
-	aStr += ",";
-aStr += nodes[i].value;
-	}
-}
-		//alert(aStr);
-		document.getElementById("input_" + nid).value = aStr;
-
-		end_dlg_alert2();
-}
 /////////////////////////////////////////
 	// сохранение по Ctrl+S
 var is_press_strl = 0;
@@ -313,7 +280,7 @@ document.onkeydown = function(event) {
 }
 function save_CTRRLS()
 {
-show_dlg_confirm("Сохранить рефлексы?",1,-1,reflex_saver);
+show_dlg_confirm("Сохранить список?",1,-1,prases_saver);
 }
 function close_all_dlg()
 {

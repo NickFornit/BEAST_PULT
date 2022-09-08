@@ -24,13 +24,12 @@ $reflexArr=array();
 foreach ($strArr as $str) {
 	if (empty($str))
 		continue;
-//$str=str_replace(",",";",$str);
-	$par = explode("|", $str);
 
+$par = explode("|", $str);
 $par[2]=str_replace(",",";",$par[2]);
 
-// $par - сортируются при записи в файл в http://go/pages/reflexes.php
-	//$id = $par[0];
+if($par[1]!=$bsID || $par[2]!=$id_list)
+	continue;
 array_push($reflexArr,$par);
 }
 //var_dump($reflexArr);exit();
