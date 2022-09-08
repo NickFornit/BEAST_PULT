@@ -111,7 +111,7 @@ $out.="</tr>";
 }
 $out.="</table>";
 
-$out.="<br><input type='button' value='Сохранить рефлексы' onClick='reflex_saver()'>";
+$out.="<br><input type='button' value='Сохранить фразы' onClick='reflex_saver()'>";
 
 echo "!".$out;
 ////////////////////////////////////////////////////////////////////

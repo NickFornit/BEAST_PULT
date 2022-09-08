@@ -50,7 +50,7 @@ is_table_shoved=1;
 //////////////////////////////////////////////////////////////
 echo "<div id='hr_table_id' style='position:relative;display:none;'>
 <hr>
-<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода рефлексов</b>
+<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода фраз-синонимов</b>
 </div>";
 
 echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/pages/reflexes_maker.htm'>Страница пояснений</a></div>";
@@ -62,7 +62,7 @@ echo "<div style='position:absolute;top:60px;right:10px;border:solid 1px #8A3CA4
 
 <b>Использование:</b><br>
 В верхнем выпадающем списке выбрать Базовый контекст и под ним – выбрать одно из сочетаний Базовых контекстов.<br>
-После нажатия кнопки “Создать таблицу для заполнения фразами” будет сформирована таблица, в правой колонке которой нужно ввести фразу-синоним рефлекса. После заполнения таблицы следует нажать под ней “Сохранить рефлексы” или просто нажать Ctrl+S. 
+После нажатия кнопки “Создать таблицу для заполнения фразами” будет сформирована таблица, в правой колонке которой нужно ввести фразу-синоним рефлекса. После заполнения таблицы следует нажать под ней “Сохранить фразы” или просто нажать Ctrl+S. 
 
 </div>";
 
@@ -150,7 +150,7 @@ echo "<div style='position:relative;'>
 //////////////////////////////////////////////////////////////
 
 echo "<div id='conditions_block_id' style='position:relative;display:none'>";
-echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='prases_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение рефлексов</span> - по <b>Ctrl+S</b></div>";
+echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='prases_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение фраз</span> - по <b>Ctrl+S</b></div>";
 echo "<b>Выбранные условия:</b><br>";
 
 echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
