@@ -90,6 +90,7 @@ $phraseArr=array();
 
 /////////////////////////////////////////////////////////
 ////////////////////////////////////// вывод таблицы
+$nid=0;
 foreach ($reflexArr as $id => $resArr)
 {
 //var_dump($resArr);exit();
@@ -105,9 +106,10 @@ $out.="<td ><input type='hidden' value='" . $resArr[3] . "'>".get_actions($resAr
 
 // фраза-синоним
 $phrase=get_prase_exists($id); // exit("$phrase");
-$out.="<td  class='table_cell'><input  class='table_input' type='text' value='".$phrase."' ></td>";
+$out.="<td  class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."' ><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")' title='Выбор слов'></td>";
 
 $out.="</tr>";
+$nid++;
 }
 $out.="</table>";
 
@@ -149,30 +151,6 @@ if(isset($phraseArr[$id]))
 
 return "";
 }
-
-////////////////////////////////////////
-// позволяет вводить только цифры,  и запятую
-function only_numbers_and_Comma_input($limit=0)
-{
-$out = <<<EOD
-onKeyDown='only_numbers_and_Comma_input(this,$limit)' onKeyUp='only_numbers_and_Comma_input(this,$limit)' onMouseUp='only_numbers_and_Comma_input(this,$limit)'
-EOD;
-return $out;
-}
-?>
-<script>
-function only_numbers_and_Comma_input(inp,limit)
-{  
-var val=inp.value;
-inp.value=val.replace(/[^0-9,]/g,'');
-if(limit>0)
-	{
-inp.value=inp.value.substr(0,limit);
-	}
-}
-</script>
-
-<?
 /////////////////////////////////////////////////
 function get_triggers_names_list($list)
 {

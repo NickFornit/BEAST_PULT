@@ -295,5 +295,28 @@ function close_all_dlg()
 		}
 		tr.style.border = "solid 2px #000000";
 	}
+
+
+
+////////////////////////////////////////
+function show_word_list(id)
+{  
+var AJAX = new ajax_support("/lib/get_exclamations.php?id=" + id, sent_act_info);
+AJAX.send_reqest();
+
+function sent_act_info(res) {
+			//alert(res);
+show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по слову:<br>" + res + "<br>", 0);
+}
+}
+function insert_word(id,word)
+{
+end_dlg_alert2();
+var inp=document.getElementById('insert_'+id).value;
+if(inp.length>0)
+inp+=" ";
+document.getElementById('insert_'+id).value=inp+word;
+//alert(word);
+}
 </script>
 
