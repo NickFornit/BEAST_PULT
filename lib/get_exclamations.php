@@ -88,6 +88,9 @@ $exclamations=array(
 "ясно"
 );
 
+sort($exclamations, SORT_STRING);
+reset($exclamations);
+
 $out="<table border=0 style='width:800px;font-size:14px;'><tr>";
 	$nCol = 0;
 	$n = 0;
