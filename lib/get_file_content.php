@@ -1,5 +1,5 @@
 <?
-/* Ïîëó÷èòü ñîäåðæèìîå ôàéëà
+/* ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ Ñ„Ð°Ð¹Ð»Ð°
 
 /lib/get_file_content.php
 */
@@ -11,7 +11,7 @@ header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
-$file=$_GET['file'];// òîëüêî ïóòü
+$file=$_GET['file'];// Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¿ÑƒÑ‚ÑŒ
 
 echo read_file($_SERVER["DOCUMENT_ROOT"].$file);
 
