@@ -76,11 +76,12 @@ echo "</div>
 
 		function result_expr_larv(res) {
 			tools_action_ID = 0;
-			if (res != "yes") {
-				show_dlg_alert(res, 0);
+			var p = res.split("|");
+			if ([p[0]]== "no") {
+				show_dlg_alert(p[1], 0);
 				return;
 			}
-			show_dlg_alert("Все файлы успешно выгружены", 0);
+			show_dlg_alert("Все файлы успешно выгружены:</br>" + p[1], 0);
 		}
 	}
 
@@ -94,11 +95,12 @@ echo "</div>
 
 		function result_impr_larv(res) {
 			tools_action_ID = 0;
-			if (res != "yes") {
-				show_dlg_alert(res, 0);
+			var p = res.split("|");
+			if ([p[0]]== "no") {
+				show_dlg_alert(p[1], 0);
 				return;
 			}
-			show_dlg_alert("Все файлы успешно обновлены", 0);
+			show_dlg_alert("Все файлы успешно обновлены:</br>" + p[1], 0);
 		}
 	}
 
