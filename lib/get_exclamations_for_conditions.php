@@ -31,6 +31,7 @@ if(empty($str))
 $p=explode("|",$str);
 array_push($wArr,$p[5]);
 }
+$wArr = array_unique($wArr);
 sort($wArr, SORT_STRING);
 reset($wArr);                //var_dump($wArr);exit();
 

@@ -90,10 +90,12 @@ if (isset($_POST['rdelID'])) {
 }
 ?>
 
-<div style='position:absolute;top:40px;left:400px;font-size:16px;cursor:pointer;color:#7E58FF;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases.php')" title="Создание базы простейщих фраз для заливки базы условных рефлексов."><b>Набить базовые фразы</b></div>
+<div style='position:absolute;top:40px;left:360px;font-size:16px;cursor:pointer;color:#7E58FF;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases.php')" title="Создание базы простейщих фраз для заливки базы условных рефлексов."><b>Набить базовые фразы</b></div>
 
-<div style='position:absolute;top:40px;right:300px;font-size:16px;cursor:pointer;color:#7E58FF;background-color:#eeeeee;padding-left:4px;padding-right:4px;border:solid 1px #8A3CA4;border-radius: 7px;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases_maker.php')" title="Сформировать условные рефлексы на основе списка фраз-синонимов.
+<div style='position:absolute;top:40px;right:360px;font-size:16px;cursor:pointer;color:#7E58FF;background-color:#eeeeee;padding-left:4px;padding-right:4px;border:solid 1px #8A3CA4;border-radius: 7px;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases_maker.php')" title="Сформировать условные рефлексы на основе списка фраз-синонимов.
 ПОСЛЕ ПОЛНОЙ ГОТОВНОСТИ ФРАЗ-СИНОНИМОВ!"><b>Сформировать условные рефлексы</b></div>
+
+<div style='position:absolute;top:40px;right:200px;font-family:courier;font-size:16px;cursor:pointer;' onClick="open_anotjer_win('/pages/condition_reflexes.htm')"><b>Пояснения</b></div>
 
 <div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()"><b>Обновить</b></div>
 
