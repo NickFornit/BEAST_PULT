@@ -301,10 +301,9 @@ function close_all_dlg()
 ////////////////////////////////////////
 function show_word_list(id)
 {  
-var AJAX = new ajax_support("/lib/get_exclamations.php?id=" + id, sent_act_info);
+var AJAX = new ajax_support("/lib/get_exclamations.php?id=" + id, sent_words_info);
 AJAX.send_reqest();
-
-function sent_act_info(res) {
+function sent_words_info(res) {
 			//alert(res);
 show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по слову:<br>" + res + "<br>", 0);
 }

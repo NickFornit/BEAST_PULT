@@ -73,7 +73,7 @@ $triggerArr=array();
 ///////////////////////////////////////
 // имеющиеся фразы
 $id_list = str_replace(";",",",$id_list);
-$file=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/".$bsID."_".str_replace(",","_","_",$id_list).".txt";
+$file=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/".$bsID."_".str_replace(",","_",$id_list).".txt";
 //exit("$file");
 $progs = read_file($file);
 $strArr = explode("\r\n", $progs);

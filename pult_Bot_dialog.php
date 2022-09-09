@@ -19,6 +19,9 @@ margin-top:10px;">
 
 <b>Поcлать сообщение Beast</b>: <span id="stadia_warn" style="color:red;"></span><br>
 <div style='position:absolute;top:10px;right:10px;'><nobr><input type="checkbox" value="1" onChange="switch_input_rejim(this)"> - набивка рабочих фраз без отсеивания мусорных слов</nobr></div>
+
+<div id="conditions_words_id" style='position:absolute;top:4px;left:250px;display:none;' title='Список слов, для которых есть условный рефлекс в этих условиях.'><img src='/img/words.png' onClick='get_conditions_words()'></div>
+
 <div id="note_rejim_id" style='position:absolute;top:0px;left:50%;transform: translate(-50%, 0);color:red;display:none;'><nobr>Это - режим формирования вербальных распознавателей и условных рефлексов, а не диалог с Beast!</nobr></div>
 <script>
 var is_input_rejim=1;
@@ -39,7 +42,7 @@ is_input_rejim=1;
 
 <div style="position:relative;">
 <div style="position:absolute;top:10px;left:-20px;color:red;cursor:pointer;padding:4px;border:solid 1px #8A3CA4;border-radius:50%;background-color:#ffffff" title="Очистить окно ввода" onClick="cliner_textarea()"><b>X</b></div>
-<textarea id="input_id"  style="width:calc(100% - 10px);;" rows="6" maxlength="500" onMouseDown="click_textarea()" onKeyDown="click_textarea()" disabled>Привет</textarea><br>
+<textarea id="input_id"  style="width:calc(100% - 10px);" rows="6" maxlength="500" onMouseDown="click_textarea()" onKeyDown="click_textarea()" disabled>Привет</textarea><br>
 <b>Тон:</b> 
 <input id='radio_1' type='radio' name='rdi' value='4' >повышенный 
 <input id="radio_2" type='radio' name='rdi' value='0' checked>нормальный 
@@ -176,5 +179,35 @@ function click_textarea()
 end_dlg_alert();
 //end_ReceiveAnsvetFromPult();
 }
-//////////////////////////////
+/* при каждом изменении условий проверка заготовленных в http://go/pages/condition_reflexes_basic_phrases.php слов - условных рефлексов.
+*/
+var cur_conditions_words="";
+function check_cur_conditions_words(basic,contexts)
+{
+//alert(basic+" | "+contexts);exit();
+var AJAX = new ajax_support("/lib/get_exclamations_for_conditions.php?basic="+basic+"&contexts="+contexts, sent_ch_words_info);
+AJAX.send_reqest();
+function sent_ch_words_info(res) {
+//show_dlg_alert(res, 0);
+if(res.length>0)
+{
+cur_conditions_words=res;
+document.getElementById('conditions_words_id').style.display="block";
+}
+else
+{
+cur_conditions_words="";
+document.getElementById('conditions_words_id').style.display="none";
+}
+}
+}
+function get_conditions_words()
+{
+show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по слову:<br>" + cur_conditions_words + "<br>", 0);
+}
+function insert_pult_word(word)
+{
+	end_dlg_alert2();
+	document.getElementById('input_id').value=word;
+}
 </script>

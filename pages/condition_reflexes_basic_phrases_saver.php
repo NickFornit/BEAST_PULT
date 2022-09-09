@@ -47,7 +47,8 @@ $out=trim($out);
 $out="\xEF\xBB\xBF".$out; // utf8 bom
 //exit("$out");
 
-$file=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/".$bsID."_".str_replace(",","_","_",$id_list).".txt"; // exit("$file");
+$file=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/".$bsID."_".str_replace(",","_",$id_list).".txt"; 
+// exit("$file");
 
 $old=read_file($file);
 

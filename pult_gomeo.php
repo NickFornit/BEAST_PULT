@@ -245,6 +245,8 @@ for(i=0;i<c.length;i++)
 current_contexts+=contextsName[parseInt(c[i])];
 	}
 document.getElementById('contect_list_id').innerHTML="("+current_contexts+")";
+
+check_cur_conditions_words(cA[0],cA[1]);
 }
 else
 document.getElementById('contect_list_id').innerHTML="";

@@ -96,10 +96,13 @@ $out="<table border=0 style='width:800px;font-size:14px;'><tr>";
 	$n = 0;
 foreach($exclamations as $word)
 {
+if(empty($word))
+	continue;
+
 if ($nCol == 6) { 
 	$out.="</tr><tr>";
 	$nCol = 0;
-}									//exit($str);
+}									//exit($word);
 
 $out.="<td align='left' style='cursor:pointer;' onClick='insert_word(".$id.",`".$word."`)'><nobr>".$word."</nobr></td>";
 	
