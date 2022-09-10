@@ -46,7 +46,33 @@ if (empty($str) || $str[0] == '#')
 $p = explode("|", $str);
 $rActionsArr[$p[0]]=$p[1];
 	}
-// var_dump($rActionsArr);exit();
+
+
+
+
+
+// Пусковые стимулы
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_names.txt");
+$aNameArr = explode("\r\n", $progs);
+
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_str.txt");
+$aIdArr = explode("\r\n", $progs);
+$triggerArr=array();
+$triggerNameArr=array();
+$n=0;
+foreach ($aIdArr as $str) {
+	$triggerArr[$n]=$str;
+	$triggerNameArr[$n]=$aNameArr[$n];
+	$n++;
+	}
+// var_dump($triggerArr);exit();
+//var_dump($triggerNameArr);exit();
+
+///////////////////////////////////////////
+
+
+
+
 ////////////////////////////////////////////////////////////////////
 
 
@@ -59,17 +85,12 @@ $out="<table class='main_table' cellpadding=0 cellspacing=0 border=1 width='100%
 		</tr>";
 
 
-// Пусковые стимулы
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/terminal_actons.txt");
-$strArr = explode("\r\n", $progs);
-$triggerArr=array();
-	foreach ($strArr as $str) {
-		if (empty($str) || $str[0] == '#')
-			continue;
-		$p = explode("|", $str);
-		$triggerArr[$p[0]]=$p[1];
-	}
-//var_dump($triggerArr);exit();
+
+
+
+
+
+
 ///////////////////////////////////////
 // имеющиеся фразы
 $id_list = str_replace(";",",",$id_list);
@@ -130,7 +151,7 @@ foreach($aArr as $a)
 		continue;
 	if(!empty($acts))
 		$acts.=", ";
-$acts.=$a." <b>".$rActionsArr[$a]."</b>";
+$acts.=$a." ".$rActionsArr[$a]."";
 }
 return $acts;
 }
@@ -154,16 +175,21 @@ return "";
 /////////////////////////////////////////////////
 function get_triggers_names_list($list)
 {
-	global $triggerArr;
-$out="";
-	$arr=explode(",",$list);
-	foreach($arr as $a)
+	global $triggerArr,$triggerNameArr;
+	if(empty($list))
+		return "";
+
+	// найти сочетание пусковых
+	$n=0;
+	foreach($triggerArr as $k => $trListId)
 	{
-if(!empty($out))
-	$out.=",&nbsp;&nbsp;&nbsp;&nbsp;";
-$out.=$a."&nbsp;<b>".$triggerArr[$a]."</b>";
+if($list == $trListId)
+{
+return $triggerNameArr[$k];
+}
+$n++;
 	}
-return $out;
+return "";
 }
 ///////////////////////////////////////////////////
 function read_file($file)
