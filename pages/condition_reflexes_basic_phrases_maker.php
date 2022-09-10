@@ -30,6 +30,7 @@ $n++;
 }
 closedir($dh);
 }
+$filesArr.="var fileCount=$n;";
 //  var_dump($contents);exit();
 if($n==0)
 {
@@ -71,6 +72,7 @@ AJAX.send_reqest();
 function sent_blocing(res)
 {
 //alert(res);
+show_dlg_alert("<span style='font-size:20px;'><b>"+(next+1)+"</b> файл из "+fileCount,0);
 
 bot_contact("file_for_condition_reflexes="+res,sent_process_mess);
 //param="file_for_condition_reflexes="+res;
