@@ -12,30 +12,23 @@ $nid=$_GET['nid'];
 $selected=$_GET['selected'];
 
 
-// реально возможные сочетания контекстов
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_str.txt");
-//$c_list=str_replace(";",",",$c_list);
-$triggersIdArr=explode("\r\n",$c_list); // var_dump($triggersIdArr);exit();
-$nsel=0;
-$n=0;
-foreach($triggersIdArr as $str)
-{
-//	echo "$selected==$str <br>";
-if($selected==$str)
-	{
-$nsel=$n; // exit("> $nsel");
-	}
-
-$n++;
+// Пусковые стимулы
+// Пусковые стимулы
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers.txt");
+$progs=substr($progs,strpos($progs,"\r\n")+2); // exit("$progs");
+$aArr = explode("\r\n", $progs);
+$triggerArr=array();
+//$triggerArr["_"]="";
+foreach ($aArr as $str) {
+	if(empty($str))
+		continue;
+$p = explode("|", $str);  
+$triggerArr[$p[0]]=$p[1];
 }
+// var_dump($triggerArr);exit();
 
 
-$c_list = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_names.txt");
-//$c_list=str_replace(";",",",$c_list);
-$triggersnamesArr=explode("\r\n",$c_list); // var_dump($triggersnamesArr);exit();
-$out="";
-$n=0;
-foreach($triggersnamesArr as $str)
+foreach($triggerArr as $ids => $str)
 {
 	if(substr_count($str, ',')>1)// не более 2-х сочетаний контектосв!
 	continue;
@@ -46,7 +39,7 @@ foreach($triggersnamesArr as $str)
 		$bg="#cccccc";
 //		exit("> $nsel");
 	}
-$out.="<div style='text-align:left;cursor:pointer;background-color:".$bg.";' onClick='set_input3_list(".$nid.",`".$triggersIdArr[$n]."`)'>".$str."</div>";
+$out.="<div style='text-align:left;cursor:pointer;background-color:".$bg.";' onClick='set_input3_list(".$nid.",`".$ids."`)'>".$str."</div>";
 $n++;
 }
 

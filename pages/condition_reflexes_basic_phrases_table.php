@@ -52,21 +52,18 @@ $rActionsArr[$p[0]]=$p[1];
 
 
 // Пусковые стимулы
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_names.txt");
-$aNameArr = explode("\r\n", $progs);
-
-$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers_str.txt");
-$aIdArr = explode("\r\n", $progs);
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers.txt");
+$progs=substr($progs,strpos($progs,"\r\n")+2); // exit("$progs");
+$aArr = explode("\r\n", $progs);
 $triggerArr=array();
-$triggerNameArr=array();
-$n=0;
-foreach ($aIdArr as $str) {
-	$triggerArr[$n]=$str;
-	$triggerNameArr[$n]=$aNameArr[$n];
-	$n++;
-	}
+//$triggerArr["_"]="";
+foreach ($aArr as $str) {
+	if(empty($str))
+		continue;
+$p = explode("|", $str);  
+$triggerArr[$p[0]]=$p[1];
+}
 // var_dump($triggerArr);exit();
-//var_dump($triggerNameArr);exit();
 
 ///////////////////////////////////////////
 
@@ -111,16 +108,19 @@ $phraseArr=array();
 
 /////////////////////////////////////////////////////////
 ////////////////////////////////////// вывод таблицы
-$nid=0;
+$nid=0;   
 foreach ($reflexArr as $id => $resArr)
 {
 //var_dump($resArr);exit();
+// рефлексы с пустыми пусковыми не использовать
+if(empty($resArr[2]))
+	continue;
 
 $out.="<tr class='r_table highlighting' style='background-color:#eeeeee;' onClick='set_sel(this," . $id . ")'>";
 $out.="<td >" . $id . "</td>";
 
 // пусковые стимулы
-$out.="<td ><input type='hidden' value='".$resArr[2]."'>".get_triggers_names_list($resArr[2])."</td>";
+$out.="<td ><input type='hidden' value='".$resArr[2]."'>".$triggerArr[$resArr[2]]."</td>";
 
 // действия рефлекса
 $out.="<td ><input type='hidden' value='" . $resArr[3] . "'>".get_actions($resArr[3])."</td>";
@@ -172,25 +172,7 @@ if(isset($phraseArr[$id]))
 
 return "";
 }
-/////////////////////////////////////////////////
-function get_triggers_names_list($list)
-{
-	global $triggerArr,$triggerNameArr;
-	if(empty($list))
-		return "";
 
-	// найти сочетание пусковых
-	$n=0;
-	foreach($triggerArr as $k => $trListId)
-	{
-if($list == $trListId)
-{
-return $triggerNameArr[$k];
-}
-$n++;
-	}
-return "";
-}
 ///////////////////////////////////////////////////
 function read_file($file)
 {

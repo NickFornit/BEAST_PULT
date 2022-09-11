@@ -140,7 +140,10 @@ if(in_array($aList,$actionArr))
 {
 	continue;
 }
-array_push($actionArr,$aList);
+// не более 3-х действий подряд: оставляем первый и 2 последних. Это еще и добавит сочетаний.
+	$aList=reduce_list($aList);
+	if(substr_count($aList, ',')<2)
+		array_push($actionArr,$aList);
 }
 }
 // var_dump($actionArr);exit();
@@ -149,14 +152,11 @@ array_push($actionArr,$aList);
 
 
 // сохранять сочетания Пусковых стимулов в раб.файлах для треугольничков /pages/reflexes.php, вызывающих диалог выбора 
-$list_id="";
-$list_name="";
+$list="";
 foreach($actionArr as $str)
 {
-$list_id.=$str."\r\n";
-
 $s="";
-	$p = explode(",", $str);
+$p = explode(",", $str);
 foreach($p as $a)
 {
 	if(empty($a) || $a<0)
@@ -168,10 +168,35 @@ if(!empty($s))
 
 	$s.=$a." ".$actionsFromPultArr[$a][0];
 }
-$list_name.=$s."\r\n";
+$list.=$str."|".$s."\r\n";
 }
-write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers_str.txt",$list_id);
-write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers_names.txt",$list_name);
+// записывать только если изменилось
+$new=md5($list);
+$hash=$new."\r\n";
+$oldLisr=read_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers.txt");
+$old=md5(substr($oldLisr,strpos($oldLisr,"\r\n")+2));
+//exit("$new<br>$old");
+if($new!=$old)
+{ 
+write_trigger_file($_SERVER["DOCUMENT_ROOT"]."/pages/combinations/list_triggers.txt",$hash.$list);
+}
+/*  ИСПОЛЬЗОВАНИЕ:
+$progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers.txt");
+$progs=substr($progs,strpos($progs,"\r\n")+2); // exit("$progs");
+$aArr = explode("\r\n", $progs);
+$triggerArr=array();
+//$triggerArr["_"]="";
+foreach ($aArr as $str) {
+	if(empty($str))
+		continue;
+$p = explode("|", $str);  
+$triggerArr[$p[0]]=$p[1];
+}
+// var_dump($triggerArr);exit();
+*/
+//////////////////////////////////////////////////
+
+
 
 
 
@@ -182,13 +207,6 @@ $nid=1;
 
 foreach ($actionArr as $list)
 {
-// не более 3-х действий подряд: оставляем первый и 2 последних. Это еще и добавит сочетаний.
-$list=reduce_list($list);
-
-//if($nid==4){var_dump($list);exit();}
-if(substr_count($list, ',')>1)
-	continue;
-
 // есть ли такой рефлекс?
 $resArr=get_reflex_exists($bsID,$id_list,$list);// вернуть ID и действия рефлекса
 //var_dump($resArr);exit();
