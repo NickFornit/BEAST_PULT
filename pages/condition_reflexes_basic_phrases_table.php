@@ -106,18 +106,21 @@ foreach ($strArr as $str) {
 
 
 // проверка неповторяемости слов, иначе у.рефлекс будет неопределнным
-$wArr=array();
 $badArr="";
+$repeatedArr=array();
+$wArr=array();
 foreach($phraseArr as $str)
 {
 if(in_array($str,$wArr))
 {
 $badArr.=$str."; ";
+array_push($repeatedArr,$str);
 }
 array_push($wArr,$str);
 }
 if(!empty($badArr))
 {
+	
 $out="<b><span style='color:red'>Есть повторяющиеся фразы: ".$badArr."</span></b>. Исправьте, сохраните и нажмите на кнопку &quot;Создать таблицу для заполнения фразами&quot;.";
 }
 ///////////////////////////////////////////////////////////////////////
@@ -158,7 +161,12 @@ if($kind && empty($phrase))
 {
 $phrase=$commonArr[$resArr[2]];  // exit("$id | $phrase");
 }
-$out.="<td  class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."' ><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")' title='Выбор слов'></td>";
+$bg="";
+if(in_array($phrase,$repeatedArr))
+{
+$bg="style='background-color:#FFFFAA;'";
+}
+$out.="<td class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."'  ".$bg."><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")' title='Выбор слов'></td>";
 
 $out.="</tr>";
 $nid++;
