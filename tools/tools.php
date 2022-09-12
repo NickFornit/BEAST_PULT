@@ -57,12 +57,18 @@ echo "</div>
 	var stages = '<?php echo $stages; ?>';
 
 	function larve_enabled() {
-		if (stages > 0) {
-			document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
-			document.getElementById('imp_larv').innerHTML = 'Импорт фраз';
-		} else {
-			document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
-			document.getElementById('imp_larv').innerHTML = 'Импортировать настройки';
+		switch (parseInt(stages)) {
+			case 0:
+				document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
+				document.getElementById('imp_larv').innerHTML = 'Импортировать настройки';
+				break;
+			case 1:
+				document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
+				document.getElementById('imp_larv').innerHTML = 'Импорт фраз и условных рефлексов';
+				break;
+			default:
+				document.getElementById('exp_larv').innerHTML = 'Экспортировать настройки';
+				document.getElementById('imp_larv').innerHTML = 'Импорт фраз';
 		}
 	}
 
