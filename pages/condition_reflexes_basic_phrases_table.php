@@ -14,7 +14,7 @@ setlocale(LC_ALL, "ru_RU.UTF-8");
 $bsID=$_GET['bsID'];
 $id_list=$_GET['id_list'];
 
-
+$kind=$_GET['kind'];
 
 
 ////// Собрать данные по существующим рефлексам
@@ -45,11 +45,8 @@ if (empty($str) || $str[0] == '#')
 			continue;
 $p = explode("|", $str);
 $rActionsArr[$p[0]]=$p[1];
-	}
-
-
-
-
+}
+/////////////////////////////////////
 
 // Пусковые стимулы
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/pages/combinations/list_triggers.txt");
@@ -68,24 +65,7 @@ $triggerArr[$p[0]]=$p[1];
 ///////////////////////////////////////////
 
 
-
-
-////////////////////////////////////////////////////////////////////
-
-
-$out="<table class='main_table' cellpadding=0 cellspacing=0 border=1 width='100%'>
-		<tr>
-		<th width=70 class='table_header'>рефлекс</th>
-			<th width=260  class='table_header'>Пусковые стимулы рефлекса</th>
-			<th  class='table_header'>Действия рефлекса</th>
-			<th  class='table_header'>Фраза-синоним</th>
-		</tr>";
-
-
-
-
-
-
+$out="";
 
 
 ///////////////////////////////////////
@@ -96,18 +76,65 @@ $file=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/".$bsID."
 $progs = read_file($file);
 $strArr = explode("\r\n", $progs);
 $phraseArr=array();
-	foreach ($strArr as $str) {
+foreach ($strArr as $str) {
 		if (empty($str) || $str[0] == '#')
 			continue;
 		$p = explode("|", $str); 
 // т.к. добавляли метку для придания файлу кода UTF, нужно ее очистить
 		$k=(int)preg_replace('/[^0-9]/','',$p[0]);            //  exit($p[0]." | ".$k);
 		$phraseArr[$k]=$p[5];
-	}
+}
 //  var_dump($phraseArr);exit();
+
+
+
+// Заполнить из общего шаблона
+if($kind)
+{
+$progs = read_file($_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases_common.txt");
+$strArr = explode("\r\n", $progs);
+$commonArr=array();
+foreach ($strArr as $str) {
+		if (empty($str) || $str[0] == '#')
+			continue;
+		$p = explode("|", $str); 
+		$commonArr[$p[0]]=$p[1];
+}
+//  var_dump($commonArr);exit();
+}
+//////////////////////////////////////////////
+
+
+// проверка неповторяемости слов, иначе у.рефлекс будет неопределнным
+$wArr=array();
+$badArr="";
+foreach($phraseArr as $str)
+{
+if(in_array($str,$wArr))
+{
+$badArr.=$str."; ";
+}
+array_push($wArr,$str);
+}
+if(!empty($badArr))
+{
+$out="<b><span style='color:red'>Есть повторяющиеся фразы: ".$badArr."</span></b>. Исправьте, сохраните и нажмите на кнопку &quot;Создать таблицу для заполнения фразами&quot;.";
+}
+///////////////////////////////////////////////////////////////////////
+
+
 
 /////////////////////////////////////////////////////////
 ////////////////////////////////////// вывод таблицы
+$out.="<table class='main_table' cellpadding=0 cellspacing=0 border=1 width='100%'>
+		<tr>
+		<th width=70 class='table_header'>рефлекс</th>
+			<th width=260  class='table_header'>Пусковые стимулы рефлекса</th>
+			<th  class='table_header'>Действия рефлекса</th>
+			<th  class='table_header'>Фраза-синоним</th>
+		</tr>";
+
+
 $nid=0;   
 foreach ($reflexArr as $id => $resArr)
 {
@@ -127,6 +154,10 @@ $out.="<td ><input type='hidden' value='" . $resArr[3] . "'>".get_actions($resAr
 
 // фраза-синоним
 $phrase=get_prase_exists($id); // exit("$phrase");
+if($kind && empty($phrase))
+{
+$phrase=$commonArr[$resArr[2]];  // exit("$id | $phrase");
+}
 $out.="<td  class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."' ><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")' title='Выбор слов'></td>";
 
 $out.="</tr>";
@@ -140,6 +171,8 @@ echo "!".$out;
 ////////////////////////////////////////////////////////////////////
 
 
+
+///////////////////////////////////////////////
 function get_actions($trArr)
 {
 	global $rActionsArr;

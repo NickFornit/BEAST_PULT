@@ -27,9 +27,10 @@ $get_list=explode(";",$id_list);
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 var is_table_shoved=0;// 1 таблица показывается
-function get_table()
+function get_table(kind)
 {
-var link="/pages/condition_reflexes_basic_phrases_table.php?"+cur_condition_choose;
+wait_show();
+var link="/pages/condition_reflexes_basic_phrases_table.php?"+cur_condition_choose+"&kind="+kind;
 //alert(link);
 var AJAX = new ajax_support(link, sent_table_info);
 AJAX.send_reqest();
@@ -42,9 +43,14 @@ show_dlg_alert(res,0);
 return;
 }
 document.getElementById('table_id').innerHTML=res.substr(1);
+document.getElementById('insert_from_common_id').style.display="block";
+
 is_table_shoved=1;
+wait_end();
 }
 }
+
+
 </script>
 <?
 //////////////////////////////////////////////////////////////
@@ -65,6 +71,11 @@ echo "<div style='position:absolute;top:60px;right:10px;border:solid 1px #8A3CA4
 После нажатия кнопки “Создать таблицу для заполнения фразами” будет сформирована таблица, в правой колонке которой нужно ввести фразу-синоним рефлекса. После заполнения таблицы следует нажать под ней “Сохранить фразы” или просто нажать Ctrl+S. 
 
 </div>";
+
+echo "<div style='position:absolute;top:240px;;left:450px;font-size:16px;' ><b>Фразы должны быть уникальны</b> для таблицы, иначе условный рефлекс окажется неопределенным!</div>";
+
+
+echo "<div style='position:absolute;top:270px;right:10px;font-size:18px;cursor:pointer;color:#885CFF' onClick='location.href=`/pages/condition_reflexes_basic_phrases_common.php`'>Общий шаблон пусковых символов</div>";
 
 // onChange='choode_base_cond(this)' - нет определенной зависимости...
 echo "<b>Базовое состояние:</b><br>
@@ -146,11 +157,13 @@ echo "<div style='position:relative;'>
 <hr>
 <div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Таблица для заполнения фразами-синонимами</b>
 </div>";
+
+echo "<div id='insert_from_common_id' style='position:absolute;top:-10px;right:10px;background-color:#efefef;font-size:18px;border:solid 1px #8A3CA4;border-radius: 7px;padding-left:10px;padding-right:10px;cursor:pointer;display:none;' onClick='get_table(1)'>Заполнить из общего шаблона</div>";
 //var_dump($contextsArr);exit();
 //////////////////////////////////////////////////////////////
 
 echo "<div id='conditions_block_id' style='position:relative;display:none'>";
-echo "<div style='position:absolute;top:0px;right:0px;'><span onClick='prases_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение фраз</span> - по <b>Ctrl+S</b></div>";
+echo "<div style='position:absolute;top:10px;right:0px;'><span onClick='prases_saver()' style='color:#AE55FF;cursor:pointer;font-size:18px;'>Сохранение фраз</span> - по <b>Ctrl+S</b></div>";
 echo "<b>Выбранные условия:</b><br>";
 
 echo "Базовое состояние: <b><span id='base_cond_id'></span></b>";
@@ -201,7 +214,7 @@ document.getElementById('conditions_block_id').style.display="block";
 document.getElementById('base_cond_id').innerHTML=cur_bcond_choose;
 document.getElementById('base_context_name').innerHTML=cur_bcontex_choose;
 
-get_table();
+get_table(0);
 
 
 //location.href='/pages/reflexes_maker.php?bsID='+bsID+'&id_list='+id_list;
