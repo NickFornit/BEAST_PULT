@@ -132,7 +132,7 @@ $out="<b><span style='color:red'>Есть повторяющиеся фразы:
 $out.="<table class='main_table' cellpadding=0 cellspacing=0 border=1 width='100%'>
 		<tr>
 		<th width=70 class='table_header'>рефлекс</th>
-			<th width=260  class='table_header'>Пусковые стимулы рефлекса</th>
+			<th width=300  class='table_header'>Пусковые стимулы рефлекса</th>
 			<th  class='table_header'>Действия рефлекса</th>
 			<th  class='table_header'>Фраза-синоним</th>
 		</tr>";
