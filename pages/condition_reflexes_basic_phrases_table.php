@@ -166,7 +166,7 @@ if(in_array($phrase,$repeatedArr))
 {
 $bg="style='background-color:#FFFFAA;'";
 }
-$out.="<td class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."'  ".$bg."><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")' title='Выбор слов'></td>";
+$out.="<td class='table_cell'><input id='insert_".$nid."' class='table_input' type='text' value='".$phrase."'  ".$bg."><img src='/img/down17.png' class='select_control' onClick='show_word_list(".$nid.")'  title='Выбор слов'></td>";
 
 $out.="</tr>";
 $nid++;

@@ -272,6 +272,7 @@ show_dlg_alert("Записаны новые фразы.",2000);
 	// сохранение по Ctrl+S
 var is_press_strl = 0;
 document.onkeydown = function(event) { 
+	
 		var kCode = window.event ? window.event.keyCode : (event.keyCode ? event.keyCode : (event.which ? event.which : null))
 
 		//alert(kCode);
@@ -291,6 +292,18 @@ document.onkeydown = function(event) {
 			}
 		}
 }
+////////////////////
+document.onmouseup = function(event) { 
+var t = event.target || event.srcElement;    
+while(t)
+{ 
+if(t.id == "div_dlg_alert2")
+	 return;	    
+t = t.offsetParent;
+}
+end_dlg_alert2(); 
+}
+///////////////////////////
 function save_CTRRLS()
 {
 show_dlg_confirm("Сохранить список?",1,-1,prases_saver);
@@ -314,6 +327,7 @@ function close_all_dlg()
 ////////////////////////////////////////
 function show_word_list(id)
 {  
+
 var AJAX = new ajax_support("/lib/get_exclamations.php?id=" + id, sent_words_info);
 AJAX.send_reqest();
 function sent_words_info(res) {

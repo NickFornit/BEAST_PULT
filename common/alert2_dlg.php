@@ -61,7 +61,8 @@ color:#000000;background-color:#eeeeee;
 font-size:16px;font-family:Arial;font-weight:bold;
 box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);border-radius: 10px;
 text-align:center;
-"></div>
+"
+onmouseup='event.preventDefault();'></div>
 
 <div id='blanck2_div_id' style='position:fixed;Z-INDEX:1000;top:0px;left:0px;width:100%;height:100%;background: rgba(64,64,64,0.7);display:none;' onClick="close_all_dlg(1)"></div>
 
