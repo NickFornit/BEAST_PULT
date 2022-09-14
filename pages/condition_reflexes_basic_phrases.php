@@ -286,7 +286,7 @@ document.onkeydown = function(event) {
 	if(!is_table_shoved)
 		return false;
 				//alert("!!!!! ");
-				save_CTRRLS();
+				reflex_saver();
 				is_press_strl = 0;
 				return false;
 			}
@@ -304,7 +304,7 @@ t = t.offsetParent;
 end_dlg_alert2(); 
 }
 ///////////////////////////
-function save_CTRRLS()
+function reflex_saver()
 {
 show_dlg_confirm("Сохранить список?",1,-1,prases_saver);
 }
