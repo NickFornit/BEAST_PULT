@@ -174,6 +174,18 @@ document.onkeydown = function(event) {
 			}
 		}
 }
+////////////////////
+document.onmouseup = function(event) { 
+var t = event.target || event.srcElement;    
+while(t)
+{ 
+if(t.id == "div_dlg_alert2")
+	 return;	    
+t = t.offsetParent;
+}
+end_dlg_alert2(); 
+}
+///////////////////////////
 function save_CTRRLS()
 {
 show_dlg_confirm("Сохранить список?",1,-1,prases_saver);
