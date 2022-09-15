@@ -85,11 +85,17 @@ if (isset($_GET['delete_id'])) {
 		if (empty($s)) {
 			continue;
 		}
-		$id=(int)substr($s,0,strpos($s,'|'));
+		//$id=(int)substr($s,0,strpos($s,'|'));
+		$p=explode("|",$s);
+		$id=(int)$p[0];
 		//	exit("! $s <hr> $id");
 		if ($id == $deln) {     
 			continue;
 		}
+// удалить рефлексы с более 2-х пусковых символами
+if(substr_count($p[3], ',')>1)
+continue;
+
 		$out .= $s . "\r\n";
 	}
 	$uri=substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],"delete_id=")-1);  //exit("! ".$uri);
