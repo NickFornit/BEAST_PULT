@@ -211,9 +211,11 @@ $reflexCount=count($strArr); //exit("$reflexCount");
 
 ?>
 
-<div id="reflex_mem_cliner_id" style='position:absolute;top:0px;left:470px;cursor:pointer;font-size:16px;<?=$statusBG?>' title='Очистить всю память, зависимую от рефлексов.
+<div id="reflex_mem_cliner_id" style='position:absolute;top:0px;left:470px;cursor:pointer;font-size:16px;<?=$statusBG?>
+border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;' title='Очистить всю память, зависимую от рефлексов.
 Это нужно делать при любом изменении рефлексов!' onClick='cliner_reflex_memory()'><b>Очистить память</b></div>
-<div style='position:absolute;top:0px;left:630px;cursor:pointer;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Удалить рефлексы</div>
+<div style='position:absolute;top:0px;left:630px;cursor:pointer;color:#D70000;
+border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;' title='Удалить все рефлексы.' onClick='cliner_reflexes()'>Удалить рефлексы</div>
 </div>
 
 <div style="position:relative;margin-bottom:4px;">
@@ -741,7 +743,7 @@ show_dlg_alert("Память, зависимая от рефлексов, очи
 /////////////////////////////
 function cliner_reflexes()
 {
-show_dlg_confirm("Удалить ВСЕ РЕФЛЕКСЫ и память, зависимую от рефлексов: Дерево безусловных и условных рефлексов.","Удалить рефлексы","Отменить",cliner_reflexes2);
+show_dlg_confirm("Удалить ВСЕ РЕФЛЕКСЫ и память, зависимую от рефлексов: Дерево безусловных и условных рефлексов.<br><br>Точно удалить рефлексы?","Удалить","Отменить",cliner_reflexes2);
 }
 function cliner_reflexes2()
 {
