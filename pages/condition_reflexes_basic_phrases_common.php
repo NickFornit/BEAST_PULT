@@ -147,10 +147,17 @@ show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по с�
 function insert_word(id,word)
 {
 end_dlg_alert2();
-var inp=document.getElementById('insert_'+id).value;
-if(inp.length>0)
-inp+=" ";
+	word="    <br>"+word+" ";
+	word=word.trim();
+	word=word.replace(/<\/?[^>]+>/g,'');
+end_dlg_alert2();
+var inp=document.getElementById('insert_'+id);
+inp.setRangeText(word, inp.selectionStart, inp.selectionEnd, "end");
+/*
+if(inp.value.length>0)
+inp.value+=" ";
 document.getElementById('insert_'+id).value=inp+word;
+*/
 //alert(word);
 }
 
