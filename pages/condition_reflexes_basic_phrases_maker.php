@@ -41,6 +41,16 @@ exit();
 
 include_once($_SERVER['DOCUMENT_ROOT']."/common/linking.php");
 ?>
+Сначала нужно:<br>
+1. При выключенном Beast очистить файлы памяти, связанные с условными рефлексами: <span style="font-size:21px;border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;cursor:pointer;" onClick='cliner_files()' title='Будут очищены файлы:
+/memory_reflex/condition_reflexes.txt
+/memory_reflex/trigger_stimuls_images.txt
+'>Очистить</span><br>
+2. Включить Beast и запустить процесс: <span style="font-size:21px;border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;cursor:pointer;" onClick='location.reload(true)' title='Если Beast включен, то можно нажимать.'>Поехали</span><br>
+3. Дождаться окончания и автоматического выключения Beast.<br>
+<br>
+
+
 
 <div id='div_id' style='font-family:courier;font-size:16px;display:block;'><span style="font-size:18px;color:red;"><b>Нужен коннект с Beast.</b></span> Включите Beast на Пульте и <a href='/pages/condition_reflexes_basic_phrases_maker.php'>перезагрузите эту страницу</a>.</div>
 
@@ -110,6 +120,15 @@ function sent_bot_closing(res)
 {
 	// не будет ответа
 
+}
+}
+///////////////////////////////////
+function cliner_files()
+{
+var AJAX = new ajax_support("/lib/cliner_condition_reflex_memory.php", sent_cliner_reflex_memory);
+AJAX.send_reqest();
+function sent_cliner_reflex_memory(res) {
+show_dlg_alert("Файлы памяти условных рефлексов очищены.",0);
 }
 }
 </script>
