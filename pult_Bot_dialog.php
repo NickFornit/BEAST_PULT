@@ -38,6 +38,11 @@ document.getElementById('note_rejim_id').style.display="none";
 is_input_rejim=1;
 	}
 }
+function mood_cliner()
+{
+document.getElementById('radio_2').checked=true;
+document.getElementById('radio2_4').checked=true;
+}
 </script>
 
 <div style="position:relative;">
@@ -50,25 +55,31 @@ is_input_rejim=1;
 
 &nbsp;&nbsp;<b>Передать контекст своего настроения:</b><br>
 
-<input id='radio2_4' type='radio' name='rdi2' value='0' checked>Нормальное &nbsp;&nbsp;
-<input id='radio2_4' type='radio' name='rdi2' value='20' >Хорошее &nbsp;&nbsp; 
-<input id="radio2_5" type='radio' name='rdi2' value='21' >Плохое &nbsp;&nbsp;
-<input id="radio2_6" type='radio' name='rdi2' value='22'>Игровое &nbsp;&nbsp;
-<input id="radio2_7" type='radio' name='rdi2' value='23'>Учитель &nbsp;&nbsp;
-<input id="radio2_8" type='radio' name='rdi2' value='24'>Агрессивное&nbsp;&nbsp;
-<input id="radio2_9" type='radio' name='rdi2' value='25'>Защитное &nbsp;&nbsp;
-<input id="radio2_10" type='radio' name='rdi2' value='26'>Протест &nbsp;&nbsp;
+<input id='radio2_4' type='radio' name='rdi2' value='0' checked>Нормальное &nbsp;
+<input id='radio2_4' type='radio' name='rdi2' value='20' >Хорошее &nbsp;
+<input id="radio2_5" type='radio' name='rdi2' value='21' >Плохое &nbsp;
+<input id="radio2_6" type='radio' name='rdi2' value='22'>Игровое &nbsp;
+<input id="radio2_7" type='radio' name='rdi2' value='23'>Учитель &nbsp;
+<input id="radio2_8" type='radio' name='rdi2' value='24'>Агрессивное&nbsp;
+<input id="radio2_9" type='radio' name='rdi2' value='25'>Защитное &nbsp;
+<input id="radio2_10" type='radio' name='rdi2' value='26'>Протест &nbsp;
 
 <input id="input_button_id" type="button"  value="Послать" onClick="sent_go()" style="position:absolute;bottom:-8px;right:0px;padding:4px;" disabled> 
 </div>
 <div id='recognized_block_id' style="position:relative;margin-top:10px;background-color:#eeeeee;padding:4px;min-height:40px;">
+
+<div style="position:absolute;top:-50px;left:750px;font-size:12px;cursor:pointer;
+line-height: 0.8;padding-left:8px;padding-right:8px;border-radius: 7px;
+border:solid 1px #8A3CA4;background-color:#C9E8FF;" onClick="mood_cliner()" title="Очистить Тон и настроение.">c<br>б<br>р<br>о<br>с</div>
+
+
 <div style="position:absolute;top:4px;right:170px;font-size:12px;"><nobr><a href='/pages/words_tree.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Дерево слов</a></nobr></div>
 <div style="position:absolute;top:4px;right:80px;font-size:12px;"><nobr><a href='/pages/phrase_tree.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Дерево фраз</a></nobr></div>
 <div style="position:absolute;top:4px;right:4px;font-size:12px;cursor:pointer;" onClick="tree_cliner()" title="Очистить дерево слов и фраз чтобы начать заново.">- очистить</div>
 
 <span style="color:#666666;font-size:15px;">Распознаное:</span><br><span id="pult_result_id" style="margin-top:10px;height:20px;"></span>
 
-<div style="position:absolute;top:-47px;right:10px;color:green;cursor:pointer;"  onClick='explane_sending()' title="По возможности предваряйте фразы подходящими действиями, сначала нажав кнопку (или несколько подряд) внизу."><b>Добавить действия</b></div>
+<div style="position:absolute;top:-47px;right:10px;color:green;cursor:pointer;"  onClick='explane_sending()' title="По возможности предваряйте фразы подходящими действиями, сначала нажав кнопку (или несколько подряд) внизу."><b>Как добавить действия</b></div>
 </div>
 
 </div>
@@ -210,4 +221,5 @@ function insert_pult_word(word)
 	end_dlg_alert2();
 	document.getElementById('input_id').value=word;
 }
+
 </script>
