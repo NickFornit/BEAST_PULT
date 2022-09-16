@@ -18,11 +18,11 @@ echo '<div style="margin-top:10px;color:;">По возможности пред�
 margin-top:10px;">
 
 <b>Поcлать сообщение Beast</b>: <span id="stadia_warn" style="color:red;"></span><br>
-<div style='position:absolute;top:10px;right:10px;'><nobr><input type="checkbox" value="1" onChange="switch_input_rejim(this)"> - набивка рабочих фраз без отсеивания мусорных слов</nobr></div>
+<div style='position:absolute;top:15px;right:10px;' title='Режим форсированного формирования вербальных распознавателей (без отсеивания мусорных слов) и условных рефлексов.'><nobr><input type="checkbox" value="1" onChange="switch_input_rejim(this)"> - режим форсированной обработки</nobr></div>
 
-<div id="conditions_words_id" style='position:absolute;top:4px;left:250px;display:none;' title='Список слов, для которых есть условный рефлекс в этих условиях.'><img src='/img/words.png' onClick='get_conditions_words()'></div>
+<div id="conditions_words_id" style='position:absolute;top:4px;left:250px;display:none;' title='Список слов, для которых есть условный рефлекс в этих условиях.'><img src='/img/words.png' onClick='get_conditions_words()' ></div>
 
-<div id="note_rejim_id" style='position:absolute;top:0px;left:50%;transform: translate(-50%, 0);color:red;display:none;'><nobr>Это - режим формирования вербальных распознавателей и условных рефлексов, а не диалог с Beast!</nobr></div>
+<div id="note_rejim_id" style='position:absolute;top:0px;right:0px;color:red;display:none;cursor:pointer;' title='Режим форсированного формирования вербальных распознавателей (без отсеивания мусорных слов) и условных рефлексов.' onClick="show_dlg_alert('<div style=`font-size:14px;font-weight:200;text-align:left;`>Включен режим форсированного формирования вербальных распознавателей (без отсеивания мусорных слов) и условных рефлексов.<br><br>Следует использовать для набивки фраз словарного запаса, для тестирования условных рефлексов и т.п. когда не требуется отсев случайного путем повторений.',0)"><nobr>Включен режим форсированной обработки.</nobr></div>
 <script>
 var is_input_rejim=1;
 function switch_input_rejim(ch)
@@ -42,7 +42,7 @@ is_input_rejim=1;
 
 <div style="position:relative;">
 <div style="position:absolute;top:10px;left:-20px;color:red;cursor:pointer;padding:4px;border:solid 1px #8A3CA4;border-radius:50%;background-color:#ffffff" title="Очистить окно ввода" onClick="cliner_textarea()"><b>X</b></div>
-<textarea id="input_id"  style="width:calc(100% - 10px);" rows="6" maxlength="500" onMouseDown="click_textarea()" onKeyDown="click_textarea()" disabled>Привет</textarea><br>
+<textarea id="input_id"  style="width:calc(100% - 10px);margin-top:10px;" rows="6" maxlength="500" onMouseDown="click_textarea()" onKeyDown="click_textarea()" disabled>Привет</textarea><br>
 <b>Тон:</b> 
 <input id='radio_1' type='radio' name='rdi' value='4' >повышенный 
 <input id="radio_2" type='radio' name='rdi' value='0' checked>нормальный 
