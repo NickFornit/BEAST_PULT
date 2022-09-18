@@ -68,9 +68,9 @@ document.getElementById('radio2_4').checked=true;
 </div>
 <div id='recognized_block_id' style="position:relative;margin-top:10px;background-color:#eeeeee;padding:4px;min-height:40px;">
 
-<div style="position:absolute;top:-50px;left:750px;font-size:12px;cursor:pointer;
-line-height: 0.8;padding-left:8px;padding-right:8px;border-radius: 7px;
-border:solid 1px #8A3CA4;background-color:#C9E8FF;" onClick="mood_cliner()" title="Очистить Тон и настроение.">c<br>б<br>р<br>о<br>с</div>
+<div style="position:absolute;top:-48px;left:750px;font-size:12px;cursor:pointer;
+line-height: 0.8;padding-left:3px;padding-right:3px;border-radius: 7px;
+border:solid 1px #8A3CA4;background-color:#efefef;" onClick="mood_cliner()" title="Очистить Тон и настроение."><br><img src='/img/delete.gif'><br>&larr;<br><br></div>
 
 
 <div style="position:absolute;top:4px;right:170px;font-size:12px;"><nobr><a href='/pages/words_tree.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Дерево слов</a></nobr></div>

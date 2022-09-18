@@ -121,9 +121,11 @@ if (isset($_POST['rdelID'])) {
 	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
 	var old_size = 0;
 
+var limitBasicID=0;//>0 - лимитировать показ только одним из базовых состояний Плохо,Норма,Хорошо 
 	function get_info() {
 		wait_begin();
-		var AJAX = new ajax_support(linking_address + "?get_condition_reflex_info=1", sent_get_info);
+
+		var AJAX = new ajax_support(linking_address + "?limitBasicID="+limitBasicID+"&get_condition_reflex_info=1", sent_get_info);
 		AJAX.send_reqest();
 
 		function sent_get_info(res) {
@@ -134,6 +136,13 @@ if (isset($_POST['rdelID'])) {
 		}
 	}
 	get_info();
+
+function show_level(base)
+{
+	limitBasicID=base;
+get_info();
+}
+//////////////////////////////////////////////
 
 	function delete_reflexes(id) {
 		show_dlg_confirm("Точно удалить?", "Да", "Нет", delete_reflexes2);
