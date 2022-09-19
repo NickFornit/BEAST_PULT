@@ -70,8 +70,9 @@ echo "<div class='main_page_div' style='margin-top:20px;'>Массированн
 echo "<div class='main_page_div' style='margin-top:50px;'>";
 
 echo "<a href='/pages/words_temp.php' target='showpage1' style='position:absolute;top:-25px;right:0px;'>Показать накопитель слов-фраз</a>";
-echo "<a href='/pages/words_tree.php' target='showpage2' style='position:absolute;top:0px;right:120px;'>Показать дерево слов</a>&nbsp;
-<a href='/pages/phrase_tree.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Дерево фраз</a>";
+echo "<a href='/pages/words_tree.php' target='showpage2' style='position:absolute;top:0px;right:210px;'>Показать дерево слов</a>
+<a href='/pages/phrase_tree.php' target='showpage2' style='position:absolute;top:0px;right:100px;'>Дерево фраз</a>
+<a href='/pages/words_list.php' target='showpage2' style='position:absolute;top:0px;right:0px;'>Список слов</a>";
 
 /////////////////////////////////////////////////////////////
 ?>
