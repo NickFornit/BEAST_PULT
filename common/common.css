@@ -272,6 +272,7 @@ cursor:pointer;
 white-space: nowrap;
 margin-top:10px;
 font-weight:normal;
+text-align:left;
 }
 .archive_list:hover
 {

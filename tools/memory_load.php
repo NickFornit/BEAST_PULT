@@ -22,10 +22,17 @@ if($file=="." || $file=="..")
 	continue;
 if(!is_dir($file))
 {
+$ext=substr($file,strrpos($file,'.'));
+$ext=strtolower($ext);
+if($ext!=".zip" && $ext!=".ZIP" )
+{
+continue;
+}
+
 //if($n==1) exit("! $file");
 if($file=="CurrentMemory.zip")
 {
-$str= "<tr class='highlighting'><td class='archive_list' onClick='restore_archive(`".$file."`)' title='Залить эту память Beast'><li>CurrentMemory.zip</td><td>
+$str= "<tr class='highlighting'><td class='archive_list' onClick='restore_archive(`".$file."`)' title='Залить эту память Beast'><li>CurrentMemory</td><td>
 
 &nbsp;&nbsp;&nbsp;&nbsp;</td><td>
 &nbsp;</td></tr>";
@@ -33,8 +40,12 @@ $str= "<tr class='highlighting'><td class='archive_list' onClick='restore_archiv
 else
 {
 $arr=explode("_",$file);
+if(count($arr)>5)
+{
 $time=mktime((int)$arr[4], 0, (int)$arr[6], (int)$arr[2], (int)$arr[1], (int)$arr[2] );
 $txt="<li>".$arr[0]."-".$arr[1]."-".$arr[2]." &nbsp;&nbsp;".$arr[3].":".$arr[4];
+}else
+$txt="<li>".$file;
 $txt=str_replace(".zip","",$txt);
 
 $str= "<tr class='highlighting'><td class='archive_list' onClick='restore_archive(`".$file."`)' title='Залить эту память Beast'>".$txt."</td><td>
