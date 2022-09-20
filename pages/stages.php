@@ -124,23 +124,35 @@ function goto_stages(next)
 next_level=next;   
 if(next<stages)
 {
-show_dlg_confirm("Точно вернуться к предыдущему уровню развития? Будет удалена память, зависимая от стадии До рождения.","ДА","НЕТ",gotonextlevel);
+//show_dlg_confirm("Точно вернуться к предыдущему уровню развития? Будет удалена память, зависимая от стадии До рождения.","ДА","НЕТ",gotonextleve0);
+show_dlg_confirm("Очистить память, зависимую от стадии &quot;"+next_level+"&quot;?<br>Или вернуться к предыдущему уровню развития без очистки?","Да, очистить","Вернуться без очистки",gotonextlevel);
 return;
+}
+if(next>stages)
+{
+gotonextlevel2();
 }
 /////////////////
 if(next==stages)
 {
 	return;
 }
-gotonextlevel();
+//gotonextlevel(next);
 }
 ///////////////////////
+function closed_dlg_confirm()// если выбрано "Вернуться без очистки"
+{ 
+//	alert("1");
+gotonextlevel2()
+}
+
 function gotonextlevel()
 {
-var AJAX = new ajax_support("/lib/cliner_stadi0_memory.php", sent_cliner_reflex_memory);
+// в зависимости от того, куда возвращаемся
+var AJAX = new ajax_support("/lib/cliner_stadies_memory.php?next_level="+next_level, sent_cliner_reflex_memory);
 AJAX.send_reqest();
 function sent_cliner_reflex_memory(res) {
-show_dlg_alert("Память, зависимая от стадии До рождения, очищена.",2000);
+show_dlg_alert("Память, зависимая от стадии "+next_level+", очищена.",2000);
 setTimeout("gotonextlevel2();",2000);
 }
 }

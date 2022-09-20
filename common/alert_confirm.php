@@ -120,6 +120,7 @@ function show_dlg_confirm(mess,yes,no,own_function)
 is_show_confirm=1;
 own_proc=own_function; //alert(typeof(own_proc));
 
+
 var name_yes="Да";
 if(yes.length>0)
 	name_yes=yes;
@@ -134,7 +135,7 @@ if(no!=-1)
 	{
 buttons+="<input type='button' value='"+name_yes+"' class='alerts_dlg_botton' onClick='end_dlg_confirm(1)' style='position:absolute;bottom:5px;left: 30%;transform: translate(-50%, 0);'>";
 
-buttons+="<input type='button' value='"+name_no+"' class='alerts_dlg_botton' onClick='end_dlg_confirm(0);' style='position:absolute;bottom:5px;left: 70%;transform: translate(-50%, 0);'>";
+buttons+="<input type='button' value='"+name_no+"' class='alerts_dlg_botton' onClick='end_dlg_confirm(0);def_func();' style='position:absolute;bottom:5px;left: 70%;transform: translate(-50%, 0);'>";
 
 	}
 	else//!! ЕСЛИ ВТОРАЯ КНОПКА==-1 то ее не показывать
@@ -143,7 +144,7 @@ buttons+="<input type='button' value='"+name_yes+"' class='alerts_dlg_botton' on
 	}
 
 
-var cntn="<span style='font-size:15px;'>"+mess+"</span>"+buttons;
+var cntn="<span style='font-size:15px;'>"+mess+"</span><div class='alert_exit' style='top:0; right:0;' title='закрыть без действий' onClick='end_dlg_confirm(-1)'><span style='position:relative; top:-1px; left:1px;'>&#10006;</span></div><div style='height:20px;'></div>"+buttons;
 document.getElementById('div_dlg_alert').innerHTML=cntn;
 document.getElementById('div_dlg_alert').style.display="block";
 
@@ -156,17 +157,17 @@ if(typeof(closed_dlg_confirm)=='function')
 {  //alert("2");
 closed_dlg_confirm();
 }
-end_dlg_confirm(0);
+//end_dlg_confirm(0);
 }
 function end_dlg_confirm(type)
 {
 is_show_confirm=0;
-//	alert(typeof(own_proc));
-if(type)
+//	alert(type);
+if(type==1)
 {
 if(typeof(own_proc)=='function')
 {
-	//alert(typeof(own_proc));
+//	alert(typeof(own_proc));
 	//own_proc();
 // нужно дать выйти из функции end_dlg_confirm чтобы нормально выполнить хоть какую own_proc
 	setTimeout("goto_own_proc()",100);
