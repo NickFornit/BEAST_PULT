@@ -344,3 +344,12 @@ border:solid 1px #666666;
 {
 outline:solid 1px #000000;
 }
+
+.luminous_text
+{
+text-shadow:
+	0 0 4px #F788A3,
+    0 0 5px #F7AEC5,
+    0 0 6px #F7CCDA,
+    0 0 10px #F7E8E8;
+}

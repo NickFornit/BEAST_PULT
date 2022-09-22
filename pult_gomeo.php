@@ -284,6 +284,15 @@ if(document.getElementById('div_dlg_alert2').style.display=="none")
 			dialog_no_reflex(current_condition, ful_condition_str,1);
 		}
 }
+
+//Действует период ожидания реакции оператора на действие автоматизма?
+if(p[6].length>0)
+{
+document.getElementById('time_limit_id').innerHTML="Осталось времени на ответ: "+p[6]+" сек";
+document.getElementById('time_limit_id').style.display="block";
+}else{
+document.getElementById('time_limit_id').style.display="none";
+}
 		
 }
 var contextsName={

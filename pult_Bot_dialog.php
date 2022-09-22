@@ -84,6 +84,18 @@ border:solid 1px #8A3CA4;background-color:#efefef;" onClick="mood_cliner()" titl
 
 </div>
 
+<?
+//////// индикация периода ожидания реакции оператора на действие автоматизма
+echo "<div style='position:relative;'>";
+echo "<div id='time_limit_id' class='luminous_text' style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);
+background-color:#ffffff;border-radius: 7px;
+padding:3px;
+font-size: 18px;color:#BF0000;
+display: none;
+'
+title='Осталось время ожидания реакции оператора на действие автоматизма'><nobr>Осталось времени на ответ:  сек</nobr></div>";
+echo "</div>";
+?>
 
 <script Language="JavaScript" src="/ajax/ajax_post.js"></script>
 <script>
