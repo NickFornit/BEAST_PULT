@@ -4,15 +4,17 @@ http://go/pages/self_perception.php
 
 */
 $page_id=6;
-$title="Стрнаница текущего самоощущения Beast";
+$title="Самоощущениe Beast";
 include_once($_SERVER['DOCUMENT_ROOT']."/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 
 
 ?>
-<div  style='position:absolute;top:38px;left:450px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()">Обновить</div>
-<div  style='position:absolute;top:38px;left:570px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree1()">Дерево автоматизмов</div>
-<div  style='position:absolute;top:38px;left:790px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree2()">Дерево понимания</div>
+<div  style='position:absolute;top:38px;left:250px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()"><b>Обновить</b></div>
+<div  style='position:absolute;top:38px;left:370px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_autimat_table()">Таблица автоматизмов</div>
+
+<div  style='position:absolute;top:38px;left:590px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree1()">Дерево автоматизмов</div>
+<div  style='position:absolute;top:38px;left:800px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree2()">Дерево понимания</div>
 
 <div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
 </div>
@@ -42,6 +44,11 @@ document.getElementById('div_id').innerHTML=res;
 }
 get_info();
 setTimeout("chech_new_info()",2000);
+
+function get_autimat_table()
+{
+open_anotjer_win("/pages/automatizm_table.php");
+}
 
 function get_tree1()
 {

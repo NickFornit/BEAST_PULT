@@ -300,6 +300,7 @@ echo "</div>";
 		}
 	}
 
+var startPsichicNow=0;// 1- психика уже готова
 	function set_Bot_Ready(ready) {
 		//alert(ready);
 		if (ready == 0) {
@@ -313,9 +314,19 @@ echo "</div>";
 			document.getElementById('stadia_warn').innerHTML = "";
 
 			tools_show(0)
-		} else // ВКЛЮЧЕН
+		} 
+		else // ВКЛЮЧЕН
 		{
-			document.getElementById('about_bot_ready').innerHTML = " "; //alert(typeof(stages_dev));
+			if(startPsichicNow==0)
+			{
+				if(stages_dev <2)
+var ready0_str="<span style='color:#000000'>Beast уже очнулся, но </span>еще НЕ восприимчив<span style='color:#000000'>, нужно немного подождать</span>";
+else
+var ready0_str="<span style='color:#000000'>Beast уже очнулся, но </span>еще НЕ сознает себя<span style='color:#000000'>, нужно немного подождать</span>";
+			document.getElementById('about_bot_ready').innerHTML = ready0_str; //alert(typeof(stages_dev));
+			}
+
+
 			if (stages_dev != '0') {
 				document.getElementById('input_id').disabled = false;
 				document.getElementById('input_button_id').disabled = false;

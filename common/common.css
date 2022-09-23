@@ -353,3 +353,11 @@ text-shadow:
     0 0 6px #F7CCDA,
     0 0 10px #F7E8E8;
 }
+.luminous_text_blue
+{
+text-shadow:
+	0 0 4px #B4BFFF,
+    0 0 5px #CCD0FF,
+    0 0 6px #DADDFF,
+    0 0 10px #E4EBFF;
+}
