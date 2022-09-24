@@ -4,7 +4,7 @@ http://go/pages/self_perception.php
 
 */
 $page_id=6;
-$title="Самоощущениe Beast";
+$title="Психика Beast";
 include_once($_SERVER['DOCUMENT_ROOT']."/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 

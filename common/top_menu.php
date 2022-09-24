@@ -29,7 +29,7 @@ $p_nameArr=array(
 3 => array("Действия","/pages/terminal_actions.php","Редактор возможных Действий"),
 4 => array("Рефлексы","/pages/reflexes.php","Редактор безусловных рефлексов"),
 5 => array("Условные рефлексы","/pages/condition_reflexes.php","Условные рефлексы Beast"),
-6 => array("Самоощущение","/pages/self_perception.php","Стрнаница текущего самоощущения Beast"),
+6 => array("Психика","/pages/self_perception.php","Стрнаница текущего состояния психики Beast"),
 
 10 => array("Стадии","/pages/stages.php","Стадии развития Beast"),
 
