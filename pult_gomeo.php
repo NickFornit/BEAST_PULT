@@ -35,7 +35,7 @@ function set_porog2($limit)
 }
 
 $slider_block = "";
-if ($stages > 1) {
+if ($stages > 2) {
 	$slider_block = "disabled";
 }
 

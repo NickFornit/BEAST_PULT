@@ -205,8 +205,12 @@ end_dlg_alert();
 /* при каждом изменении условий проверка заготовленных в http://go/pages/condition_reflexes_basic_phrases.php слов - условных рефлексов.
 */
 var cur_conditions_words="";
+var old_contexts="";
 function check_cur_conditions_words(basic,contexts)
 {
+	if(old_contexts==contexts)
+		return;
+old_contexts=contexts;
 //alert(basic+" | "+contexts);exit();
 var AJAX = new ajax_support("/lib/get_exclamations_for_conditions.php?basic="+basic+"&contexts="+contexts, sent_ch_words_info);
 AJAX.send_reqest();
