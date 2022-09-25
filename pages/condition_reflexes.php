@@ -18,32 +18,28 @@ $out_str_for_del = ""
 <script>
 	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
 	//alert(linking_address);
-	function end_deleting(out) {
-		show_dlg_alert("Beast выключается...", 2000);
+	function end_deleting() {
+		//show_dlg_alert("Beast выключается...", 2000);
+		/*
 		var AJAX = new ajax_support(linking_address + "?bot_closing=1", sent_info);
 		AJAX.send_reqest();
-
 		function sent_info(res) {
 			// не будет ответа
 		}
-		//alert(out);
-		setTimeout("delete_end('" + out + "')", 2000);
-	}
-
-	function delete_end(out) { //alert(out);
-		var AJAX = new ajax_support("/pages/condition_reflexes_server.php?out=" + out, sent_end_info);
+		Выключить без сохранения памяти, просто погасить исполняемый файл
+		*/
+		var server = "/kill.php";
+		var AJAX = new ajax_support(server, sent_end_answer);
 		AJAX.send_reqest();
-
-		function sent_end_info(res) {
-			//	alert(res);
-			document.forms['refresh'].submit();
+		function sent_end_answer(res) {
+			show_dlg_alert("Beast выключен.", 2000);
 		}
 	}
 </script>
 <?
 
 // удаление рефлексов
-if (isset($_POST['rdelID'])) {
+if (isset($_POST['rdelID'])) {  //var_dump($_POST['rdelID']);exit();
 	$delArr = explode("|", $_POST['rdelID']);
 	$dArr = array();
 	foreach ($delArr as $s) {
@@ -53,7 +49,7 @@ if (isset($_POST['rdelID'])) {
 		array_push($dArr, substr($s, 6));  //var_dump($dArr);exit();
 
 	}
-	$dCount = count($dArr);
+	$dCount = count($dArr);   //var_dump($dArr);exit();
 
 	$str = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/condition_reflexes.txt");
 	$list = explode("\r\n", $str);  //exit("! $str | ".$_GET['delete_id']);
@@ -66,14 +62,14 @@ if (isset($_POST['rdelID'])) {
 		$r = explode("|", $s);
 		$id = $r[0];
 		$isDeleting = 0;
-		for ($n = 0; $n < $dCount; $n++) {
+		for ($n = 0; $n < $dCount; $n++) { //if($id=="6252") exit("WWWWWWWW");
 			if ($id == $dArr[$n]) {
 				$isDeleting = 1;
 				break;
 			}
 		}
 		if (!$isDeleting) {
-			$out .= $s . "|"; // exit($out);
+			$out .= $s . "|\r\n"; // exit($out);
 		}
 	}
 	//exit(": ".$out);
@@ -83,7 +79,7 @@ if (isset($_POST['rdelID'])) {
 	echo "<script>";
 	// вырубить Beast и записать рефлексы после этого
 	echo "show_dlg_alert('Выбранные рефлексы удалябтся.<br>Beast выключается.',1500);
-		setTimeout(`end_deleting('" . $out . "');`,2000);";
+		setTimeout(`end_deleting();`,2000);";
 
 	echo "</script>";
 	exit();
