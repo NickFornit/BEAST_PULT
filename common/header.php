@@ -57,6 +57,37 @@ if(parseInt(document.getElementById("block_id").style.height)!=0)
 	open_close(`block_id`,0);
 
 }
+// для поддержки страниц информации от 
+// ждем пока не включат бестию
+var begin_activnost_after=1; // после какого пульса запускать функцию get_info()
+function check_Beast_activnost(begin)
+{
+if(typeof(get_info)!="function")
+{
+	alert("Нужно определить функцию получения информации get_info()");
+	return;
+}
+begin_activnost_after=begin;
+get_Beast_connection();
+}
+var check_info_timer=0
+function get_Beast_connection()
+{	
+var AJAX = new ajax_support(linking_address + "?check_Beast_activnost=1", check_info);
+		AJAX.send_reqest();
+		function check_info(res) {
+document.getElementById('div_id').innerHTML = "Beast активна, но еще не готова, подождите "+(begin_activnost_after-res)+" секунд.";
+
+res=parseInt(res); // alert(res);
+			if(res > begin_activnost_after)
+			{  //alert(res);
+clearTimeout(check_info_timer);
+document.getElementById('div_id').innerHTML = "Beast активна";
+get_info();
+			}
+		}
+		check_info_timer=setTimeout("get_Beast_connection()",1000);
+}
 </script>
 <?
 ///// стадии развития 

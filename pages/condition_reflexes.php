@@ -85,6 +85,7 @@ if (isset($_POST['rdelID'])) {  //var_dump($_POST['rdelID']);exit();
 	exit();
 }
 ?>
+<div id='div_id' style='font-family:courier;font-size:18px;'><b>Нужен коннект с Beast.</b></div>
 
 <div style='position:absolute;top:40px;left:360px;font-size:16px;cursor:pointer;color:#7E58FF;' onClick="open_anotjer_win('/pages/condition_reflexes_basic_phrases.php')" title="Создание базы простейщих фраз для заливки базы условных рефлексов."><b>Набить базовые фразы</b></div>
 
@@ -93,11 +94,11 @@ if (isset($_POST['rdelID'])) {  //var_dump($_POST['rdelID']);exit();
 
 <div style='position:absolute;top:40px;right:200px;font-family:courier;font-size:16px;cursor:pointer;' onClick="open_anotjer_win('/pages/condition_reflexes.htm')"><b>Пояснения</b></div>
 
-<div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()"><b>Обновить</b></div>
+<div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b></div>
 
 
 
-<div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
+
 </div>
 
 Рефлексы можно только удалить, после чего нужно перезапустить Beast. Чтобы создался новый рефлекс нужно не менее 3-х раз повторить воздействие пусковых стимулов, не обязательно подряд, - этим предотвращаются случайные, мусорные сочетания.
@@ -115,8 +116,11 @@ if (isset($_POST['rdelID'])) {  //var_dump($_POST['rdelID']);exit();
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
-	var old_size = 0;
 
+// ждем пока не включат бестию
+check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
+
+	var old_size = 0;
 var limitBasicID=0;//>0 - лимитировать показ только одним из базовых состояний Плохо,Норма,Хорошо 
 	function get_info() {
 		wait_begin();
@@ -131,7 +135,7 @@ var limitBasicID=0;//>0 - лимитировать показ только од�
 			document.getElementById('del_btn_id').style.display = "block";
 		}
 	}
-	get_info();
+//	get_info();
 
 function show_level(base)
 {

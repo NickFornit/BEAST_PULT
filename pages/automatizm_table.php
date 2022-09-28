@@ -6,14 +6,14 @@ http://go/pages/automatizm_table.php
 id|BranchID|Usefulness||Sequence||NextID|Energy|Belief
 */
 
-$page_id = -1;
+$page_id = 6;
 $title = "Список автоматизмов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
 $out_str_for_del = ""
 ?>
-<div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_info()"><b>Обновить</b></div>
+<div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b></div>
 
 
 
@@ -28,12 +28,17 @@ $out_str_for_del = ""
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
+
+// ждем пока не включат бестию
+check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
+
 var old_size = 0;
 var limitBasicID=0;//>0 - лимитировать показ только одним из базовых состояний Плохо,Норма,Хорошо
-wait_begin();
-//setTimeout("get_info()",1000);
-get_info();
-	function get_info() {
+
+
+function get_info() {
+	end_dlg_alert();
+	wait_begin();
 		var AJAX = new ajax_support(linking_address + "?limitBasicID="+limitBasicID+"&get_automatizm_list_info=1", sent_get_info);
 		AJAX.send_reqest();
 

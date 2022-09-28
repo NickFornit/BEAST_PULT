@@ -1,27 +1,25 @@
 <?
-/*   Стрнаница текущего самоощущения Beast
-http://go/pages/self_perception.php  
+/*   Стрнаница автоматизмов Beast
+http://go/pages/automatizm.php  
 
 */
-$page_id=7;
-$title="Психика Beast";
+$page_id=6;
+$title="Автоматизмы Beast";
 include_once($_SERVER['DOCUMENT_ROOT']."/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 
 
 ?>
-<div  style='position:absolute;top:38px;left:250px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b></div>
-<div  style='position:absolute;top:38px;left:370px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_autimat_table()">Таблица автоматизмов</div>
+<div  style='position:absolute;top:38px;left:250px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_autimat_table"><b>Обновить</b></div>
 
+<div  style='position:absolute;top:38px;left:370px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_autimat_table()">Таблица автоматизмов</div>
 <div  style='position:absolute;top:38px;left:590px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree1()">Дерево автоматизмов</div>
-<div  style='position:absolute;top:38px;left:800px;font-family:courier;font-size:16px;cursor:pointer;' onClick="get_tree2()">Дерево понимания</div>
+
 
 <div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
 </div>
 
 
-
-Еще не доделано.
 
 
 
@@ -31,25 +29,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 <script>
 var linking_address='<?include($_SERVER["DOCUMENT_ROOT"]."/common/linking_address.txt");?>';
 
-// ждем пока не включат бестию
-check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
-
-function get_info()
-{
-wait_begin();
-var AJAX = new ajax_support(linking_address+"?get_self_perception_info=1",sent_info);
-AJAX.send_reqest();
-function sent_info(res)
-{
-//alert(res);
-wait_end();
-document.getElementById('div_id').innerHTML=res;
-
-setTimeout("chech_new_info()",2000);
-}
-}
-//get_info();
-//setTimeout("chech_new_info()",2000);
 
 function get_autimat_table()
 {
