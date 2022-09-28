@@ -88,6 +88,22 @@ get_info();
 		}
 		check_info_timer=setTimeout("get_Beast_connection()",1000);
 }
+// есть ли коннект с ГО
+var check_info_timer_cheker=0
+function exists_connection()
+{
+check_info_timer_cheker=setTimeout("get_Beast_connection_checker()",2000);
+var AJAX = new ajax_support(linking_address + "?check_Beast_activnost=1", check_go_connction);
+AJAX.send_reqest();
+function check_go_connction(res) {
+clearTimeout(check_info_timer_cheker);
+}
+}
+function get_Beast_connection_checker()
+{
+show_dlg_alert("Нет коннекта с Beast.<br>Включите Beast и повторите операцию.",0);
+wait_end();
+}
 </script>
 <?
 ///// стадии развития 
