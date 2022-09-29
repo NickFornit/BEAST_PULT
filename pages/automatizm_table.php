@@ -7,13 +7,13 @@ id|BranchID|Usefulness||Sequence||NextID|Energy|Belief
 */
 
 $page_id = 6;
-$title = "Список автоматизмов";
+$title = "Список штатных автоматизмов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
 $out_str_for_del = ""
 ?>
-<div style='position:absolute;top:40px;right:100px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b></div>
+<div style='position:absolute;top:40px;left:350px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b><span style="padding-left:100px"><span>(Только один штатный автматизм привязывается к узлу Дерева)</div>
 
 
 

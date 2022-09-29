@@ -71,11 +71,14 @@ begin_activnost_after=begin;
 get_Beast_connection();
 }
 var check_info_timer=0
+var check_info_timer_cheker=0
 function get_Beast_connection()
 {	
+check_info_timer_cheker=setTimeout("get_Beast_connection_checker()",1000);
 var AJAX = new ajax_support(linking_address + "?check_Beast_activnost=1", check_info);
-		AJAX.send_reqest();
-		function check_info(res) {
+AJAX.send_reqest();
+function check_info(res) {
+clearTimeout(check_info_timer_cheker);
 document.getElementById('div_id').innerHTML = "Beast активна, но еще не готова, подождите "+(begin_activnost_after-res)+" секунд.";
 
 res=parseInt(res); // alert(res);
@@ -89,7 +92,7 @@ get_info();
 		check_info_timer=setTimeout("get_Beast_connection()",1000);
 }
 // есть ли коннект с ГО
-var check_info_timer_cheker=0
+
 function exists_connection()
 {
 check_info_timer_cheker=setTimeout("get_Beast_connection_checker()",2000);
@@ -101,6 +104,7 @@ clearTimeout(check_info_timer_cheker);
 }
 function get_Beast_connection_checker()
 {
+clearTimeout(check_info_timer);
 show_dlg_alert("Нет коннекта с Beast.<br>Включите Beast и повторите операцию.",0);
 wait_end();
 }
