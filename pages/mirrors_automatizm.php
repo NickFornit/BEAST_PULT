@@ -1,12 +1,13 @@
 <?
-/* набивальщик базы зеркальных автоматизмов из условных рефлексов (безусловных если нет условных для данных условий)
+/* набивальщик базы зеркальных автоматизмов 
 
 Сохранение - в /pages/mirrors_automatizm_saver.php
 
 http://go/pages/mirrors_automatizm.php
+
 */
 $page_id = -1;
-$title = "Создание базы зеркальных автоматизмов из условных рефлексов";
+$title = "Создание базы зеркальных автоматизмов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 //include_once($_SERVER['DOCUMENT_ROOT']."/pult_js.php");
 //////////////////////////////////////////////////////////////
@@ -26,18 +27,22 @@ $get_list=explode(";",$id_list);
 
 
 ?>
+<div style="position:absolute;top:35px;right:10px;color:red"> - только после формирования шаблонов условных рефлексов</div>
+
+
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 var is_table_shoved=0;// 1 таблица показывается
 function get_table(kind)
 {
 wait_show();
-var link="/pages/condition_reflexes_basic_phrases_table.php?"+cur_condition_choose+"&kind="+kind;
+var link="/pages/mirrors_automatizm_table.php?"+cur_condition_choose+"&kind="+kind;
 //alert(link);
 var AJAX = new ajax_support(link, sent_table_info);
 AJAX.send_reqest();
 function sent_table_info(res)
 {
+	wait_end();
 //show_dlg_alert(res,0);
 if(res[0]!='!')
 { //alert(res);
@@ -45,7 +50,7 @@ show_dlg_alert(res,0);
 return;
 }
 document.getElementById('table_id').innerHTML=res.substr(1);
-document.getElementById('insert_from_common_id').style.display="block";
+//document.getElementById('insert_from_common_id').style.display="block";
 
 is_table_shoved=1;
 wait_end();
@@ -58,7 +63,7 @@ wait_end();
 //////////////////////////////////////////////////////////////
 echo "<div id='hr_table_id' style='position:relative;display:none;'>
 <hr>
-<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода фраз-синонимов</b>
+<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Задать условия для таблицы ввода фраз-ответоа</b>
 </div>";
 
 echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/pages/condition_reflexes_basic_phrases.htm'>Страница пояснений</a></div>";
@@ -72,10 +77,10 @@ xcvxcvxcvxcvxcvxcvx После заполнения таблицы следуе�
 
 </div>";
 
-echo "<div style='position:absolute;top:240px;;left:450px;font-size:16px;' ><b>Фразы должны быть уникальны</b> для таблицы, иначе условный рефлекс окажется неопределенным!</div>";
+echo "<div style='position:absolute;top:240px;;left:450px;font-size:16px;' >Фразы могут быть <b>НЕ уникальны</b> для таблицы.</div>";
 
 
-echo "<div style='position:absolute;top:270px;right:10px;font-size:18px;cursor:pointer;color:#885CFF' onClick='location.href=`/pages/condition_reflexes_basic_phrases_common.php`'>Общий шаблон пусковых символов</div>";
+echo "<div style='position:absolute;top:270px;right:10px;font-size:18px;cursor:pointer;color:#885CFF' onClick='location.href=`/pages/mirror_basic_phrases_common.php`'>Общий шаблон ответов</div>";
 
 // onChange='choode_base_cond(this)' - нет определенной зависимости...
 echo "<b>Базовое состояние:</b><br>
@@ -127,7 +132,11 @@ if(res[0]!='!')
 show_dlg_alert(res,0);
 return;
 }
-document.getElementById('context_variations_id').innerHTML=res.substr(1); 
+res=res.substr(1);
+// удалить (число рефлексов)
+res=res.replace(/\(\/?[^>]+\)/g, '');
+
+document.getElementById('context_variations_id').innerHTML=res; 
 //alert(res.substr(1));
 
 //show_dlg_alert(res.substr(1),0);
@@ -155,10 +164,10 @@ echo "<br><input id='button_table_id' type='button' value='Создать таб
 
 echo "<div style='position:relative;'>
 <hr>
-<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Таблица для заполнения фразами-синонимами</b>
+<div style='position:absolute;top:-10px;left:50%;transform: translate(-50%, 0);background-color:#ffffff;padding-left:10px;padding-right:10px;'><b>Таблица для заполнения фразами-ответами</b>
 </div>";
 
-echo "<div id='insert_from_common_id' style='position:absolute;top:-10px;right:10px;background-color:#efefef;font-size:18px;border:solid 1px #8A3CA4;border-radius: 7px;padding-left:10px;padding-right:10px;cursor:pointer;display:none;' onClick='get_table(1)'>Заполнить из общего шаблона</div>";
+//echo "<div id='insert_from_common_id' style='position:absolute;top:-10px;right:10px;background-color:#efefef;font-size:18px;border:solid 1px #8A3CA4;border-radius: 7px;padding-left:10px;padding-right:10px;cursor:pointer;display:none;' onClick='get_table(1)'>Заполнить из общего шаблона</div>";
 //var_dump($contextsArr);exit();
 //////////////////////////////////////////////////////////////
 
@@ -170,6 +179,24 @@ echo "Базовое состояние: <b><span id='base_cond_id'></span></b>"
 echo "</b>&nbsp;&nbsp;&nbsp;&nbsp;Сочетания контекстов: <b><span id='base_context_name'></span></b>";
 
 echo "</div>";
+
+
+$ton_moode_dlg="<br><div style='text-align:left;'>
+<b>Тон:</b> &nbsp; 
+<input id='radio_0' type='radio' name='rdi' value='0' checked>0 нормальный &nbsp;
+<input id='radio_1' type='radio' name='rdi' value='1'>1 вялый &nbsp;
+<input id='radio_2' type='radio' name='rdi' value='2' >2 повышенный <br>
+
+<br><b>Настроение:</b> &nbsp;
+<input id='radio2_0' type='radio' name='rdi2' value='0' checked>0 Нормальное &nbsp;
+<input id='radio2_1' type='radio' name='rdi2' value='1' >1 Хорошее &nbsp;
+<input id='radio2_2' type='radio' name='rdi2' value='2' >2 Плохое &nbsp;
+<input id='radio2_3' type='radio' name='rdi2' value='3'>3 Игровое &nbsp;
+<input id='radio2_4' type='radio' name='rdi2' value='4'>4 Учитель &nbsp;
+<input id='radio2_5' type='radio' name='rdi2' value='5'>5 Агрессивное&nbsp;
+<input id='radio2_6' type='radio' name='rdi2' value='6'>6 Защитное &nbsp;
+<input id='radio2_7' type='radio' name='rdi2' value='7'>7 Протест </div>";
+
 
 //////////////////////////////////////// ТАБЛИЦА
 echo "<div id='table_id'></div>";
@@ -226,23 +253,23 @@ function prases_saver()
 //	alert("ЗАПИСЬ");	return;
 var saveStr="";
 var tr =0;
-var nodes = document.getElementsByClassName('r_table'); //alert(nodes.length);
+var nodes = document.getElementsByClassName('r_table'); // alert(nodes.length);
 for(var i=0; i<nodes.length; i++) 
 {
 tr=nodes[i]; //alert(tr.cells[0].innerHTML+"|"+tr.cells[3].childNodes[0].value);return;
 
-// пропускаем все, что не содержит фраз
-if(tr.cells[3].childNodes[0].value==0)
+// пропускаем все, что не содержит фраз и действий
+if(tr.cells[1].childNodes[0].value==0 && tr.cells[3].childNodes[0].value==0)
 	continue;
 
 //alert(tr.cells[0].innerHTML+"|"+tr.cells[3].childNodes[0].value);return;
-saveStr+=tr.cells[0].innerHTML+"|"+tr.cells[1].childNodes[0].value+"|"+tr.cells[2].childNodes[0].value+"|"+tr.cells[3].childNodes[0].value+"|||";
+saveStr+=tr.cells[0].childNodes[0].value+"|"+tr.cells[1].childNodes[0].value+"|"+tr.cells[2].childNodes[0].value+"|"+tr.cells[3].childNodes[0].value+"|||";
 }//for(
 //  alert(saveStr);return;
 
 if(saveStr.length==0)
 {
-show_dlg_alert("Нет новых фраз-синонимов.",2000);
+show_dlg_alert("Нет фраз-ответов.",2000);
 return;
 }
 //alert(saveStr); // return;
@@ -324,30 +351,84 @@ function set_sel(tr, id) {
 
 
 ////////////////////////////////////////
-function show_word_list(id)
-{  
-
-var AJAX = new ajax_support("/lib/get_exclamations.php?id=" + id, sent_words_info);
-AJAX.send_reqest();
-function sent_words_info(res) {
-			//alert(res);
-show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по слову:<br>" + res + "<br>", 0);
-}
-}
-function insert_word(id,word)
+// сработает перед закрытием show_dlg_confirm
+function onw_dlg_exit_proc()
 {
-	word="    <br>"+word+" ";
-	word=word.trim();
-	word=word.replace(/<\/?[^>]+>/g,'');
-end_dlg_alert2();
-var inp=document.getElementById('insert_'+id);
-inp.setRangeText(word, inp.selectionStart, inp.selectionEnd, "end");
-/*
-if(inp.value.length>0)
-inp.value+=" ";
-document.getElementById('insert_'+id).value=inp+word;
-*/
-//alert(word);
+//alert("onw_dlg_exit_proc");
+var allr=document.getElementsByName('rdi'); //alert(allr.length);
+var ton=0;
+for(var i=0; i<allr.length; i++)
+{
+    if (allr[i].checked) 
+	{
+		ton=allr[i].value;
+      break; 
+	}
 }
+var allr=document.getElementsByName('rdi2');
+var moode=0;
+for(var i=0; i<allr.length; i++)
+{
+    if (allr[i].checked) 
+	{
+		moode=allr[i].value;
+      break; 
+	}
+}
+var inp=document.getElementById('insert_'+cur_ton_moode_id).value=ton+","+moode;
+
+}
+var cur_ton_moode_id=0;
+function show_ton_mood(id)
+{  
+cur_ton_moode_id=id;
+var cont=`<?=$ton_moode_dlg?>`;
+is_onw_dlg_exit_proc=1; //предопределенная переменнная
+show_dlg_alert("<br><span style='font-weight:normal;'>Выберите Тон и настроение:<br>" + cont + "<br>", 0);
+// проставить выделение старого выбора
+var inp=document.getElementById('insert_'+cur_ton_moode_id).value;
+if(inp.length>0)
+{
+var tm=inp.split(","); //alert(tm[0]+" | "+tm[1]+" || "+tm.length);
+  //alert(document.getElementById('radio_2').checked);
+document.getElementById('radio_'+tm[0]).checked=true;
+document.getElementById('radio2_'+tm[1]).checked=true;
+}
+
+//is_onw_dlg_exit_proc=0 - при закрытии само очистится
+}
+////////////////////////////////
+function show_actions_list(nid)
+{
+event.stopPropagation();
+var selected=document.getElementById("insert2_" + nid).value;
+//show_dlg_alert(selected,0);
+event.stopPropagation();
+		var AJAX = new ajax_support("/lib/get_actions_list.php?selected="+selected, sent_act_info);
+		AJAX.send_reqest();
+
+		function sent_act_info(res) {
+			show_dlg_alert2("<br><span style='font-weight:normal;'>Выберите значения:<br>" + res + "<br><input type='button' value='Выбрать значения' onClick='set_input_list("+nid + ")'>", 2);
+		}
+}
+/////////////////////////////
+function set_input_list(nid) {
+var aStr = "";
+var nodes = document.getElementsByClassName('chbx_identiser'); //alert(nodes.length);
+for(var i=0; i<nodes.length; i++) 
+{
+if(nodes[i].checked)
+	{
+if(aStr.length > 0)
+	aStr += ",";
+aStr += nodes[i].value;
+	}
+}
+		//alert(aStr);
+		document.getElementById("insert2_" + nid).value = aStr;
+
+		end_dlg_alert2();
+}
+/////////////////////////////////////////
 </script>
 

@@ -80,6 +80,17 @@ res=res.replace(/\<\/b\>/g,'</b><br>');
 show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
 }
 }
+function show_emotion(emotionID)
+{
+var AJAX = new ajax_support(linking_address + "?emotionID="+emotionID+"&get_emotion_info=1", sent_emotion_info);
+AJAX.send_reqest();
+function sent_emotion_info(res) {
+			//alert(res);
+res=res.replace(/\<\/b\>/g,'</b><br>');
+show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
+}
+}
+
 </script>
 
 </body>

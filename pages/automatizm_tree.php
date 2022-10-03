@@ -24,34 +24,35 @@ check_Beast_activnost(4);// после 4-го пульса И запускает
 
 //show_dlg_alert("Ожидаем 4 секунды...",0);
 //setTimeout("get_info()",4000);
-
-	function get_info() { //alert("!!!!");
+var limitBasicID=0;//>0 - лимитировать показ только одним из базовых состояний Плохо,Норма,Хорошо
+function get_info() { //alert("!!!!");
 		wait_begin();
-		var AJAX = new ajax_support(linking_address + "?get_automatizm_tree=1", sent_info);
-		AJAX.send_reqest();
-		function sent_info(res) {
+var AJAX = new ajax_support(linking_address + "?limitBasicID="+limitBasicID+"&get_automatizm_tree=1", sent_info);
+AJAX.send_reqest();
+function sent_info(res) {
 			//alert(res);
-			wait_end();
-			document.getElementById('div_id').innerHTML = res;
-		}
-	}
+		wait_end();
+	document.getElementById('div_id').innerHTML = res;
+}
+}
+function show_level(base)
+{
+	limitBasicID=base;
+get_info();
+}
+///////////////////////////////////////////
 
-/*
-	// проверяется размер /memory_psy/automatizm_tree.txt
-	var old_size = 0;
-	function chech_new_info() {
-		var AJAX = new ajax_support("/pages/automatizm_tree_checker.php", sent_size_info);
-		AJAX.send_reqest();
-		function sent_size_info(res) {
+////////////////
+function show_automatizms(id)
+{
+var AJAX = new ajax_support(linking_address + "?autNodeID="+id+"&get_node_automatizms=1", sent_automatizms_info);
+AJAX.send_reqest();
+function sent_automatizms_info(res) {
 			//alert(res);
-			if (old_size != res) {
-				get_info();
-				old_size = res;
-			}
-			setTimeout("chech_new_info()", 2000);
-		}
-	}
-*/
+res=res.replace(/\<\/b\>/g,'</b><br>');
+show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
+}
+}
 </script>
 
 </div>

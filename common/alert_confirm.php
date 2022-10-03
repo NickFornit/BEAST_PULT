@@ -7,14 +7,30 @@ alert() и if(!confirn())
 Псевдомодальность реализуется бланкирующим серым затемнением, 
 по щелку на котором выключается конфирм.
 
-Применение:
+Применение show_dlg_alert:
 show_dlg_alert(mess,autoclose);   end_dlg_alert()
 	show_dlg_alert("<br>"+res,2);//только крестик
 	show_dlg_alert("<br>"+res,3);//и крестик и OK
+================================ СОБСТВЕННАЯ ФУНКЦИЯ ПЕРЕД ЗАКРЫТИЕМ:
+Если нужно сделать что-то перед закрытие, то нужно определить функцию onw_dlg_exit_proc() для этого:
+// сработает перед закрытием show_dlg_confirm
+function onw_dlg_exit_proc()
+{
+alert("onw_dlg_exit_proc");
+}
+Вызов:
+is_onw_dlg_exit_proc=1; // предопределенная переменнная
+show_dlg_alert(mess,autoclose);
+//is_onw_dlg_exit_proc=0 - при закрытии само очистится
+================================
+
+
+Применение show_dlg_confirm:
 show_dlg_confirm("Уверены?",1,-1,save_continue);// save_continue - если нажали на ДА
 !!! если нажали на др.кнопку, то будет вызов умолчательной функции closed_dlg_confirm()!!!
 !!! ВСЕГДА НУЖНО ОПРЕДЕЛЯТЬ function closed_dlg_confirm() пусть пустую, чтобы не срабатывало где-то в кеше!!!
 end_dlg_confirm(0); - зактыть confirm
+
 
 
 Только один алерт или конфирм может быть в данный момент на странице. 
@@ -69,6 +85,7 @@ text-align:center;
 <div id='blanck_div_id' style='position:fixed;Z-INDEX:1000;top:0px;left:0px;width:100%;height:100%;background: rgba(64,64,64,0.7);display:none;' onClick="close_all_dlg(1)"></div>
 
 <script>
+var is_onw_dlg_exit_proc=0;
 // autoclose: 0 - без кнопки ОК, 1 или время в сек - самозакрытие, 2 - без кнопки OK и не самозакрываться
 function show_dlg_alert(mess,autoclose)
 {   //alert(autoclose);
@@ -109,6 +126,12 @@ document.getElementById('div_dlg_alert').style.display="block";
 }
 function end_dlg_alert()
 { //alert("!!!!!!");
+if(typeof(onw_dlg_exit_proc)=='function')// есть пользовательская функция, сначала выполнить ее
+{  
+if(is_onw_dlg_exit_proc==1)
+onw_dlg_exit_proc();
+}
+is_onw_dlg_exit_proc=0;
 document.getElementById('div_dlg_alert').style.display="none";
 }
 //////////////////////////////////////////////////////

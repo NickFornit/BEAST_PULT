@@ -13,6 +13,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
 $out_str_for_del = ""
 ?>
+
+
 <form name="refresh" method="post" action="/pages/condition_reflexes.php"></form>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
