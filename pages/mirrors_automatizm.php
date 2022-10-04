@@ -70,7 +70,7 @@ echo "<div style='position:absolute;z-index:10;top:20px;right:20px;'><a href='/p
 
 echo "<div style='position:absolute;top:60px;right:10px;border:solid 1px #8A3CA4;border-radius: 7px;padding:10px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);background-color:#efefef;max-width:65%;font-size:14px;'>
 <b>Поясненния:</b><br>
-xcvxcvxvxvxvxvxvxcvxcvxcvxcvx<br>
+Колонка &quot;Ответная фраза&quot; - это ответ оператора на фразу в колонке слева в данных условиях (строка над таблицей). Как человек, оператор может ответить, не затрудняясь с подбором, свободно, так что не стоит особенно заморачиваться с Ответной фразой.<br>НО нужно понимать, что эту фразу Beast станет использовать бездумно, полагаясь на авторитет оператора (раз он так отвечает, то и мне можно попробовать). Желательно писать короткие и ясные фразы.<br>
 
 <b>Использование:</b><br>
 xcvxcvxcvxcvxcvxcvx После заполнения таблицы следует нажать под ней “Сохранить фразы” или просто нажать Ctrl+S. 

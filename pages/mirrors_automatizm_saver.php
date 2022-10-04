@@ -40,6 +40,7 @@ foreach($rArr as $rp)
 	if(empty($rp))
 		continue;
 $p=explode("|",$rp);
+// triggPhrase|baseID|ContID_list|answerPhrase|Ton,Mood|actions1,...
 $out.=$p[0]."|".$bsID."|".$id_list."|".$p[1]."|".$p[2]."|".$p[3]."\r\n";
 
 }

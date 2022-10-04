@@ -2,6 +2,7 @@
 /* Сохранить рефлексы табцы из http://go/pages/condition_reflexes_basic_phrases.php
 
 bsID=1&id_list=2&saveStr=|1,50,76|фффффффф||
+
 /pages/condition_reflexes_basic_phrases_saver.php
 */
 
@@ -40,6 +41,7 @@ foreach($rArr as $rp)
 	if(empty($rp))
 		continue;
 $p=explode("|",$rp);
+//treggPrease|baseID|ContID_list|answerPrease|Ton,Mood|actions1,...
 $out.=$p[0]."|".$bsID."|".$id_list."|".$p[1]."|".$p[2]."|".$p[3]."\r\n";
 
 }

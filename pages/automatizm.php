@@ -58,10 +58,41 @@ background-color:#eeeeee;' onClick="make_genetic_automatizms()">Создать �
 <br><br>
 <div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
-background-color:#eeeeee;' onClick="open_anotjer_win('/pages/mirrors_automatizm.php')" >Начать набивку зеркальных автоматизмов на основе существующих</div><br>
+background-color:#eeeeee;' onClick="open_anotjer_win('/pages/mirrors_automatizm.php')" >Начать набивку зеркальных автоматизмов на основе существующих</div>
+
+
+<?
+// сколько файлов уже есть в mirror_reflexes_basic_phrases
+$m_file_count=0;
+$tdir=$_SERVER["DOCUMENT_ROOT"]."/lib/mirror_reflexes_basic_phrases/";
+$filesArr="var filesArr = new Array();";
+$n=0;
+if($dh = opendir($tdir)) 
+{ //exit("!!!");
+while(false !== ($file = readdir($dh))) 
+{		
+if($file=="." || $file=="..")
+	continue;
+if(filesize($tdir.$file)>0)
+	{
+$m_file_count++;
+	}
+}
+closedir($dh);
+}
+
+echo "&nbsp;&nbsp;&nbsp;&nbsp;количество созданных для отзеркаливания файлов: <span style='font-size:20px'><b>".$m_file_count."</b></span>";
+if($m_file_count)
+{
+
+echo "<br><br>
+<div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
+border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
+background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker.php\")' >Сформировать автоматизмы для всех списков ответов</div>";
+}
+?>
 <br>
-
-
+<br>
 </div>
 
 </div>
