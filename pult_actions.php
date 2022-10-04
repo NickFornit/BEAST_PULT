@@ -40,9 +40,11 @@ $trigg=$actionsFromPultArr;
 	<br><div style='font-size:5px;'>&nbsp;</div>
 	<div id="act_2" class='actions actions_green action_poz1' onClick="to_action(2)" title="<?=$trigg[2][1]?>"><?=$trigg[2][0]?><?=setGo(2)?></div>
 	
-	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="<?=$trigg[14][1]?>"><?=$trigg[14][0]?><?=setGo(14)?></div>
-	<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="<?=$trigg[13][1]?>"><?=$trigg[13][0]?><?=setGo(13)?></div>
+	<div id="act_4" class='actions actions_green action_poz2' onClick="to_action(4)" title="<?=$trigg[4][1]?>"><?=$trigg[4][0]?><?=setGo(4)?></div>
+		<div id="act_13" class='actions actions_green action_poz1' onClick="to_action(13)" title="<?=$trigg[13][1]?>"><?=$trigg[13][0]?><?=setGo(13)?></div>
+
 	<div id="act_11" class='actions actions_green action_poz3' onClick="to_action(11)" title="<?=$trigg[11][1]?>"><?=$trigg[11][0]?><?=setGo(11)?></div>
+	<div id="act_14" class='actions actions_green action_poz2' onClick="to_action(14)" title="<?=$trigg[14][1]?>"><?=$trigg[14][0]?><?=setGo(14)?></div>
 	<div id="act_9" class='actions actions_gray action_poz3' onClick="to_action(9)" title="<?=$trigg[9][1]?>"><?=$trigg[9][0]?><?=setGo(9)?></div>
 	<br><div style='font-size:5px;'>&nbsp;</div>
 	<div id="act_6" class='actions actions_blue action_poz1' onClick="to_action(6)" title="<?=$trigg[6][1]?>"><?=$trigg[6][0]?><?=setGo(6)?></div>
