@@ -7,7 +7,8 @@ foreach ($triggerPhraseArr as $tArr)
 */
 $triggerPhraseArr=array();
 $tdir=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/";
-$filesArr="var filesArr = new Array();";
+
+/*
 $n=0;
 if($dh = opendir($tdir)) 
 { //exit("!!!");
@@ -29,6 +30,16 @@ $n++;
 }
 closedir($dh);
 }
+*/
+// просто считать файл
+$tstr=read_t_file($_SERVER["DOCUMENT_ROOT"]."/lib/mirror_basic_phrases_common.txt");
+$str=explode("\r\n",$tstr);
+foreach($str as $s)
+{
+$p=explode("|",$s);
+array_push($triggerPhraseArr,$p[0]);
+}
+
 $triggerPhraseArr=array_unique($triggerPhraseArr);  // var_dump($triggerPhraseArr);exit();
 
 

@@ -1,41 +1,18 @@
 <?
 /* Сформировать автоматизмы для всех списков ответов.
 
-http://go/pages/mirrors_automatizm_maker.php
+http://go/pages/mirrors_automatizm_maker_from_template.php
 
-перебирает файлы в /lib/mirror_reflexes_basic_phrases посылая запросы в ГО 
+использует файл mirror_basic_phrases_common.txt посылая 1 запрос в ГО 
 */
 
 $page_id = -1;
-$title = "Формирование зеркальных автоматизмов на основе списка ответов";
+$title = "Формирование зеркальных автоматизмов на основе шаблона списка ответов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 //include_once($_SERVER['DOCUMENT_ROOT']."/pult_js.php");
 //////////////////////////////////////////////////////////////
-$dir=$_SERVER["DOCUMENT_ROOT"]."/lib/mirror_reflexes_basic_phrases/";
-$filesArr="var filesArr = new Array();";
-$n=0;
-if($dh = opendir($dir)) 
-{ //exit("!!!");
-while(false !== ($file = readdir($dh))) 
-{		
-if($file=="." || $file=="..")
-	continue;
-if(filesize($dir.$file)>0)
-	{
-$filesArr.="filesArr[".$n."] = '/lib/mirror_reflexes_basic_phrases/".$file."';";
-$n++;
-	}
 
-}
-closedir($dh);
-}
-$filesArr.="var fileCount=$n;";
-//  var_dump($contents);exit();
-if($n==0)
-{
-echo "<div style='font-family:courier;font-size:16px;display:block;'><span style='font-size:18px;color:red;'><b>Нет файлов списков.</b></span><br> Сначала нужно в <a href='/pages/mirrors_automatizm.php'>редакторе</a> заготовить фразы - ответы.</div>";
-exit();
-}
+$fileList="/lib/mirror_basic_phrases_common.txt";
 
 
 echo "<div id='div_id' style='font-family:courier;font-size:18px;'><b>Нужен коннект с Beast.</b></div>";
@@ -50,17 +27,18 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/linking.php");
 
 
 
-<div id='div_id' style='font-family:courier;font-size:16px;display:block;'><span style="font-size:18px;color:red;"><b>Нужен коннект с Beast.</b></span> Включите Beast на Пульте и <a href='/pages/mirrors_automatizm_maker.php'>перезагрузите эту страницу</a>.</div>
+<div id='div_id' style='font-family:courier;font-size:16px;display:block;'><span style="font-size:18px;color:red;"><b>Нужен коннект с Beast.</b></span> Включите Beast на Пульте и <a href='/pages/mirrors_automatizm_maker_from_template.php'>перезагрузите эту страницу</a>.</div>
 
 
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
+var linking_address='<?include($_SERVER["DOCUMENT_ROOT"]."/common/linking_address.txt");?>';
+
 // ждем пока не включат бестию
 check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
 
 function get_info()
 {
-var linking_address='<?include($_SERVER["DOCUMENT_ROOT"]."/common/linking_address.txt");?>';
 //wait_begin(); // wait_end();
 var AJAX = new ajax_support(linking_address+"?stop_activnost=1",sent_blocing);
 AJAX.send_reqest();
@@ -74,45 +52,23 @@ processing();
 }
 }
 ///////////////////////
-var next=0;
 function processing()
 {
-<?=$filesArr?>
-//	alert("типа идет процесс");
-/*
-var AJAX = new ajax_support("/lib/get_file_content.php?file="+filesArr[next],sent_blocing);
+// alert("/lib/get_file_content.php?file=<?=$fileList?>");
+var AJAX = new ajax_support(linking_address + "?mirror_making_temp=/lib/mirror_basic_phrases_common.txt", sent_process_info);
 AJAX.send_reqest();
-//var check_working_timer=setTimeout("check_working()",2000);
-function sent_blocing(res)
-{
-*/
-//alert(res);
-show_dlg_alert("<span style='font-size:20px;'><b>"+(next+1)+"</b> файл из "+fileCount,0);
-
-//bot_contact("file_for_automayizm_making="+res,sent_process_mess);
-//alert(filesArr[next]);
-var AJAX = new ajax_support(linking_address + "?mirror_making_fool="+filesArr[next], sent_process_info);
-AJAX.send_reqest();
-function sent_process_info(res)
-{
+function sent_process_info(res) {
 //alert(res);
 if(res!="OK")
 {
-show_dlg_alert(res+"<hr>Ошибка файла "+filesArr[next]+"<hr>Процесс остановлен.",0);
+show_dlg_alert("Возникла ошибка:<hr>"+res,0);
 wait_end();
 return;
 }
 
-// следующий файл
-next++;
-if(next==filesArr.length)
 end();
-else
-processing();
 }
-
 }
-
 /////////////////////////////////////////
 
 function end()

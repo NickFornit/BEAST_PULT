@@ -112,7 +112,8 @@ $actn=$commonArr[$tArr][2];
 $out.="<tr class='r_table highlighting' style='background-color:#eeeeee;' onClick='set_sel(this," . $id . ")'>";
 
 // пусковые стимулы
-$out.="<td  class='table_cell'><input type='hidden'  name='trigg[]' value='".$tArr."'><nobr>".$tArr."</nobr></td>";
+$out.="<td  class='table_cell' style='background-color:#eeeeee;'><input type='hidden'  name='trigg[]' value='".$tArr."'><nobr>".$tArr."</nobr></td>";
+
 //Ответная фраза
 $out.="<td  class='table_cell'><input  name='answ[]' class='table_input' type='text' value='".$answ."' ></td>";
 //Тон и настроение

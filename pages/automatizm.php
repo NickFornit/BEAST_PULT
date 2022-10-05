@@ -21,7 +21,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 
 
 <div style="width:1000px;">
-Следующие возможности рекомендуется использовать только для ознакомления и тестирования, они не могут заменить полноценное воспитание, вот почему.<br>
+Предоставляемые здесь инструменты возможно использовать не только для ознакомления и тестирования (рекомендации - в самом низу), но в этом случае они не могут заменить полноценное воспитание, вот почему.<br>
 Если уже созданы впрок все возможные сочетания безусловных и условных рефлексов (их по 6000 каждого вида), то при запуске создания автоматизмов создается настолько большое и <b>избыточное</b> количество автоматизмов, что работа подсмотрщика дерева автоматизма оказывается очень долгой и совершенно бесполезной (хотя дерево автоматизмов работает вполне оперативно). Кроме того, в ходе развития последующих стадий образуется лавинообразно еще большее число вторичных автоматизмов (это какая-то шизофрения получается), что совершенно не адекватно нормальному процессу воспитания.<br>
 <hr>
 
@@ -34,26 +34,23 @@ background-color:#eeeeee;' title="Для тестирования различн
 При этом у автоматизмов будут установлены опции уже проверенного автоматизма с полезностью, равной 1 (вполне полезно). Это правомерно потому, что рефлексы создавались уже полезными для своих условий.<br>
 В дальнейшем такие автоматизмы будут проверяться в зависимости от реакции оператора и изменения состояния Beast, корректируясь настолько эффективно, насколько позволяет текущая стадия развития.
 <br><br>
-<div id="make_automatizms_id" style='display:inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
+<div id="make_genetic_automatizms_id" style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
-background-color:#eeeeee;' onClick="make_automatizms()">Создать автоматизмы на основе существующих <b>условных</b> рефлексов</div><br>
+background-color:#eeeeee;' onClick="make_genetic_automatizms()">Создать автоматизмы на основе существующих <b>безусловных</b> рефлексов</div> - связываются с 3-м уровнем ветки дерева<br>
+
 <br>
 <div id='res_div_id' style='font-family:courier;font-size:21px;color:green;font-weight:bold;'></div>
 <div id='div_id' style='font-family:courier;font-size:21px;color:red;font-weight:bold;'></div>
 </div>
-
-
-<br><br>
-<div id="make_genetic_automatizms_id" style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
+<div id="make_automatizms_id" style='display:inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
-background-color:#eeeeee;' onClick="make_genetic_automatizms()">Создать автоматизмы на основе существующих <b>безусловных</b> рефлексов</div><br>
+background-color:#eeeeee;' onClick="make_automatizms()">Создать автоматизмы на основе существующих <b>условных</b> рефлексов</div> - связываются с 7-м (вербальным) уровнем ветки дерева. Если условные рефлексы были сгенерированы искусственно, то будет создано большое число автоматизмов. Но <span style='color:red'>нет смысла создавать автоматизмы из условных рефлексов, если затем воспользоваться кнопкой "Сформировать зеркальные автоматизмы для всех таблиц сочетаний контекстов"</span> потому, что вторые перекроют первых.<br>
 <br>
 
 </div>
-<br>
-<br>
+
 <hr>
-Для стадии 3 так же необходимо длительное время для отзеркаливания реакций оператора в различных ситуациях. Это время возможно сократить для тестирования, запустив редактор создания зеркальных автоматизмов (первичного жизненного импринтингового опыта) на основе существующих автоматизмов.<br>
+<b>Для стадии 3</b> так же необходимо длительное время для отзеркаливания реакций оператора в различных ситуациях. Это время возможно сократить для тестирования, запустив редактор создания зеркальных автоматизмов (первичного жизненного импринтингового опыта) на основе существующих автоматизмов.<br>
 При этом уже будут вставлены умолчательные значения в виде предположительной инверсии реакций автоматизма.
 <br><br>
 <div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
@@ -88,11 +85,27 @@ if($m_file_count)
 echo "<br><br>
 <div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
-background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker.php\")' >Сформировать автоматизмы для всех списков ответов</div>";
+background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker.php\")' >Сформировать зеркальные автоматизмы для всех таблиц сочетаний контекстов</div> - очень большое число автоматизмов, которые, впрочем, будут нормально отрабатывать.";
+echo "<br><br>
+<div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
+border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
+background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker_from_template.php\")' >Сформировать зеркальные автоматизмы только для таблицы общего шаблона</div> - это наиболее разумное решение, т.к. будет создано относительно недольшое число автоматизмов. И в этом случае не требуется заполнять таблицы по каждому сочетанию Базовых контекстов.";
 }
 ?>
 <br>
 <br>
+<b>Рекомендуемая последовательность для искусственного создания рабочей коллекции автоматизмов.</b><br>
+1. Заполнить общий шаблон пусковых символов /pages/condition_reflexes_basic_phrases_common.php<br>
+2. Нажать кнопку “Удалить все автоматизмы и очистить дерево автоматизмов”<br>
+3. Нажать кнопку “Создать автоматизмы на основе существующих безусловных рефлексов”<br>
+4. Заполнить общий шаблон ответов для имитации отзеркаливания /pages/mirror_basic_phrases_common.php<br>
+5. Нажать кнопку “Сформировать зеркальные автоматизмы только для таблицы общего шаблона”.<br>
+<b>Альтернативный вариант:</b><br>
+5. Заполнить таблицы для всех сочетаний Базовых контекстов /pages/mirrors_automatizm.php (очень большая работа)<br>
+6. Нажать кнопку “Сформировать зеркальные автоматизмы для всех таблиц сочетаний контекстов”.<br>
+<br>
+Для тестирования же возможно использовать любые варианты.
+
 </div>
 
 </div>

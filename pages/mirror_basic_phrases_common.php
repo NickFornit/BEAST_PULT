@@ -15,17 +15,64 @@ echo '<div style="position:absolute;top:35px;right:10px;color:red"> - тольк
 
 
 if(isset($_POST['gogogo'])&&$_POST['gogogo']==1)
-{
+{  
+//	var_dump($_POST);exit();
+$newslines=$_POST['newslines']; //exit("! $newslines");
 $out="";
+$uniqueArr=array();
 foreach($_POST['trigg'] as $id => $trigg)
 {
 $_POST['answ'][$id]=trim($_POST['answ'][$id]);
 $_POST['actn'][$id]=trim($_POST['actn'][$id]);
-if(empty($_POST['answ'][$id]) && empty($_POST['actn'][$id]))// незаполненные фразы не писать
-	continue;
+// !!!! if(empty($_POST['answ'][$id]) && empty($_POST['actn'][$id]))// незаполненные фразы не писать
+//	continue;
 
+if(!in_array($trigg,$uniqueArr) || empty($trigg))
+		{
+	array_push($uniqueArr,$trigg);
 $out.=$trigg."|".$_POST['answ'][$id]."|".$_POST['ton_mood'][$id]."|".$_POST['actn'][$id]."\r\n"; // exit("$out");
+		}
 }
+
+//................................
+if($newslines==1)// добавить 10 пустых строк
+{  
+for($n=0;$n<10;$n++)
+	{
+$out.="||0,0|\r\n";
+	}
+}
+//................................
+if($newslines==2)// добавить все слова из условных рефлексов
+{  
+$tdir=$_SERVER["DOCUMENT_ROOT"]."/lib/condition_reflexes_basic_phrases/";
+$n=0;
+if($dh = opendir($tdir)) 
+{ //exit("!!!");
+while(false !== ($file = readdir($dh))) 
+{		
+if($file=="." || $file=="..")
+	continue;
+if(filesize($tdir.$file)>0)
+	{
+$tstr=reading_file($tdir.$file);
+$str=explode("\r\n",$tstr);
+foreach($str as $s)
+{
+$p=explode("|",$s);
+if(!in_array($p[5],$uniqueArr))
+		{
+	array_push($uniqueArr,$p[5]);
+$out.=$p[5]."||0,0|\r\n"; // exit("$out");
+		}
+}
+$n++;
+	}
+}
+closedir($dh);
+}
+}
+//................................
 
 //exit("$out");
 writing_file($_SERVER["DOCUMENT_ROOT"]."/lib/mirror_basic_phrases_common.txt",$out);
@@ -46,15 +93,25 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/pages/mirrors_automatizm_get_all_phra
 $file=$_SERVER["DOCUMENT_ROOT"]."/lib/mirror_basic_phrases_common.txt";
 $progs = reading_file($file); 
 $strArr = explode("\r\n", $progs);  //var_dump($strArr);exit();
+
+$uniqueArr=array();
 $phraseArr=array();
+$n=0;
 	foreach ($strArr as $str) {
 		if (empty($str))
 			continue;
 		$p = explode("|", $str);
-		$phraseArr[$p[0]][0]=$p[1];
-		$phraseArr[$p[0]][1]=$p[2];
-		$phraseArr[$p[0]][2]=$p[3];
-	}
+// в левой колонке - только уникальные фразы (кроме вставленных пустых)
+if(!in_array($p[0],$uniqueArr) || empty($p[0]))
+		{
+	array_push($uniqueArr,$p[0]);
+		$phraseArr[$n][0]=$p[0];
+		$phraseArr[$n][1]=$p[1];
+		$phraseArr[$n][2]=$p[2];
+		$phraseArr[$n][3]=$p[3];
+$n++;
+		}
+}
 //  var_dump($phraseArr);exit();
 
 ///////////////////////////////////////////////////////////////////////
@@ -72,24 +129,31 @@ $out="<table class='main_table' cellpadding=0 cellspacing=0 border=1 width='1000
 		</tr>";
 
 $nid=0;
-foreach ($triggerPhraseArr as $tArr)
+foreach ($phraseArr as $tArr)
 {
-//	var_dump($resArr);exit();
+//if($nid==488)	{var_dump($tArr);exit("<hr>$trig");}
 $out.="<tr class='r_table highlighting' style='background-color:#eeeeee;' onClick='set_sel(this,`" . $index . "`)'>";
-
-// пусковые стимулы
-$out.="<td class='table_cell'><input type='hidden'  name='trigg[]' value='".$tArr."'><nobr>".$tArr."</nobr></td>";
 
 // фразы-ответы
 $answ="";
 $tm="0,0";
 $actn="";
-if(isset($phraseArr[$tArr]))
-{
-$answ=$phraseArr[$tArr][0];
-$tm=$phraseArr[$tArr][1];
-$actn=$phraseArr[$tArr][2];
-}
+
+$trig=$tArr[0];
+$answ=$tArr[1];
+$tm=$tArr[2];
+$actn=$tArr[3];
+
+// пусковые стимулы
+if(empty($trig))
+	{
+$out.="<td  class='table_cell' ><input id='insert_".$nid."' name='trigg[]' class='table_input' type='text' value='' ></td>";
+	}
+	else
+	{
+$out.="<td class='table_cell'><input type='hidden'  name='trigg[]' value='".$trig."'><nobr>".$trig."</nobr></td>";
+	}
+
 $out.="<td  class='table_cell'><input  name='answ[]' class='table_input' type='text' value='".$answ."' ></td>";
 
 $out.="<td  class='table_cell'><input id='insert_".$nid."' name='ton_mood[]' class='table_input' type='text' value='".$tm."' ><img src='/img/down17.png' class='select_control' onClick='show_ton_mood(".$nid.")' title='Выбор Тона и Настроения'></td>";
@@ -101,20 +165,29 @@ $nid++;
 }
 $out.="</table>";
 
-$out.="<br><input type='submit' value='Сохранить' >";
-
 
 /////////////////////////////////////////////////////////
-echo "<div style='font-size:16px;' >Фразы могут быть <b>НЕ уникальны</b> - это ответ оператора на фразу в колонке слева в данных условиях (строка над таблицей). Как человек, оператор может ответить, не затрудняясь с подбором, свободно, так что не стоит особенно заморачиваться с Ответной фразой.<br>НО нужно понимать, что эту фразу Beast станет использовать бездумно, полагаясь на авторитет оператора (раз он так отвечает, то и мне можно попробовать). Желательно писать короткие и ясные фразы.<br>
-В таблице показаны все встречающиеся в шаблонных условных рефлексах фразы.</div>";
-echo 'Cохранение по Ctrl+S<form id="form_id" name="form" method="post" action="/pages/mirror_basic_phrases_common.php">';
+echo "<div style='font-size:16px;' >Фразы могут быть <b>НЕ уникальны</b> и можно не заполнять все строки таблицы (тогда они не будут записаны в шаблон).<br> 
+Это ответ оператора на фразу в колонке слева в данных условиях (строка над таблицей). Как человек, оператор может ответить, не затрудняясь с подбором, свободно, так что не стоит особенно заморачиваться с Ответной фразой.<br>НО нужно понимать, что эту фразу Beast станет использовать бездумно, полагаясь на авторитет оператора (раз он так отвечает, то и мне можно попробовать). Желательно писать короткие и ясные фразы.</div>";
+echo 'Cохранение по Ctrl+S
+<div style="position:relative;width:1000px;" >
+<form name="form_saver" method="post" action="/pages/mirror_basic_phrases_common.php">
+<input type="hidden" name="gogogo" value="1">
+<input type="hidden" name="newslines" value="0">
+';
 echo $out;
-echo "<input type='hidden' name='gogogo' value='1'>
-</form>";
+echo "
+<br><input type='button' value='Добавить 10 пустых строк' onClick='add_lines(1)'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' value='Сохранить' >
+
+<input type='button' style='position:absolute;top:0x;right:0px;' value='Добавить все фразы из таблиц условных рефлексов' onClick='add_lines(2)'>
+</form>
+</div>";
+?>
+<br>
 
 
 
-
+<?
 //////////////////////////////////////
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/alert2_dlg.php");
 
@@ -137,6 +210,30 @@ $ton_moode_dlg="<br><div style='text-align:left;'>
 ?>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
+
+function prases_saver()
+{
+document.forms.form_saver.submit(); // alert(document.forms.newslines+" | "+document.forms.form_saver);
+}
+//////
+function add_lines(type)
+{
+	alert(type);
+	if(type=='2')
+	{
+show_dlg_confirm("Если в таблице уже есть фразы, то из условных рефлексов будут добавлены только уникальные фразы - в самом низу таблицы.<br><br>Запустить процесс?","Да, запустить","Отменить",add_lines2);
+return;
+	}
+//	alert(document.forms.form_saver.newslines+" | "+document.forms.form_saver);
+document.forms.form_saver.newslines.value=type;   
+document.forms.form_saver.submit();
+}
+function add_lines2()
+{
+document.forms.form_saver.newslines.value=2;   
+document.forms.form_saver.submit();
+}
+/////////////////////////////////////
 
 // сработает перед закрытием show_dlg_confirm
 function onw_dlg_exit_proc()
@@ -229,11 +326,7 @@ function save_CTRRLS()
 {
 show_dlg_confirm("Сохранить список?",1,-1,prases_saver);
 }
-function prases_saver()
-{
-document.forms.form_id.submit();
-}
-//////////////////////////////////////
+
 ////////////////////////////////
 function show_actions_list(nid)
 {
@@ -267,6 +360,7 @@ aStr += nodes[i].value;
 		end_dlg_alert2();
 }
 /////////////////////////////////////////
+
 </script>
 <?
 //////////////////////////////////////////////////////////////////////
