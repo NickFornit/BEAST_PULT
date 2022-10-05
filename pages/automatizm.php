@@ -86,8 +86,13 @@ echo "<br><br>
 <div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
 background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker.php\")' >Сформировать зеркальные автоматизмы для всех таблиц сочетаний контекстов</div> - очень большое число автоматизмов, которые, впрочем, будут нормально отрабатывать.";
-echo "<br><br>
-<div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
+echo "";
+}
+
+
+if(file_exists($_SERVER["DOCUMENT_ROOT"]."/lib/mirror_basic_phrases_common.txt") && filesize($_SERVER["DOCUMENT_ROOT"]."/lib/mirror_basic_phrases_common.txt")>20)
+{
+echo "<br><br><div  style='display: inline-block;relative;font-family:courier;font-size:16px;cursor:pointer;
 border:solid 1px #8A3CA4;border-radius: 7px;padding-left:4px;padding-right:4px;
 background-color:#eeeeee;' onClick='open_anotjer_win(\"/pages/mirrors_automatizm_maker_from_template.php\")' >Сформировать зеркальные автоматизмы только для таблицы общего шаблона</div> - это наиболее разумное решение, т.к. будет создано относительно недольшое число автоматизмов. И в этом случае не требуется заполнять таблицы по каждому сочетанию Базовых контекстов.";
 }
