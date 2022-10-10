@@ -73,7 +73,8 @@ cursor:pointer;
 <li><a href="/pages/gomeostaz.php">РедакторФормирование жизненных параметров гомеостаза</a></li>
 <li><a href="/pages/words.php">Заливка Фраз для дерева слов и дерева фраз</a></li>
 <li><a href="/pages/terminal_actions.php">Редактор возможных Действий</a></li>
-<li><a href="/pages/reflexes.php">Редактор безусловных рефлексов</a></li>
+<li><a href="/pages/reflexes.php">Редактор безусловных рефлексов</a> 
+<span style="font-size:16px;cursor:pointer;color:#7E58FF;" onClick="cliner_reflex_times_stadies()"  title="Чтобы рефлексы не просрочили свое время жизни, нужно обновлять его перед началом использования." ><b>Обновить время жизни рефлексов</b></span></li>
 В общем-то эта стадия уже предложена в головом виде и можно просто перейти к следубщей, а можно изменить базовую сущность этого живого существа.
 <br><br>
 <div style="position:relative;">
@@ -120,6 +121,7 @@ cursor:pointer;
 <br>
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
+var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
 var stages='<?=$stages?>';
 var next_level=0;
 function goto_stages(next)
@@ -165,6 +167,23 @@ var form=document.getElementById("goto1");
 form.next.value=next_level; 
 form.submit();
 next_level=0;
+}
+
+var cliner_reflex_timer=0;
+function cliner_reflex_times_stadies()
+{
+ cliner_reflex_timer=setTimeout("cliner_reflex_times_stadies2()",2000);
+var AJAX = new ajax_support(linking_address + "?cliner_time_condition_reflex=1", sent_get_info);
+AJAX.send_reqest();
+function sent_get_info(res) 
+{
+show_dlg_alert('Время жизни условных рефлексов очищено.',2000);
+clearTimeout(cliner_reflex_timer);
+}
+}
+function cliner_reflex_times_stadies2()
+{
+show_dlg_alert('Функция не срабатывает, сначала нужно включить Beast.',0);
 }
 </script>
 <?

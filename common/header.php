@@ -122,10 +122,7 @@ echo "<div style='font-size:21px;color:red;'><b>Это - пройденная с
 	}
 break;
 
-case 5:
-if($stages>1)
-echo "<div style='font-size:21px;color:red;'><b>Это - пройденная стадия развития! Не следует редактировать данные на этой станице!</b></div>";
-break;
+
 
 }
 
