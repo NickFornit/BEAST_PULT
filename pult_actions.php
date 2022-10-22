@@ -183,6 +183,7 @@ sending_trigg(id);
 function sending_trigg(triggers_str)
 {
 //alert(triggers_str);desactivationAll();return;
+//alert(triggers_str);
 
 var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
 		var food_portion = document.getElementById("food_portion_id").selectedIndex + 1;

@@ -68,7 +68,7 @@ break;
 //aOut+="<b>Beast говорит:</b><br>"+actStr+"<br>";
 //break;
 case "3":// автоматизм
-aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Автоматизм:</b><br>"+actStr+"</div>";
+aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\">Показан на пульте <b>Автоматизм:</b><br>"+actStr+"</div>";
 break;
 default:
 alert("Неверно прописана акция: "+act_str);

@@ -69,10 +69,10 @@ show_dlg_alert(res,0);
 }
 }
 
-function show_actions(id,sequence)
+function show_actions(id)
 {
-//alert(sequence);
-var AJAX = new ajax_support(linking_address + "?autmzmID="+id+"&sequence="+sequence+"&get_sequence_info=1", sent_sequence_info);
+//alert(id);
+var AJAX = new ajax_support(linking_address + "?autmzmID="+id+"&get_sequence_info=1", sent_sequence_info);
 AJAX.send_reqest();
 function sent_sequence_info(res) {
 			//alert(res);
