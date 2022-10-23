@@ -105,7 +105,7 @@ clearTimeout(check_info_timer_cheker);
 function get_Beast_connection_checker()
 {
 clearTimeout(check_info_timer);
-show_dlg_alert("Нет коннекта с Beast.<br>Включите Beast и повторите операцию.",0);
+show_dlg_alert("Нет коннекта с Beast.<br>Включите Beast и <span style='color:blue;cursor:pointer;' onClick='location.reload(true)'>повторите</span> операцию.",0);
 wait_end();
 }
 </script>

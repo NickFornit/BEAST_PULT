@@ -135,6 +135,7 @@ var ful_condition_str="";
 	}
 
 	/////////////////
+var old_period_val=0;
 	function sent_get_params(res) {
 		if (res == "!!!") // Смерть beast
 		{
@@ -287,10 +288,23 @@ if(document.getElementById('div_dlg_alert2').style.display=="none")
 //Действует период ожидания реакции оператора на действие автоматизма?
 if(p[6].length>0)
 {
-document.getElementById('time_limit_id').innerHTML="Осталось времени на ответ: "+p[6]+" сек";
-document.getElementById('time_limit_id').style.display="block";
-}else{
+var periodI=document.getElementById('time_limit_id');
+//show_dlg_alert(old_period_val+" < "+p[6],0);
+	if(old_period_val < 1*p[6])
+	{
+	//alert("!!!! 20");
+	periodI.style.fontSize="30px";
+	}else{
+	periodI.style.fontSize="18px";
+	}
+periodI.innerHTML="Осталось времени на ответ: "+p[6]+" сек";
+periodI.style.display="block";
+old_period_val=1*p[6];
+}
+else
+{
 document.getElementById('time_limit_id').style.display="none";
+old_period_val=0;
 }
 
 if(p[7]=="1")

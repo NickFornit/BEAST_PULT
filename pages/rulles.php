@@ -11,6 +11,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
 ?>
+<div style='position:absolute;top:40px;left:350px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b><span style="padding-left:100px"><span>
+</div>
+
 <div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
 </div>
 
@@ -23,21 +26,31 @@ var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_a
 
 // ждем пока не включат бестию
 check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
+//get_info();
 
 var old_size = 0;
 var limitBasicID=0;//>0 - лимитировать показ только одним из базовых состояний Плохо,Норма,Хорошо
 
 
-function get_info() {
+function get_info() {  
 var AJAX = new ajax_support(linking_address + "?get_rulles_list_info=1", sent_get_info);
 AJAX.send_reqest();
 function sent_get_info(res) {
-
-document.getElementById('rules_info_id').innerHTML = res;
+if(res.length<10)
+	{
+document.getElementById('rules_info_id').innerHTML = "Еще нет правил.";
+	}
+else
+	{
+document.getElementById('rules_info_id').innerHTML = "Правила обновляются при появлении нового автоматически.<hr>"+res;
+	}
 document.getElementById('div_id').innerHTML="";
 
-setTimeout("get_info",1000);
+//setTimeout("get_info()",2000);   
+//show_dlg_alert("!!!!!!!!!!!",0); 
 }
+
+setTimeout("get_info()",2000);
 }
 
 </script>
