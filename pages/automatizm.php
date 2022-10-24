@@ -153,7 +153,7 @@ if(bot_is_connected==0)
 show_dlg_alert("Файлы памяти автоматизвом очищены.",0);
 else// нужно обесточить GO
 {
-show_dlg_alert("Файлы памяти автоматизвом очищены.<br>Best выключается для очистки памяти.",0);
+show_dlg_alert("Файлы памяти автоматизмов очищены.<br>Best выключается для очистки памяти.",0);
 var server = "/kill.php";
 		var AJAX = new ajax_support(server, sent_end_answer);
 		AJAX.send_reqest();

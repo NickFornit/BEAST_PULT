@@ -177,7 +177,7 @@ desactivationAll();
 
 //alert(params);return;
 bot_contact(params,text_bot_answer);
-
+document.getElementById('input_id').value = "";
 }
 }
 
