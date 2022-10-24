@@ -1,6 +1,10 @@
 <?
 /*  задатчики жизненных параметров
 include_once($_SERVER["DOCUMENT_ROOT"]."/pult_gomeo.php");
+
+При стадии развития 
+if ($stages > 4) {
+	$slider_block = "disabled";  - не давать рулить оператору
 */
 
 $progs = read_file($_SERVER["DOCUMENT_ROOT"] . "/memory_reflex/GomeostazLimits.txt");
@@ -35,7 +39,7 @@ function set_porog2($limit)
 }
 
 $slider_block = "";
-if ($stages > 2) {
+if ($stages > 4) {
 	$slider_block = "disabled";
 }
 
