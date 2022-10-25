@@ -127,6 +127,8 @@ document.getElementById('input_id').focus();
 }
 function sent_go()
 {
+end_dlg_bot_action(); //alert("!!!!");
+
 var txt=document.getElementById('input_id').value;
 
 var tone=0;
