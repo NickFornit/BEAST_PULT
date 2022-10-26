@@ -10,8 +10,9 @@ $title = "Последние 10 правил";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
+// из-за конфликтов чтение-запись убрал авто обновление
 ?>
-<div style='position:absolute;top:40px;left:350px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b><span style="padding-left:100px"><span>
+<div style='position:absolute;top:40px;left:350px;font-family:courier;font-size:16px;cursor:pointer;' onClick="location.reload(true)"><b>Обновить</b> - нет автоматического обновления<span style="padding-left:100px"><span> 
 </div>
 
 <div id='div_id' style='font-family:courier;font-size:16px;'>Нужен коннект с Beast.</div>
@@ -46,11 +47,10 @@ document.getElementById('rules_info_id').innerHTML = "Правила обнов�
 	}
 document.getElementById('div_id').innerHTML="";
 
-//setTimeout("get_info()",2000);   
 //show_dlg_alert("!!!!!!!!!!!",0); 
 }
 
-setTimeout("get_info()",2000);
+//setTimeout("get_info()",2000);из-за конфликтов чтение-запись убрал авто обновление
 }
 
 </script>
