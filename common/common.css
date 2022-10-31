@@ -361,3 +361,19 @@ text-shadow:
     0 0 6px #DADDFF,
     0 0 10px #E4EBFF;
 }
+.luminous_text_green
+{
+text-shadow:
+	0 0 4px #B4FFAE,
+    0 0 5px #CCFFD0,
+    0 0 6px #DAFFE8,
+    0 0 10px #E4FFE4;
+}
+.luminous_text_red
+{
+text-shadow:
+	0 0 4px #FFA7AE,
+    0 0 5px #FFC9D0,
+    0 0 6px #FFE8E8,
+    0 0 10px #FFE8E4;
+}

@@ -308,7 +308,7 @@ var startPsichicNow=0;// 1- психика уже готова
 			clearTimeout(actionTimerID);
 			desactivationAll();
 
-			document.getElementById('about_bot_ready').innerHTML = "Beast еще не пришел в себя, нужно немного подождать";
+//			document.getElementById('about_bot_ready').innerHTML = "Beast еще не пришел в себя, нужно немного подождать";
 			document.getElementById('input_id').disabled = true;
 			document.getElementById('input_button_id').disabled = true;
 			document.getElementById('stadia_warn').innerHTML = "";
@@ -317,15 +317,6 @@ var startPsichicNow=0;// 1- психика уже готова
 		} 
 		else // ВКЛЮЧЕН
 		{
-			if(startPsichicNow==0)
-			{
-				if(stages_dev <2)
-var ready0_str="<span style='color:#000000'>Beast уже очнулся, но </span>еще НЕ восприимчив<span style='color:#000000'>, нужно немного подождать</span>";
-else
-var ready0_str="<span style='color:#000000'>Beast уже очнулся, но </span>еще НЕ сознает себя<span style='color:#000000'>, нужно немного подождать</span>";
-			document.getElementById('about_bot_ready').innerHTML = ready0_str; //alert(typeof(stages_dev));
-			}
-
 
 			if (stages_dev != '0') {
 				document.getElementById('input_id').disabled = false;

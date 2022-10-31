@@ -311,18 +311,27 @@ document.getElementById('time_limit_id').style.display="none";
 old_period_val=0;
 }
 
-if(p[7]=="1")
-{   //  alert(p[7]);
-if(startPsichicNow==0)
-	{  //alert(stages_dev);
+///////////////////////// индикация готовности к общению
+var beast_ready=1*p[7];   // alert(beast_ready);
+switch(beast_ready)
+{     
+case 0:
+var ready_str="<span style='color=#000000background-color:#ffffff;border-radius: 7px;padding-left:3px;padding-right:3px;font-size: 15px;' title=''>Beast еще не пришел в себя, общение невозможно.</span>";
+break;
+case 1:
 if(stages_dev <2)
-var ready_str="Beast очнулся и восприимчив к воздействиям.";
+var ready_str="<span class='luminous_text_blue' style='background-color:#ffffff;border-radius: 7px;padding-left:3px;padding-right:3px;font-size: 15px;color:#585CFF;' title=''>Beast очнулся и восприимчив к воздействиям.</span>";
 else
-var ready_str="Психика Beast активрована. Можно общаться.";
-document.getElementById('about_bot_ready').innerHTML = "<span class='luminous_text_blue' style='background-color:#ffffff;border-radius: 7px;padding-left:3px;padding-right:3px;font-size: 15px;color:#585CFF;' title=''><nobr>"+ready_str+"</nobr></span>";
-	}
+var ready_str="<span class='luminous_text_blue' style='background-color:#ffffff;border-radius: 7px;padding-left:3px;padding-right:3px;font-size: 15px;color:#585CFF;' title=''>Психика Beast активрована, но без осознания.</span>";
+break;
+case 2:
+var ready_str="<span class='luminous_text_green' style='background-color:#ffffff;border-radius: 7px;padding-left:3px;padding-right:3px;font-size: 15px;color:#008800;' title=''>Beast готов к общению.</span>";
+if(startPsichicNow==0)
 startPsichicNow=1;
+break;
 }
+document.getElementById('about_bot_ready').innerHTML = "<nobr>"+ready_str+"</nobr>";
+///////////////////////////////
 		
 }
 var contextsName={
