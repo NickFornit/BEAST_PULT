@@ -7,7 +7,7 @@ id|BranchID|Usefulness||Sequence||NextID|Energy|Belief
 */
 
 $page_id = 6;
-$title = "Список штатных автоматизмов";
+$title = "Список моторных автоматизмов";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 

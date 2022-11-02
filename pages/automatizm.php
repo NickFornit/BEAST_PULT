@@ -31,7 +31,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 $stages=read_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/stages.txt");
 $stages=trim($stages);
 if ($stages > 3) {
-	echo "<div style='color:red;border:solid 1px #8A3CA4;padding:10px;background-color:#DDEBFF;'>Инструменты ниже <b>НЕ СЛЕДУЕТ ИСПОЛЬЗОВАТЬ</b> потому, что уже пройдена 3-я стадия развития. Использовать эти можно, только ясно представлявляя происходящее и ямея работать с файлами памяти.</div>";
+	echo "<div style='color:red;border:solid 1px #8A3CA4;padding:10px;background-color:#DDEBFF;'>Инструменты ниже <b>НЕ СЛЕДУЕТ ИСПОЛЬЗОВАТЬ</b> потому, что уже пройдена 3-я стадия развития. Использовать эти можно, только ясно представлявляя происходящее и умея работать с файлами памяти.</div>";
 }
 ?>
 
@@ -187,7 +187,7 @@ function make_automatizms()
 document.getElementById('make_automatizms_id').disabled=true
 //exists_connection(); // если нет коннекта, будет сообщение
 // ждем пока не включат бестию
-check_Beast_activnost(4);// после 4-го пульса И запускается get_info()
+check_Beast_activnost(6);// после 4-го пульса И запускается get_info()
 type_reqwest_go=1; //alert(type_reqwest_go);
 }
 function get_info() 
