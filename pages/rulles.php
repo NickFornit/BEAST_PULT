@@ -1,12 +1,12 @@
 <?
-/*   последние 10 правил
+/*   последние 10 Правил
 http://go/pages/rulles.php  
 
 
 */
 
 $page_id = 6;
-$title = "Последние 10 правил";
+$title = "Правила, Стимул-Ответ-Эффект";
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/show_waiting.php");
 
@@ -41,11 +41,8 @@ if(res.length<10)
 	{
 document.getElementById('rules_info_id').innerHTML = "Еще нет правил.";
 	}
-else
-	{
-document.getElementById('rules_info_id').innerHTML = "Правила обновляются при появлении нового автоматически.<hr>"+res;
-	}
-document.getElementById('div_id').innerHTML="";
+
+document.getElementById('div_id').innerHTML=res;
 
 //show_dlg_alert("!!!!!!!!!!!",0); 
 }
