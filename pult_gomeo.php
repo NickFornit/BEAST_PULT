@@ -61,7 +61,7 @@ EOD;
 }
 ?>
 
-<b>Управление жизненными параметрами</b> не использовать в качестве ответа на действия Beast:<br>
+<b>Управление жизненными параметрами</b> <span style="color:red;cursor:pointer;padding-left:2px;padding-right:2px;border:solid 1px #8A3CA4;border-radius:50%;background-color:#ffffff" title="Сбросить все жизненные параметры в 0" onClick="cliner_gomeo_pars()"><b>X</b></span> &nbsp;&nbsp;&nbsp;&nbsp; - не использовать в качестве ответа на действия Beast:<br>
 <table border=0 cellpadding=0 cellspacing=4 width='100%'>
 	<tr>
 		<td class="slider_td" title="" valign="top">
@@ -182,32 +182,36 @@ var old_period_val=0;
 			var val = g[1]; // if(id==1) alert(id+" | "+val);
 			var color = "#CCFF66";
 			var color2 = "#CCFFC1";
-			var title = "Норма";
+			var title = "Жизненные параметры в норме.";
+			valueS="Норма"
 			if (val == 1) {
 				color = "#FFD3EB";
 				color2 = "red";
-				title = "Плохо";
+				title = "Жизненные параметры ВЫШЛИ ИЗ НОРМЫ";
+				valueS="Плохо"
 			} else
 			if (val == 3) {
 				color = "#CCFFC1";
 				color2 = "green";
-				title = "Хорошо";
+				title = "Жизненные параметры вернулись в норму.";
+				valueS="Хорошо"
 			}
 
 			if (id == 0) // общее состояние
 			{
-				if (title == "Хорошо")
+				if (valueS == "Хорошо")
 					document.body.style.backgroundColor = "#DDEBFF";
-				if (title == "Плохо")
+				if (valueS == "Плохо")
 					document.body.style.backgroundColor = "#FFE4E1";
 
 				document.getElementById('common_status_id').style.backgroundColor = color;
-				document.getElementById('common_status_id').innerHTML = title; //alert(title);
+				document.getElementById('common_status_id').innerHTML = valueS; //alert(title);
+				document.getElementById('common_status_id').title=title;
 				continue;
 			}
 			//if(id==1) alert(id+" | "+val+" | "+color);
 			document.getElementById('status_' + id).style.backgroundColor = color2;
-			document.getElementById('status_' + id).title = title;
+			document.getElementById('status_' + id).title = valueS;
 		}
 
 		get_context_info(p[2]);
@@ -367,4 +371,25 @@ var triggersName={
 16:"16 Простить",
 17:"17 Вылечить"
 };
+
+// сбросить локально в GomeostazParams.txt, а если Включен, то послать на ГО.
+function cliner_gomeo_pars()
+{
+	var server = "/lib/cliner_gomeo_pars.php";    
+	var AJAX = new ajax_support(server, sent_cliner_gomeo);
+	AJAX.send_reqest();
+function sent_cliner_gomeo(res)
+{
+// alert(exists_connect);
+	if (exists_connect) 
+		{     
+var AJAX = new ajax_support(linking_address + "?cliner_gomeo_pars=1", sent_cliner_gomeo_go);
+AJAX.send_reqest();  
+function sent_cliner_gomeo_go(res) 
+{
+
+}
+		}
+}
+}
 </script>
