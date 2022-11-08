@@ -403,6 +403,8 @@ function sent_cliner_gomeo_go(res)
 }
 		}
 }
+end_dlg_control();
+show_dlg_alert("Установлено",1500);
 }
 </script>
 <style>
