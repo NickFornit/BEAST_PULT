@@ -15,6 +15,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/spoiler.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/alert_confirm.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/common/alert2_dlg.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/common/alert_control.php");
 
 // набор инструментов (загрузка и сохранение памяти Beast)
 include_once($_SERVER["DOCUMENT_ROOT"] . "/tools/tools.php");
@@ -61,7 +62,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/common/linking.php");
 
 <?
 // возраст:
-echo "<div id='life_time_id' style='position:absolute;top:0px;right:0px;'></div>";
+echo "<div style='position:absolute;top:0px;right:0px;'>";
+echo "<span id='life_time_id' style=''></span>";
+
+echo '&nbsp;<img src="/img/edit.png" style="cursor:pointer;" title="Установить возраст" onClick="set_life_time(this)">';
+
+echo "</div>";
 }
 
 
@@ -555,8 +561,72 @@ function rebooting2()
 wait_end();  //alert("333");
 show_dlg_alert("Beast перезагружен.",1500);
 }
+
+function set_life_time(parent)
+{
+var str="<div style='color:red;text-align:left;width:300px;'>При изменении возраста датировка эпизодической памяти будет нарушена! Файл памяти будет очищен а файл условных рефлексов обновлен.</div>";
+str+="<b>Установить возраст:</b><br><table border=0>";
+str+="<tr><td>Число лет: </td><td><input id='set_yeas' type='text' value='' class='control_input'></td></tr>";
+str+="<tr><td>Число месяцев: </td><td><input id='set_month' type='text' value='' class='control_input'></td></tr>";
+str+="<tr><td>Число дней: </td><td><input id='set_days' type='text' value='' class='control_input'></td></tr></table>";
+str+="<input type='button' value='Установить возраст' onClick='set_life_time2()'>";
+show_dlg_control(str,parent);
+}
+function set_life_time2()
+{
+var yeas=parseInt(document.getElementById('set_yeas').value);
+var month=parseInt(document.getElementById('set_month').value);
+var days=parseInt(document.getElementById('set_days').value);
+//alert(yeas+" | "+month+" | "+days);
+if (isNaN(yeas) && isNaN(month) && isNaN(days))	
+{
+show_dlg_alert("Нужно определить хотя бы одно из значений.<br>Можно задать только число дней.",0);
+	return;
+}
+var server = "/lib/set_life_time.php?yeas="+yeas+"&month="+month+"&days="+days;    alert(server);
+var AJAX = new ajax_support(server, sent_cliner_gomeo);
+AJAX.send_reqest();
+function sent_cliner_gomeo(res)
+{
+	if (res=="0")
+	{
+show_dlg_alert("Возраст не был установлен т.к. переданы пустые значения.",0);
+		return;
+	}
+	var warn="";
+	if (exists_connect)
+		warn="<br><br>Beast выключается.";
+
+	show_dlg_alert("Установлен новый возраст.<br>теперь все условные рефлексы - новые.<br>Удалена эпизодическая память.<br>Нужно пройти заново 4-ю ступень развития."+warn,0);
+
+	if (exists_connect)
+	{
+	var server = "/kill.php";
+		var AJAX = new ajax_support(server, sent_end_answer);
+		AJAX.send_reqest();
+		function sent_end_answer(res) {
+			show_dlg_alert("Beast выключен.", 2000);
+		}
+	}
+
+}
+end_dlg_control();
+}
 </script>
 </div>
+<style>
+.control_input
+{
+width:100%;
+border:0;
+outline:none;
+text-align:left;
+padding-left:4px;
+padding-top:2px;
+box-sizing:border-box;
+}
+</style>
+
 </body>
 
 </html>

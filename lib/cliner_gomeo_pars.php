@@ -10,10 +10,11 @@ header("Pragma: no-cache");
 header('Content-Type: text/html; charset=UTF-8');
 setlocale(LC_ALL, "ru_RU.UTF-8");
 
+$value=$_GET['value'];
 
 
 write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/GomeostazParams.txt",
-"1|0
+"1|".$value."
 2|0
 3|0
 4|0
@@ -22,7 +23,7 @@ write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/GomeostazParams.txt",
 7|0
 8|0");
 
-return 1;
+echo "1";
 
 
 ///////////////////////////////////////////////////

@@ -50,6 +50,7 @@ if(t.id == "div_dlg_alert")
 t = t.offsetParent;
 }
 end_dlg_confirm(0);//   зкрывать конфирм при щелчке по серому.
+//!!!!! end_dlg_control();
 
 // закрыть спойлер инструментов
 if(document.getElementById("block_id"))
