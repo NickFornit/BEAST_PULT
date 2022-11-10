@@ -51,6 +51,60 @@ document.getElementById('div_id').innerHTML=res;
 //setTimeout("get_info()",2000);из-за конфликтов чтение-запись убрал авто обновление
 }
 
+function show_mental_actions(actID)
+{
+var AJAX = new ajax_support(linking_address + "?get_mental_action_info="+actID, sent_action_info);
+AJAX.send_reqest();
+function sent_action_info(res) {
+
+show_dlg_alert(res,0); 
+}
+}
+
+function show_cickles_strings(cickle)
+{
+//	alert(cickle);
+var AJAX = new ajax_support(linking_address + "?get_mental_rules_cickle_info="+cickle, sent_cickles_info);
+AJAX.send_reqest();
+function sent_cickles_info(res) {
+
+show_dlg_alert(res,0); 
+}
+}
+
+
+
+
+function show_unde_tree(id)
+{
+var AJAX = new ajax_support(linking_address + "?objID="+id+"&get_undstg_tree_info=1", sent_undstg_info);
+AJAX.send_reqest();
+function sent_undstg_info(res) {
+			//alert(res);
+res=res.replace(/\<\/b\>/g,'</b><br>');
+show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
+}
+}
+function show_atmzm_tree(id)
+{
+var AJAX = new ajax_support(linking_address + "?objID="+id+"&get_atmzm_tree_info=1", sent_atmzm_tree_info);
+AJAX.send_reqest();
+function sent_atmzm_tree_info(res) {
+			//alert(res);
+res=res.replace(/\<\/b\>/g,'</b><br>');
+show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
+}
+}
+function show_ment_atmzm(id)
+{
+var AJAX = new ajax_support(linking_address + "?objID="+id+"&get_ment_atmzm_info=1", sent_ment_atmzm_info);
+AJAX.send_reqest();
+function sent_ment_atmzm_info(res) {
+			//alert(res);
+res=res.replace(/\<\/b\>/g,'</b><br>');
+show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",0);
+}
+}
 </script>
 
 </body>
