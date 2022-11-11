@@ -38,6 +38,16 @@ $out.=$p[0]."|".$p[1]."|".$p[2]."|".$p[3]."|".$p[4]."|".$p[5]."|".$p[6]."|".$p[7
 }
 write_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/condition_reflexes.txt",$out);
 
+
+
+
+
+// TODO: Обновить время рождения Доминант  /lib/set_life_time.php!!!!!!!!!
+
+
+
+
+
 exit("1");
 }
 
