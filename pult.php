@@ -131,8 +131,41 @@ echo "</div>";
 	?>
 
 	// адрес для обращения по ajax к ГО-серверу
-	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';
-	setTimeout("get_bot_connect()", 1000);
+	var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_address.txt"); ?>';	
+
+/////////////////////////////////////////////
+/* Синхронизация пульса с ГО:
+Как только пришел ответ из ГО sent_sincronisation(res) происходит новый запуск через 1 сек.
+При этом в main.go происходит подмена автогенератора синхрозапуском: brain.SincroTic()
+Так что пуль на Пульте и в ГО синхронизирован.
+Времени 5 сек типа должно хватить, чтобы в ГО завершились процессы данного Пульса.
+*/
+var main_puls_timer = 0;
+var main_scan_timer = 0;
+// поехали...
+main_puls_timer = setTimeout("sincronisationWithGo()", 1000);
+function sincronisationWithGo()
+{
+		clearTimeout(main_puls_timer);
+		clearTimeout(main_scan_timer);
+// все время опрашивает, но в раб.режиме успевает очиститься clearTimeout(main_puls_timer);
+		main_scan_timer = setTimeout("sincronisationWithGo()", 5000);
+		//////////////
+bot_contact("get_params=1", sent_sincronisation);
+function sent_sincronisation(res)
+{
+//   alert("!!!!!!!!!!!! 22222");
+// для синхронизации автоопроса и пульса ГО
+		clearTimeout(main_puls_timer);
+		clearTimeout(main_scan_timer);
+		main_puls_timer = setTimeout("sincronisationWithGo()", 1000);
+
+// вызов при Включено - раз в секунду, при выключено - раз в 5 сек.
+		get_bot_connect();
+}
+}
+//////////////////////////////////////////////
+
 
 	var exists_connect = 0; // 1 - есть ответ Beast
 
@@ -141,17 +174,13 @@ echo "</div>";
 	var del_tymer = 0;
 	var t_count = 0; // просто счетчик пульсов
 	var isBotReady = 0;
-	var main_puls_timer = 0;
+	
 	var not_allow_get_gomeo = 0; // 1-блокировка изменений при установки новых значений
-
 	////////////////////////// постоянный пульс Пульта 1 сек
 	function get_bot_connect() {
-		clearTimeout(main_puls_timer);
-		main_puls_timer = setTimeout("get_bot_connect()", 1000); // постоянно опрашивать
+			// show_dlg_alert(t_count,500);
 
-		// show_dlg_alert(t_count,500);
-
-		// если был коннект, то снова опрашивать, если exists_connect==0 - значит коннект прекращен
+// Детектор: если был коннект, то снова опрашивать check_bot_connect(), если exists_connect==0 - значит коннект прекращен
 		// если сработает after_answer_server() то exists_connect=1;
 		if (exists_connect)
 			del_tymer = setTimeout("check_bot_connect()", 5000);
@@ -162,9 +191,9 @@ echo "</div>";
 		var req_bot_answer = 0; // alert(new_gomeo_par_id);
 		// этот запрос на состояние бота должен быть всегда, и когда он есть, остальные ниже блокируются на этом пульсе.   
 		if (t_count % 2 == 0 && !not_allow_get_gomeo) // опрос состояния Beast раз в 2 сек для /pult_gomeo.php
-		{
+		{   //alert("!!!!!!!!!!!! 0000");
 			req_bot_answer = 1;
-			bot_params = "get_params=1";
+			bot_params = "get_params=1";  
 			bot_contact(bot_params, sent_get_params);
 			bot_params = ""; //alert("!!!1");
 			//return;
@@ -218,6 +247,7 @@ echo "</div>";
 
 	function check_bot_connect() // не ответил за 5 тактов
 	{
+		//blockingAutoScan=0;
 		tools_show(0);
 		exists_connect = 0;
 		warning_connect();
@@ -262,31 +292,32 @@ echo "</div>";
 
 	function bot_switcher() {
 		if (document.getElementById('bot_switcher2').style.display == "none") {
-			if (!confirm("Запустить исполняемый файл Beast?"))
-				return;
+//if (!confirm("Запустить исполняемый файл Beast?"))
+//return;
+show_dlg_alert("Включаем...", 1500);
 			var server = "/run.php";    
 			var AJAX = new ajax_support(server, sent_run_answer);
 			AJAX.send_reqest();
-
+			function sent_run_answer(res) {  // alert(res);
+// Довольно долго запускается файл ГО, так что не нужно ждать окончания, а сразу
+// location.reload(true);
+//show_dlg_alert("Beast включился.", 1500);
+			}
 /* нужно перегрузить страницу, иначе после загрузки сохраненного архива и Включения не появляется страница (как при отсуствии связи). Пока не исследовал почему это, просто поставил обновление страницы:
 */
 			location.reload(true);
-
+/*
 			// не ожидая sent_run_answer т.к. /run.php зависает при запуске файла 
 			document.getElementById('bot_switcher').style.display = "none";
 			document.getElementById('close_note_id').style.display = "block";
 			document.getElementById('bot_switcher2').style.display = ""; //document.getElementById('bot_switcher2').value="&nbsp;Выключить Beast&nbsp;";
 			show_dlg_alert("Beast включен.", 1);
-
-			function sent_run_answer(res) {  // alert("!!!!");
-//location.reload(true);
-			}
+*/
 		} else {
 			// сохранить память в файлах
-			var AJAX = new ajax_support(linking_address + "?save_all_memory=1", sent_info_1);
+			var AJAX = new ajax_support(linking_address + "?save_all_memory=1", sent_save_answer);
 			AJAX.send_reqest();
-
-			function sent_info_1(res) {
+			function sent_save_answer(res) {  
 				if (res != "yes") {
 					show_dlg_alert("Не удалось сохранить память Beast. Выключение отменено.", 0);
 					bot_closing();
@@ -295,11 +326,10 @@ echo "</div>";
 				var server = "/kill.php";
 				var AJAX = new ajax_support(server, sent_end_answer);
 				AJAX.send_reqest();
-
-				function sent_end_answer(res) {
+				function sent_end_answer(res) {  //alert(res);
 					document.getElementById('bot_switcher2').style.display = "none";
 					document.getElementById('bot_switcher').style.display = "";
-					show_dlg_alert("Beast выключен.", 1);
+					show_dlg_alert("Beast выключен. Память сохранена.", 1);
 					set_Bot_Ready(0);
 				}
 			}
@@ -311,7 +341,7 @@ var startPsichicNow=0;// 1- психика уже готова
 		//alert(ready);
 		if (ready == 0) {
 			//При потере коннекта сбрасывать таймер 10сек удержания Акции
-			clearTimeout(actionTimerID);
+			//clearTimeout(actionTimerID);
 			desactivationAll();
 
 //			document.getElementById('about_bot_ready').innerHTML = "Beast еще не пришел в себя, нужно немного подождать";

@@ -144,9 +144,9 @@ var ful_condition_str="";
 		//slider_val(slider,id)
 	}
 
-	/////////////////
+////////////////////////  sent_get_params(res)  //////////////////////////
 var old_period_val=0;
-	function sent_get_params(res) {
+function sent_get_params(res) {  //  alert("!!!!!!!!!!!! 111111");
 		if (res == "!!!") // Смерть beast
 		{
 			//alert(res);
@@ -344,7 +344,9 @@ break;
 document.getElementById('about_bot_ready').innerHTML = "<nobr>"+ready_str+"</nobr>";
 ///////////////////////////////
 		
-}
+}// КОНЕЦ sent_get_params(res)
+
+
 var contextsName={
 1:"1 Пищевой",
 2:"2 Поиск",

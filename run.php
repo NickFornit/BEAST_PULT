@@ -45,7 +45,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 $ret= exec("go_build_BOT.exe"); // , $pid
 
-exit("! $ret");
+exit("Включен");
 
 // убить процесс
 //$ret= exec('kill '.$pid); echo "! $ret";

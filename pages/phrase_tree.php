@@ -15,6 +15,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 <script Language="JavaScript" src="/ajax/ajax.js"></script>
 <script>
 var linking_address='<?include($_SERVER["DOCUMENT_ROOT"]."/common/linking_address.txt");?>';
+// ждем пока не включат бестию
+check_Beast_activnost(4);
 var old_size=0;
 function get_info()
 {
