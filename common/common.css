@@ -377,3 +377,21 @@ text-shadow:
     0 0 6px #FFE8E8,
     0 0 10px #FFE8E4;
 }
+.navigator_button
+{
+position:relative;
+font-family:courier;
+font-size:16px;
+padding-left:4px;
+padding-right:4px;
+text-align:center;
+cursor: pointer;
+background:linear-gradient(180deg, #eeeeee, #dddddd);
+border-radius: 7px;
+border:1px solid #aaaaaa;
+display:inline-block;
+}
+.navigator_button:hover
+{
+background:linear-gradient(0deg, #eeeeee, #dddddd);
+}
