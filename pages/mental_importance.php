@@ -1,6 +1,6 @@
 <?
 /* объекты значимости
-http://go/pages/mental_importance.php    ID|NodeAID|NodePID|Type|Value
+http://go/pages/mental_importance.php    ID|NodeAID|NodePID|Type|ObjectID|Value
 */
 
 $page_id = 7;

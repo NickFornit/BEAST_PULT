@@ -73,6 +73,10 @@ break;
 case "4":// ментальный запуск моторного автоматизма
 aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Осознанно:</b><br>"+actStr+"</div>";
 break;
+case "10":// непонимание, растерянность - в случае отсуствия пси-реакций но Лени.
+aOut+="<div style=\"padding:10px;background-color:#FFE8E8;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Непонимание, растерянность:</b><br>"+actStr+"</div>";
+break;
+break;
 default:
 alert("Неверно прописана акция: "+act_str);
 break; // кривая акция

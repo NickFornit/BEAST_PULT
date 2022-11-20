@@ -22,6 +22,9 @@ margin-top:10px;">
 
 <div id="conditions_words_id" style='position:absolute;top:4px;left:250px;display:none;' title='Список слов, для которых есть условный рефлекс в этих условиях.'><img src='/img/words.png' onClick='get_conditions_words()' ></div>
 
+<div id="basic_words_id" style='position:absolute;top:4px;left:300px;display:none;' title='Список фраз, для которых есть автоматизм Beast в этих условиях.'><img src='/img/words.png' onClick='get_conditions_words_basic()' ></div>
+
+
 <div id="note_rejim_id" style='position:absolute;top:0px;right:0px;color:red;display:none;cursor:pointer;' title='Режим форсированного формирования вербальных распознавателей (без отсеивания мусорных слов) и условных рефлексов.' onClick="show_dlg_alert('<div style=`font-size:14px;font-weight:200;text-align:left;`>Включен режим форсированного формирования вербальных распознавателей (без отсеивания мусорных слов) и условных рефлексов.<br><br>Следует использовать для набивки фраз словарного запаса, для тестирования условных рефлексов и т.п. когда не требуется отсев случайного путем повторений.',0)"><nobr>Включен режим форсированной обработки.</nobr></div>
 <script>
 var is_input_rejim=1;
@@ -208,11 +211,16 @@ end_dlg_alert();
 */
 var cur_conditions_words="";
 var old_contexts="";
+var curBasicPar="";
+var curContextsPar=""
 function check_cur_conditions_words(basic,contexts)
 {
 	if(old_contexts==contexts)
 		return;
 old_contexts=contexts;
+curBasicPar=basic;
+curContextsPar=contexts;
+
 //alert(basic+" | "+contexts);exit();
 var AJAX = new ajax_support("/lib/get_exclamations_for_conditions.php?basic="+basic+"&contexts="+contexts, sent_ch_words_info);
 AJAX.send_reqest();
@@ -222,11 +230,13 @@ if(res.length>0)
 {
 cur_conditions_words=res;
 document.getElementById('conditions_words_id').style.display="block";
+document.getElementById('basic_words_id').style.display="block";
 }
 else
 {
 cur_conditions_words="";
 document.getElementById('conditions_words_id').style.display="none";
+document.getElementById('basic_words_id').style.display="none";
 }
 }
 }
@@ -234,6 +244,19 @@ function get_conditions_words()
 {
 show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по слову:<br>" + cur_conditions_words + "<br>", 0);
 }
+/////////////////////////////
+function get_conditions_words_basic()
+{
+//	alert(curBasicPar+" || "+curContextsPar);return; //  1 || 1,2,9
+var AJAX = new ajax_support(linking_address + "?conditions_words_basic=1&basicID="+curBasicPar+"&contexts="+curContextsPar, sent_words_basic_info); 
+AJAX.send_reqest();
+function sent_words_basic_info(res) {
+			//alert(res);
+show_dlg_alert2("<br><span style='font-weight:normal;'>" + res + "<br>", 2);
+}
+
+}
+//////////////////////////////
 function insert_pult_word(word)
 {
 	end_dlg_alert2();

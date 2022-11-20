@@ -36,6 +36,7 @@ sort($wArr, SORT_STRING);
 reset($wArr);                //var_dump($wArr);exit();
 
 $out="<table border=0 style='width:800px;font-size:14px;'><tr>";
+$nCol=0;
 foreach($wArr as $word)
 {
 if(empty($word))
