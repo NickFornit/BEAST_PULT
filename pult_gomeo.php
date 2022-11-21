@@ -231,7 +231,7 @@ function sent_get_params(res) {  //  alert("!!!!!!!!!!!! 111111");
 var yeas = parseInt(p[4] / (3600 * 24 * 365));
 var month = parseInt( (p[4] - yeas*3600*24*365)/ (3600*24*30)  );
 var days = parseInt((p[4] - yeas*3600*24*365  - month*3600*24*30)/ (3600*24)); 
-document.getElementById('life_time_id').innerHTML = "Возраст: "+yeas+" лет "+month+" мес "+days+" дней";
+document.getElementById('life_time_id').innerHTML = "Возраст лет: "+yeas+", мес: "+month+", дней: "+days+".";
 
 /* постоянно доступно текущее состояние:
 1|2,5,8|11
