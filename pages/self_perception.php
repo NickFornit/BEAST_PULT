@@ -35,7 +35,9 @@ include_once($_SERVER['DOCUMENT_ROOT']."/common/show_waiting.php");
 Цепочки Правил в Эпиз.памяти создабт карту решений в контексте одной темы:<br>
 карты местности - куда идти после очередного шага,
 карту игры в шахматы: как ходить в данной позиции и на сколько шагов вперед обдумывать решения.<br>
-<div class='navigator_button'  onClick="get_rules()" title='Ментальные Правила - опыт последовательности ментальных автоматизмов'>Список Правил</div><br>
+
+<div class='navigator_button'  onClick="get_rules()" title='Правила - опыт использования  автоматизмов после реакции Оператора.'>Список Правил</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class='navigator_button'  onClick="get_mental_rules()" title='Ментальные Правила - опыт последовательности ментальных автоматизмов'>Список ментальных Правил</div><br>
 <hr style='width:90%' align='left'>
 
 
@@ -109,6 +111,10 @@ open_anotjer_win("/pages/mental_automatizm_tree.php");
 function get_rules()
 {
 //alert("Дерево понимания");
+open_anotjer_win("/pages/rules.php");
+}
+function get_mental_rules()
+{
 open_anotjer_win("/pages/mental_rules.php");
 }
 function get_cicles(){
