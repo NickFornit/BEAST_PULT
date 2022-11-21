@@ -252,7 +252,7 @@ type_reqwest_go=2; //alert(type_reqwest_go);
 // станица правил
 function get_rulles()
 {
-open_anotjer_win("/pages/rulles.php");
+open_anotjer_win("/pages/rules.php");
 }
 </script>
 
