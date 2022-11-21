@@ -175,7 +175,8 @@ for(i=0;i<actionsArr.length;i++)
 	{
 triggers_str+=actionsArr[i]+"|";//! нельзя разделять ; или ,
 	}
-params+="&set_img_action=" + triggers_str;
+var food_portion = document.getElementById("food_portion_id").selectedIndex + 1;
+params+="&set_img_action=" + triggers_str + "&food_portion=" + food_portion;
 
 desactivationAll();
 }
