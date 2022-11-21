@@ -159,10 +159,9 @@ function sent_sincronisation(res)
 		clearTimeout(main_puls_timer);
 		clearTimeout(main_scan_timer);
 		main_puls_timer = setTimeout("sincronisationWithGo()", 1000);
-
+}
 // вызов при Включено - раз в секунду, при выключено - раз в 5 сек.
 		get_bot_connect();
-}
 }
 //////////////////////////////////////////////
 
@@ -177,7 +176,7 @@ function sent_sincronisation(res)
 	
 	var not_allow_get_gomeo = 0; // 1-блокировка изменений при установки новых значений
 	////////////////////////// постоянный пульс Пульта 1 сек
-	function get_bot_connect() {
+function get_bot_connect() {
 			// show_dlg_alert(t_count,500);
 
 // Детектор: если был коннект, то снова опрашивать check_bot_connect(), если exists_connect==0 - значит коннект прекращен
@@ -290,7 +289,7 @@ function sent_sincronisation(res)
 		document.getElementById('puls_id').className = "puls_passive";
 	}
 
-	function bot_switcher() {
+function bot_switcher() {
 		if (document.getElementById('bot_switcher2').style.display == "none") {
 //if (!confirm("Запустить исполняемый файл Beast?"))
 //return;
@@ -327,14 +326,18 @@ show_dlg_alert("Включаем...", 1500);
 				var AJAX = new ajax_support(server, sent_end_answer);
 				AJAX.send_reqest();
 				function sent_end_answer(res) {  //alert(res);
-					document.getElementById('bot_switcher2').style.display = "none";
-					document.getElementById('bot_switcher').style.display = "";
-					show_dlg_alert("Beast выключен. Память сохранена.", 1);
-					set_Bot_Ready(0);
+					close_end()
 				}
 			}
 		}
 	}
+function close_end()
+{
+document.getElementById('bot_switcher2').style.display = "none";
+document.getElementById('bot_switcher').style.display = "";
+show_dlg_alert("Beast выключен. Память сохранена.", 1);
+set_Bot_Ready(0);
+}
 
 var startPsichicNow=0;// 1- психика уже готова
 	function set_Bot_Ready(ready) {
