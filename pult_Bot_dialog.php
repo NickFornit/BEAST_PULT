@@ -234,10 +234,10 @@ document.getElementById('conditions_words_id').style.display="block";
 document.getElementById('basic_words_id').style.display="block";
 }
 else
-{
-cur_conditions_words="";
-document.getElementById('conditions_words_id').style.display="none";
-document.getElementById('basic_words_id').style.display="none";
+{ // не гасить
+//cur_conditions_words="";
+//document.getElementById('conditions_words_id').style.display="none";
+//document.getElementById('basic_words_id').style.display="none";
 }
 }
 }
@@ -248,6 +248,13 @@ show_dlg_alert2("<br><span style='font-weight:normal;'>Щелкните по с�
 /////////////////////////////
 function get_conditions_words_basic()
 {
+	// разрешать только после готовности ГО
+	if(beast_ready!=2)
+	{
+show_dlg_alert("Будет доступно когда beast будет готов к общению", 0);
+return;
+	}
+
 //	alert(curBasicPar+" || "+curContextsPar);return; //  1 || 1,2,9
 var AJAX = new ajax_support(linking_address + "?conditions_words_basic=1&basicID="+curBasicPar+"&contexts="+curContextsPar, sent_words_basic_info); 
 AJAX.send_reqest();

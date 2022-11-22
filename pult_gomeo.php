@@ -146,6 +146,7 @@ var ful_condition_str="";
 
 ////////////////////////  sent_get_params(res)  //////////////////////////
 var old_period_val=0;
+var beast_ready=0; // Степень готовности к общению.
 function sent_get_params(res) {  //  alert("!!!!!!!!!!!! 111111");
 		if (res == "!!!") // Смерть beast
 		{
@@ -323,7 +324,7 @@ old_period_val=0;
 }
 
 ///////////////////////// индикация готовности к общению
-var beast_ready=1*p[7];   // alert(beast_ready);
+beast_ready=1*p[7];   // alert(beast_ready);
 switch(beast_ready)
 {     
 case 0:
