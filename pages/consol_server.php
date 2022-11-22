@@ -1,5 +1,5 @@
 <?
-/* Запись лога в файл /pult_consol.txt
+/* Запись лога в файл /pult_consol.txt   - последнее - наверх
 /pages/consol_server.php
 */
 

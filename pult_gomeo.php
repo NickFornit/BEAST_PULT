@@ -146,6 +146,13 @@ var ful_condition_str="";
 
 ////////////////////////  sent_get_params(res)  //////////////////////////
 var old_period_val=0;
+var allowShowWaightStr=0;
+var isBigFontShow=0;
+function endBigFontShow()
+{  
+isBigFontShow=0;
+}
+
 var beast_ready=0; // Степень готовности к общению.
 function sent_get_params(res) {  //  alert("!!!!!!!!!!!! 111111");
 		if (res == "!!!") // Смерть beast
@@ -304,23 +311,39 @@ if(document.getElementById('div_dlg_alert2').style.display=="none")
 //Действует период ожидания реакции оператора на действие автоматизма?
 if(p[6].length>0)
 {
+if(isAutomatizmShow)
+{
+isAutomatizmShow=0;
+allowShowWaightStr=1;
+isBigFontShow=1;
+setTimeout("endBigFontShow()",2000);
+}
+
 var periodI=document.getElementById('time_limit_id');
 //show_dlg_alert(old_period_val+" < "+p[6],0);
-	if(old_period_val < 1*p[6])
+	//if(old_period_val < 1*p[6])
+	if(isBigFontShow==1)
 	{
 	//alert("!!!! 20");
 	periodI.style.fontSize="30px";
 	}else{
 	periodI.style.fontSize="18px";
 	}
+
 periodI.innerHTML="Осталось времени на ответ: "+p[6]+" сек";
-periodI.style.display="block";
+if(allowShowWaightStr)
+{
+	// показывать только после вывода автоматизма в function new_bot_action(
+	periodI.style.display="block";
+}
+								
 old_period_val=1*p[6];
 }
 else
 {
 document.getElementById('time_limit_id').style.display="none";
 old_period_val=0;
+allowShowWaightStr=0;
 }
 
 ///////////////////////// индикация готовности к общению

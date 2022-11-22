@@ -24,7 +24,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
   </style>
   <div style="position:relative;">
-    <h3>Консоль событий Бота</h3>
+    <h3 style="margin-bottom:2px;">Консоль событий Бота:</h3> последнее - наверху<br>
     <div style="position:absolute;top:0px;left:300px;cursor:pointer;" onClick='cline_log()'><b>Очистить лог</b></div>
   </div>
 

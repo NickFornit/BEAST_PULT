@@ -36,10 +36,10 @@ function sent_request_info(res)
 }
 function set_consol(str)
 {
-var list_consol_info=str+"<br>\r\n"; // alert(list_consol_info);
+var list_consol_info=str+"<br><separ>\r\n"; // alert(list_consol_info);
 document.getElementById('pult_consol_id').innerHTML=list_consol_info;
 
-// записывать в файл /pult_consol.txt
+// записывать в файл /pult_consol.txt - последнее - наверх
 param="info="+list_consol_info;
 var AJAX = new ajax_post_support('/pages/consol_server.php',param,sent_consol_info,1);
 AJAX.send_reqest();

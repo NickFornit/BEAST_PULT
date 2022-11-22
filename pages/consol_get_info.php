@@ -22,7 +22,17 @@ function read_file($file)
 	if ($hf) {
 		$contents = fread($hf, filesize($file));
 		fclose($hf);
-		return $contents;
+
+// последние фразы вверху
+$out="";
+$lines=explode("<br><separ>\r\n",$contents);
+for($i=count($lines)-1;$i>=0;$i--)
+{
+$out.=$lines[$i]."<hr style='width:800px;border:solid 1px #dddddd;background-color:#dddddd;' align='left'>";
+}
+
+
+		return $out;
 	} //if($hf)
 	return "";
 }
