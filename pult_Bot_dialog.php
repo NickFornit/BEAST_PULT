@@ -133,6 +133,11 @@ function sent_go()
 end_dlg_bot_action(); //alert("!!!!");
 
 var txt=document.getElementById('input_id').value;
+if (txt.length==0)
+{
+show_dlg_alert("Пустое сообщение.",1500);
+	return;
+}
 
 var tone=0;
 var moode=0;
