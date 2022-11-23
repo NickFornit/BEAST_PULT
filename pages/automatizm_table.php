@@ -103,6 +103,16 @@ show_dlg_alert("<div style='text-align:left;font-weight:normal;'>"+res+"</div>",
 }
 }
 
+function cliner_block(id)// разблокировать автоматизм
+{
+var AJAX = new ajax_support(linking_address + "?atmtzmID="+id+"&cliner_atmtzm_block=1", sent_unblock_info);
+AJAX.send_reqest();
+function sent_unblock_info(res) {
+			//alert(res);
+show_dlg_alert("Автоматизм разблокирован и уже готов к действию.",0);
+}
+
+}
 </script>
 
 </body>

@@ -19,12 +19,13 @@ bottom: 10px;right: 10px;
 max-height:600px;
 min-width:250px;
 overflow:auto;
-display:none;
+display: none;
 padding: 10px;padding-top:4px;padding-bottom:4px;
 border:solid 2px #8A3CA4;
 color:#000000;background-color:#eeeeee;
 font-size:16px;font-family:Arial;font-weight:normal;
-box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);border-radius: 10px;
+box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);
+border-radius: 10px;
 text-align:left;
 "></div>
 
@@ -71,14 +72,14 @@ break;
 //break;
 case "3":// моторн.автоматизм
 isAutomatizmShow=1;
-aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\">Бессознательный <b>Автоматизм:</b><br>"+actStr+"</div>";
+aOut+="<div style=\"padding:10px;background-color:#CCE8FF;\">Бессознательный <b>Автоматизм:</b><br>"+actStr+"</div>";
 break;
 case "4":// ментальный запуск моторного автоматизма
 isAutomatizmShow=1;
-aOut+="<div style=\"padding:10px;background-color:#CCE8FF;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Осознанно:</b><br>"+actStr+"</div>";
+aOut+="<div style=\"padding:10px;background-color:#CCE8FF;\"><b>Осознанно:</b><br>"+actStr+"</div>";
 break;
 case "10":// непонимание, растерянность - в случае отсуствия пси-реакций но Лени.
-aOut+="<div style=\"padding:10px;background-color:#FFE8E8;border-radius: 7px;box-shadow: 8px 8px 8px 0px rgba(122,122,122,0.3);\"><b>Непонимание, растерянность:</b><br>"+actStr+"</div>";
+aOut+="<div style=\"padding:10px;background-color:#FFE8E8;\"><b>Непонимание, растерянность:</b><br>"+actStr+"</div>";
 break;
 break;
 default:
@@ -86,6 +87,9 @@ alert("Неверно прописана акция: "+act_str);
 break; // кривая акция
 }
 }
+// зеленое сияние вокруг на 1,5 сек
+document.getElementById('div_bot_action').style.boxShadow="0px 0px 83px 27px rgba(33, 180, 8, 0.69)"; 
+setTimeout("end_effect_bot_action()",1500);
 
 show_dlg_bot_action(aOut);
 
@@ -95,7 +99,11 @@ log=log.replace(/\>/g,'');
 log=log.replace(/&nbsp;/g,' ');// иначе не передает POST
 //log+="\r\n";
 //alert(log);
-set_consol(log);
+set_consol(log); 
+}
+function end_effect_bot_action()
+{
+document.getElementById('div_bot_action').style.boxShadow="8px 8px 8px 0px rgba(122,122,122,0.3)";
 }
 ////////////////////////
 var actTimer=0;
