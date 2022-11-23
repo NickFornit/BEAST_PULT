@@ -194,8 +194,14 @@ var linking_address = '<? include($_SERVER["DOCUMENT_ROOT"] . "/common/linking_a
 		AJAX.send_reqest();
 
 		function sent_action(res) {		
-			desactivationAll();
+			if(res.length>5)// уже готов ответ Beast
+			{ //alert(res);
+// выдать его на Пульт
+new_bot_action(res);
+			}else{
 			show_dlg_alert("Пусковой стимул принят Beast.", 2000);
+			}
+			desactivationAll();
 		}
 }
 /////////////////////////////////////

@@ -169,7 +169,7 @@ var AJAX = new ajax_post_support(server,params,sent_request_bot,1);
 AJAX.send_reqest();
 function sent_request_bot(res)
 {
-// если выбрены действия для добавления
+// если выбраны действия для добавления
 //alert(allow_sent_to_beast);
 params="is_input_rejim="+is_input_rejim+"&pult_tone="+tone+"&pult_mood="+moode+"&text_dlg="+res;
 if(allow_sent_to_beast)
@@ -202,7 +202,15 @@ show_dlg_alert('Не воспринят текст...',3000);
 return;
 }
 
-document.getElementById('pult_result_id').innerHTML=res;
+var par=res.split("|&|");   // alert(par[0]+" | "+par[1]);
+
+document.getElementById('pult_result_id').innerHTML=par[0];
+
+if(par[1].length>5)// уже готов ответ Beast в том же пульсе
+			{ //alert(par[1]);
+// выдать его на Пульт
+new_bot_action(par[1]);
+			}
 
 //show_dlg_alert(res,2000);
 //setTimeout(`document.forms['refresh'].submit();`,2000);
