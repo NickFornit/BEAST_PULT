@@ -369,6 +369,14 @@ text-shadow:
     0 0 6px #DAFFE8,
     0 0 10px #E4FFE4;
 }
+.luminous_text_yellow
+{
+text-shadow:
+	0 0 4px #FFFF7E,
+    0 0 5px #FFFFB8,
+    0 0 6px #FFFFD7,
+    0 0 10px #FFFFEE;
+}
 .luminous_text_red
 {
 text-shadow:

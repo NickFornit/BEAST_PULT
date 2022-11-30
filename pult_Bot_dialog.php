@@ -5,7 +5,12 @@
 
 echo "<hr>";
 
-echo '<div id="about_bot_ready" style="margin-top:10px;color:red;">Beast еще не пришел в себя, общение невозможно.</div>';
+echo "<div style='position:relative;margin-top:10px;height:18px;'>";
+echo '<div id="about_bot_ready" style="position:absolute;left:0;top:0;color:red;">Beast еще не пришел в себя, общение невозможно.</div>';
+echo '
+<div style="position:absolute;right:150px;top:2;" title="Изменение состояния после ответа Оператора на действия Beast.">Изменение состояния: </div>
+<div id="diff_condition_id" style="position:absolute;right:0;top:0;"></div>';
+echo "</div>";
 
 if($stages>0)
 {

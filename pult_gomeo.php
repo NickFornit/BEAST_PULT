@@ -152,6 +152,8 @@ function endBigFontShow()
 {  
 isBigFontShow=0;
 }
+var currentMoodCondition=0;
+var currentMoodConditionOld=0;
 
 var beast_ready=0; // Степень готовности к общению.
 function sent_get_params(res) {  //  alert("!!!!!!!!!!!! 111111");
@@ -367,6 +369,26 @@ break;
 }
 document.getElementById('about_bot_ready').innerHTML = "<nobr>"+ready_str+"</nobr>";
 ///////////////////////////////
+currentMoodCondition=1*p[8]; //     alert(currentMoodCondition);
+if(currentMoodCondition>0 && currentMoodConditionOld!=currentMoodCondition)
+{
+var mood_str=""
+if(currentMoodCondition==3)
+{
+mood_str="<span class='luminous_text_green' style='color:green;font-size:20px;'> Улучшилось<span>"
+}
+if(currentMoodCondition==2)
+{
+mood_str="<span style='color:#000000;font-size:20px;'> Не изменилось<span>"
+}
+if(currentMoodCondition==1)
+{
+mood_str="<span class='luminous_text_red' style='color:red;font-size:20px;'> Ухудшилось<span>"
+}
+document.getElementById('diff_condition_id').innerHTML = "<nobr>"+mood_str+"</nobr>";
+}
+currentMoodConditionOld=currentMoodCondition;
+/////////////////////////
 		
 }// КОНЕЦ sent_get_params(res)
 
