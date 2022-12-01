@@ -79,6 +79,7 @@ isAutomatizmShow=1;
 aOut+="<div style=\"padding:10px;background-color:#CCE8FF;\"><b>Осознанно:</b><br>"+actStr+"</div>";
 break;
 case "10":// непонимание, растерянность - в случае отсуствия пси-реакций но Лени.
+isAutomatizmShow=1;
 aOut+="<div style=\"padding:10px;background-color:#FFE8E8;\"><b>Непонимание, растерянность:</b><br>"+actStr+"</div>";
 break;
 break;
