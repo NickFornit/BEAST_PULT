@@ -15,21 +15,36 @@ mb_internal_encoding("UTF-8");
 
 $next_level=$_GET['next_level'];
 
-if($next_level==0)// до рождения
-{
-//cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/dnk_reflexes.txt");
-cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/reflex_tree.txt");
-cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/condition_reflexes.txt");
-cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/trigger_stimuls_images.txt");
+switch ($next_level){
+  case 0: // до рождения
+    cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/reflex_tree.txt");
+    cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/trigger_stimuls_images.txt");
+    cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/condition_reflexes.txt");
+    break;
+  case 1: // после рождения
+    cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_reflex/condition_reflexes.txt");
+    break;
 }
+cliner_all_psy();
 
-if($next_level==1)// после рождения
-{
-
+function cliner_all_psy(){
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/automatizm_images.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/automatizm_tree.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/action_images.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/action_images.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/trigger_and_actions.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/action_images_mental.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/cerebellum_reflex.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/episod_memory.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/goNext.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/importance.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/purpose_images.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/rules.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/situation_images.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/trigger_and_actions_mental.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/understanding_tree.txt");
+  cliner_file($_SERVER["DOCUMENT_ROOT"]."/memory_psy/verbal_images.txt");
 }
-
-// для остальных еще не сделано
-
 
 ///////////////////////////////////////////////////
 function cliner_file($file)

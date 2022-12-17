@@ -135,6 +135,12 @@ return;
 }
 if(next>stages)
 {
+	if(next - stages > 1){
+		var next_stag = stages
+		next_stag ++
+		show_dlg_alert("Нельзя пропускать стадии развития!</br>Следующей стадией должна быть: " + next_stag + "!",0);
+		return;
+	}
 gotonextlevel2();
 }
 /////////////////
