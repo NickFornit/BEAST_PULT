@@ -18,8 +18,8 @@ foreach ($strArr as $s) {
 function set_porog1($limit)  // set_porog1($limits[1])
 {
 	$w_norm = 100 - $limit;
-	echo '<div class="slider_bad" style="left:0%;width:' . $limit . '%;" >&nbsp;</div>
-<div class="slider_norm" style="left:' . $limit . '%;width:' . $w_norm . '%;" >
+	echo '<div class="slider_norm" style="left:' . $limit . '%;width:' . $w_norm . '%;" >&nbsp;</div>
+	<div class="slider_bad" style="left:0%;width:' . $limit . '%;" >
 <span class="slider_shkala" style="left:20%">|</span>
 <span class="slider_shkala" style="left:40%">|</span>
 <span class="slider_shkala" style="left:60%">|</span>
@@ -29,8 +29,8 @@ function set_porog1($limit)  // set_porog1($limits[1])
 function set_porog2($limit)
 {
 	$w_norm = 100 - $limit;
-	echo '<div class="slider_bad" style="left:' . $limit . '%;width:' . $w_norm . '%;" >&nbsp;</div>
-<div class="slider_norm" style="left:0%;width:' . $limit . '%;" >
+	echo '<div class="slider_norm" style="left:0%;width:' . $limit . '%;" >&nbsp;</div>
+	<div class="slider_bad" style="left:' . $limit . '%;width:' . $w_norm . '%;" >
 <span class="slider_shkala" style="left:20%">|</span>
 <span class="slider_shkala" style="left:40%">|</span>
 <span class="slider_shkala" style="left:60%">|</span>
